@@ -1,16 +1,19 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-import logo from './logo.svg';
+
+import PrincipalHeader from './vista/PrincipalHead';
+import PrincipalBody from './vista/PrincipalBody';
+import PrincipalFooter from './vista/PrincipalFooter';
+
 import './App.css';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hola Mundo</h1>
-        <Button color="danger">Hello World</Button>
-      </header>
-    </div>
+    <React.Fragment>
+      <PrincipalHeader/>
+      <PrincipalBody/>
+      <PrincipalFooter/>
+    </React.Fragment>
   );
 }
 
