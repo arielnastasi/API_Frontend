@@ -11,7 +11,7 @@ function App() {
   return (
     <React.Fragment>
       <PrincipalHeader/>
-      <PrincipalBody/>
+      
       <PrincipalFooter/>
     </React.Fragment>
   );
