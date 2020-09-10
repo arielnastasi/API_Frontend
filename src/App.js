@@ -11,6 +11,8 @@ import {
 import Login from './components/Login';
 import ABMForms from './components/ABMForms';
 import ABMUsers from './components/ABMUsers';
+import Button from '@material-ui/core/Button';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 function App() {
@@ -25,19 +27,24 @@ function App() {
 				</button>
 				<div className="collapse navbar-collapse" id="navbarNav">
 					<ul className="navbar-nav">
-						<li className="nav-item">
+						<li className="nav-item mx-2">
 							<NavLink className="nav-link" to="/abm-usuarios" activeClassName="active"> ABM usuarios </NavLink>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item mx-2">
 							<NavLink className="nav-link" to="/login" activeClassName="active"> Login </NavLink>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item mx-2">
 							<NavLink className="nav-link" to="/abm-formularios" activeClassName="active"> ABM formularios </NavLink>
 						</li>
 					</ul>
 				</div>
 				<div>
-					<button type="button" class="btn btn-danger">Cerrar sesión</button>
+					<Button
+						variant="contained"
+						color="secondary"
+						startIcon={<ExitToAppIcon />}>
+						Cerrar sesión
+					</Button>
 				</div>
 			</nav>
 			<Switch>
