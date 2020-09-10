@@ -13,7 +13,7 @@ const ABMUsers = () => {
 			_id: "5f4ebe0c04ce66431062ba3f",
 			role: "SUPER_ADMIN",
 			name: "SUPER_ADMIN",
-			email: "admin",
+			email: "admin@admin",
 		},
 		{
 			_id: "5f4ebdeb04ce66431062ba3e",
