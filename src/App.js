@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Login from './components/Login';
 import ABMForms from './components/ABMForms';
 import ABMUsers from './components/ABMUsers';
+import CreateForm from './components/CreateForm';
 import Navbar from './components/Nabvar';
 import logo from './imagenes/logo.png';
 
@@ -26,6 +27,9 @@ function App() {
 				</Route>
 				<Route path="/abm-formularios">
 					<ABMForms />
+				</Route>
+				<Route path="/create-form">
+					<CreateForm />
 				</Route>
 			</Switch>
 		</Router>
