@@ -5,6 +5,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import PopUp from './PopUp.js';
 
 const ABMUsers = () => {
 
@@ -48,16 +49,13 @@ const ABMUsers = () => {
 	]);
 
 	return (
+		
 		<div className="container mt-5">
+			
 			<div className="d-flex justify-content-between mb-3">
 				<h3>Gestionar usuarios</h3>
-				<Button
-					className="mb-2"
-					variant="contained"
-					color="primary"
-					startIcon={<PersonAddIcon />}>
-					Nuevo usuario
-				</Button>
+				<PopUp />
+				
 			</div>
 			<table className="table table-responsive-md">
 				<thead>
