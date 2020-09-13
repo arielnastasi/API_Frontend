@@ -5,10 +5,10 @@ import {
     AppBar,
     Toolbar,
     Paper,
-    Button,
     TextField
 } from "@material-ui/core";
 import logo from '../imagenes/logo.png';
+import ContainedButtons from './Botones'
 
 
 const Login = () => {
@@ -104,13 +104,9 @@ const Login = () => {
                                         />
                                     </Grid>
                                     <Grid item>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            type="submit"
-                                            className="button-block"
-                                        >
-                                            Login</Button>
+                                        <ContainedButtons 
+                                            colorDelBoton="primary" 
+                                            descrip="Login"/>     
                                         <span className="text-danger text-small d-block mb-2">
                                             {errors.email?.message}
                                         </span>

@@ -10,12 +10,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContainedButtons() {
+export default function ContainedButtons({colorDelBoton}) {
   const classes = useStyles();
-
-  return (
+    return (
     <div className={classes.root}>
-      <Button variant="contained">Login</Button>
+      <Button 
+        variant="contained"
+        color= {colorDelBoton}
+        type="submit"
+        className="button-block"
+       >Login</Button>
     </div>
   );
 }
