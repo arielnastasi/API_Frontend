@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContainedButtons({colorDelBoton}) {
+export default function ContainedButtons({colorDelBoton, descrip}) {
   const classes = useStyles();
     return (
     <div className={classes.root}>
@@ -19,7 +19,7 @@ export default function ContainedButtons({colorDelBoton}) {
         color= {colorDelBoton}
         type="submit"
         className="button-block"
-       >Login</Button>
+    >{descrip}</Button>
     </div>
   );
 }

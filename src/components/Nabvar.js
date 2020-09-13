@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white border border-dark">
             <Link to="/" className="navbar-brand">
-                <img src={logo} width="200px" />
+                <img src={logo} width="200px" alt="Obs pyme"/>
             </Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -17,9 +17,6 @@ const Navbar = () => {
                 <ul className="navbar-nav">
                     <li className="nav-item mx-2">
                         <NavLink className="nav-link" to="/abm-usuarios" activeClassName="active"> ABM usuarios </NavLink>
-                    </li>
-                    <li className="nav-item mx-2">
-                        <NavLink className="nav-link" to="/login" activeClassName="active"> Login </NavLink>
                     </li>
                     <li className="nav-item mx-2">
                         <NavLink className="nav-link" to="/abm-formularios" activeClassName="active"> ABM formularios </NavLink>

@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+
 import {
     Grid,
     AppBar,
@@ -7,21 +9,20 @@ import {
     Paper,
     TextField
 } from "@material-ui/core";
+
 import logo from '../imagenes/logo.png';
 import ContainedButtons from './Botones'
 
 
 const Login = () => {
+    let history = useHistory();
     const { register, errors, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
-        let result = JSON.stringify(data);
         if (data.email === 'admin@admin' && data.password === 'secret') {
-			alert('Bienvenido!')
+            history.push("/home")
 		} else {
-			alert('Credenciales inválidas!');
+            alert('Credenciales inválidas!');
 		}
-        console.log(data);
-        console.log(result)
         e.target.reset();
     }
     return (
