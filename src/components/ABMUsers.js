@@ -5,8 +5,12 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import { useHistory } from "react-router-dom";
 
 const ABMUsers = () => {
+
+	// States & Variables
 
 	const [users, updateUsers] = useState([
 		{
@@ -47,17 +51,34 @@ const ABMUsers = () => {
 		}
 	]);
 
+	const history = useHistory();
+
+	// Functions
+
+	const routeChange = (path) => {
+		history.push(path);
+	}
+
 	return (
 		<div className="container mt-5">
 			<div className="d-flex justify-content-between mb-3">
 				<h3>Gestionar usuarios</h3>
-				<Button
-					className="mb-2"
-					variant="contained"
-					color="primary"
-					startIcon={<PersonAddIcon />}>
-					Nuevo usuario
-				</Button>
+				<div>
+					<Button
+						className="mb-2 mx-1"
+						variant="contained"
+						startIcon={<AutorenewIcon />}>
+						Actualizar
+					</Button>
+					<Button
+						className="mb-2 mx-1"
+						variant="contained"
+						color="primary"
+						onClick={() => routeChange('/create-users')}
+						startIcon={<PersonAddIcon />}>
+						Nuevo usuario
+					</Button>
+				</div>
 			</div>
 			<table className="table table-responsive-md">
 				<thead>

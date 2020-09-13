@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from "react-router-dom";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import logo from '../imagenes/logo.png'
-import Button from '@material-ui/core/Button';
 
 const Navbar = () => {
+
+    // States & Variables
+
+    const [showNavbar, handleshowNavbar] = useState(true);
+
+    // Functions
+
+
+    // JSX
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white border border-dark">
             <Link to="/" className="navbar-brand">
@@ -19,20 +27,12 @@ const Navbar = () => {
                         <NavLink className="nav-link" to="/abm-usuarios" activeClassName="active"> ABM usuarios </NavLink>
                     </li>
                     <li className="nav-item mx-2">
-                        <NavLink className="nav-link" to="/login" activeClassName="active"> Login </NavLink>
-                    </li>
-                    <li className="nav-item mx-2">
                         <NavLink className="nav-link" to="/abm-formularios" activeClassName="active"> ABM formularios </NavLink>
                     </li>
+                    <li className="nav-item mx-2">
+                        <NavLink className="nav-link" to="/perfil" activeClassName="active"> Perfil </NavLink>
+                    </li>
                 </ul>
-            </div>
-            <div>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<ExitToAppIcon />}>
-                    Cerrar sesión
-				</Button>
             </div>
         </nav>
     );
