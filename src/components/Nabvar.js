@@ -6,10 +6,7 @@ const Navbar = () => {
 
     // States & Variables
 
-    const [showNavbar, handleshowNavbar] = useState(true);
-
     // Functions
-
 
     // JSX
 
