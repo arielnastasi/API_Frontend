@@ -1,126 +1,131 @@
-
-import React, { Component } from 'react';
+import React, { Fragment } from 'react'
+import { useForm } from "react-hook-form";
 import {
-	Button,
-	TextField,
-	Grid,
-	Paper,
-	AppBar,
-	Typography,
-	Toolbar,
-	Link,
+    Grid,
+    AppBar,
+    Toolbar,
+    Paper,
+    Button,
+    TextField
 } from "@material-ui/core";
 import logo from '../imagenes/logo.png';
-//import {BRAND_NAME} from '../constants'
-class Login extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = { username: "", password: "", authflag: 1 };
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-	handleChange(event) {
-		this.setState({ username: event.state.username, password: event.state.password });
-	}
-	handleSubmit(event) {
-		event.preventDefault();
-		if (this.state.username == 'admin@admin' && this.state.password == 'secret') {
-			this.props.history.push("/home");
-		} else {
-			alert('Incorrect Credntials!');
-		}
-	}
-	render() {
-		return (
-			<div className="container mt-5">
-				<AppBar position="static" alignitems="center" color="primary">
-					<Toolbar>
-						<Grid container justify="center" wrap="wrap" >
 
-						</Grid>
-					</Toolbar>
-				</AppBar>
-				<Grid container spacing={0} justify="center" direction="row">
-					<Grid item>
-						<Grid
-							container
-							direction="column"
-							justify="center"
-							spacing={2}
-							className="login-form"
-						>
-							<Paper
-								variant="elevation"
-								elevation={2}
-								className="login-background"
-							>
-								<Grid item>
-									<br />
-									<Typography component="h1" variant="h5">
-									<img className="imag" src={logo} width="200px" />
-									</Typography>
-								</Grid>
-								<Grid item>
-									<form onSubmit={this.handleSubmit}>
-										<Grid container direction="column" spacing={2}>
-											<Grid item>
-												<TextField
-													type="email"
-													placeholder="Email"
-													fullWidth
-													name="username"
-													variant="outlined"
-													value={this.state.username}
-													onChange={(event) =>
-														this.setState({
-															[event.target.name]: event.target.value,
-														})
-													}
-													required
-													autoFocus
-												/>
-											</Grid>
-											<Grid item>
-												<TextField
-													type="password"
-													placeholder="Password"
-													fullWidth
-													name="password"
-													variant="outlined"
-													value={this.state.password}
-													onChange={(event) =>
-														this.setState({
-															[event.target.name]: event.target.value,
-														})
-													}
-													required
-												/>
-											</Grid>
-											<Grid item>
-												<Button
-													variant="contained"
-													color="primary"
-													type="submit"
-													className="button-block"
-												>
-													Login
-	</Button>
-											</Grid>
-										</Grid>
-									</form>
-								</Grid>
-								<Grid item>
-									<Link href="#" variant="body2">
-										Forgot Password?
-	</Link>
-								</Grid>
-							</Paper>
-						</Grid>
-					</Grid>
-				</Grid>
-			</div>
-		);
-	}
+
+const Login = () => {
+    const { register, errors, handleSubmit } = useForm();
+    const onSubmit = (data, e) => {
+        let result = JSON.stringify(data);
+        if (data.email === 'admin@admin' && data.password === 'secret') {
+			alert('Bienvenido!')
+		} else {
+			alert('Credenciales inválidas!');
+		}
+        console.log(data);
+        console.log(result)
+        e.target.reset();
+    }
+    return (
+        <Fragment>
+            <AppBar position="static" alignitems="center" color="primary">
+                <Toolbar>
+                    <Grid container justify="center" wrap="wrap" >
+                    </Grid>
+                </Toolbar>
+            </AppBar>
+            <Grid container spacing={0} justify="center" direction="row">
+                <Grid item xs={4}>
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        spacing={2}
+                        className="login-form">
+                        <Paper
+                            variant="elevation"
+                            elevation={3}
+                            className="login-background"
+                        >
+                            <Grid item>
+                                <img className="imag" src={logo} width="300px" alt="Observatorio pyme" /><br />
+                            </Grid>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <Grid container direction="column" spacing={2}>
+                                    <Grid item>
+                                        <TextField
+                                            type="email"
+                                            placeholder="Ingresa tu Email"
+                                            name="email"
+                                            label="Email"
+                                            variant="outlined"
+                                            inputRef={
+                                                register({
+                                                    required: {
+                                                        value: true,
+                                                        message: 'Email es requerido'
+                                                    },
+                                                    maxLength: {
+                                                        value: 100,
+                                                        message: 'No mas de 100 carácteres!'
+                                                    },
+                                                    minLength: {
+                                                        value: 2,
+                                                        message: 'Mínimo 2 carácteres'
+                                                    }
+                                                })
+                                            }
+                                            fullWidth
+                                            autoFocus
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            inputRef={register({
+                                                required: {
+                                                    value: true,
+                                                    message: 'Ingrese su Password'
+                                                },
+                                                maxLength: {
+                                                    value: 100,
+                                                    message: 'No mas de 100 carácteres!'
+                                                },
+                                                minLength: {
+                                                    value: 2,
+                                                    message: 'Mínimo 2 carácteres'
+                                                }
+                                            })}
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="current-password"
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            type="submit"
+                                            className="button-block"
+                                        >
+                                            Login</Button>
+                                        <span className="text-danger text-small d-block mb-2">
+                                            {errors.email?.message}
+                                        </span>
+                                        <span className="text-danger text-small d-block mb-2">
+                                            {errors.password?.message}
+                                        </span>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Fragment >
+    )
 }
 
-export default Login;
+export default Login
