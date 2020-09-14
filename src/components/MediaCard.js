@@ -1,21 +1,32 @@
 import React from 'react';
-import bg from '../imagenes/pyme_background.jpg';
+import card_img from '../imagenes/form_logo.png';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import ListAltIcon from '@material-ui/icons/ListAlt';
-import Icon from '@material-ui/core/Icon';
+import { useHistory } from "react-router-dom";
 
-const MediaCard = ({ titulo }) => {
+const MediaCard = ({ titulo, descripcion, _id }) => {
+
+    // Sates & Variables
+
+    const history = useHistory();
+
+	// Functions
+
+	const routeChange = (path) => {
+		history.push(path);
+    }
+    
     return (
         <div className="card">
-            <img src={bg} className="card-img-top" max-width="400px" alt="..." />
-            <div className="card-body">
+            <img className="card-img-top" src={card_img} alt="Card image cap" />
+            <div className="card-body d-flex justify-content-center flex-column">
                 <h5 className="card-title">{titulo}</h5>
-                <p className="card-text">Form description.</p>
+                <p className="card-text">{descripcion}</p>
                 <Button
                     variant="contained"
                     color="primary"
-                    startIcon={<ListAltIcon />}>
+                    startIcon={<ListAltIcon />}
+                    onClick={() => routeChange(`/form/${_id}`)}>
                     Completar
                 </Button>
             </div>

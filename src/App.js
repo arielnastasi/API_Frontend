@@ -7,6 +7,7 @@ import Navbar from './components/Nabvar';
 import CreateUserForm from './components/CreateUserForm';
 import Login from './components/auth/Login';
 import Benchmarking from './components/Benckmarking';
+import Form from './components/Form';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
 				<Route path="/abm-usuarios" component={ABMUsers} />
 				<Route path="/abm-formularios" component={ABMForms} />
 				<Route path="/create-users" component={CreateUserForm} />
+				<Route path="/form/:id" component={Form} />
 			</Switch>
 		</Router>
 	);
