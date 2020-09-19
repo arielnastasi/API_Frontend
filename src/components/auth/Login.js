@@ -10,6 +10,8 @@ import logo from '../../imagenes/logo.png';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
+import Alert from '@material-ui/lab/Alert';
+import { useForm } from "react-hook-form";
 
 const Login = () => {
 
@@ -61,6 +63,10 @@ const Login = () => {
     const classes = useStyles();
     const history = useHistory();
 
+    const [loginFLag, setLoginFlag] = useState(true);
+    //se usa la libreria react hook forms https://react-hook-form.com/
+    const { handleSubmit, register, errors } = useForm();
+
     const [loginData, handleLoginData] = useState({
         email: '',
         password: '',
@@ -79,8 +85,10 @@ const Login = () => {
     const validateForm = (e) => {
         e.preventDefault();
         console.log(email, password);
-        if (email === 'admin@admin.com' && password === 'secret') {
+        if (email === 'admin@admin.com' && password === 'secretos') {
             routeChange('/abm-formularios');
+        } else {
+            setLoginFlag(false);
         }
     }
 
@@ -97,9 +105,9 @@ const Login = () => {
         );
     }
 
-	const routeChange = (path) => {
-		history.push(path);
-	}
+    const routeChange = (path) => {
+        history.push(path);
+    }
 
     // JSX
 
@@ -132,6 +140,7 @@ const Login = () => {
                             id="password"
                             onChange={getFormData}
                         />
+                        <Alert severity="warning" hidden={loginFLag}>¡Verifica tus credenciales!</Alert>
                         <Button
                             type="submit"
                             fullWidth
