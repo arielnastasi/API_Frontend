@@ -8,12 +8,15 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import logo from '../imagenes/logo.png'
 import { useLocation } from "react-router-dom";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useHistory } from "react-router-dom";
 
 const Form = () => {
 
     // States & Variables
 
     const location = useLocation();
+    const history = useHistory();
     let titulo = location.state;
 
     useEffect(() => {
@@ -28,6 +31,10 @@ const Form = () => {
         e.preventDefault();
     }
 
+    const routeChange = (path) => {
+		history.push(path);
+	}
+
     // JSX
 
     return (
@@ -37,8 +44,14 @@ const Form = () => {
                     <img src={logo} width="200px" />
 						Benchmarking
   				</a>
+                <Button
+                    variant="contained"
+                    onClick={() => routeChange('/benchmarking')}
+                    startIcon={<ArrowBackIcon />}>
+                    Volver
+				</Button>
             </nav>
-            <div className="bg-observatorio" style={{height: 100 + 'vh'}}>
+            <div className="bg-observatorio" style={{ height: 100 + 'vh' }}>
                 <Container component="main" maxWidth="sm" className="bg-white p-5">
                     <div>
                         <form noValidate onSubmit={validateForm}>
