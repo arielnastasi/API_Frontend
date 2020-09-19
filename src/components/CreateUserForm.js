@@ -20,16 +20,17 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.primary.main,
-    },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
-    submit: {
+    greenButton: {
         margin: theme.spacing(3, 0, 2),
+		color: 'white',
+		backgroundColor: '#279daa',
+		'&:hover': {
+			backgroundColor: "#2aadbb",
+		},
     },
 }));
 
@@ -103,7 +104,7 @@ const CreateUserForm = () => {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
+                <Avatar className={classes.greenButton}>
                     <PersonAddIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
@@ -184,7 +185,7 @@ const CreateUserForm = () => {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.submit}>
+                            className={classes.greenButton}>
                             Crear
                         </Button>
                         <Grid container justify="flex-end">
