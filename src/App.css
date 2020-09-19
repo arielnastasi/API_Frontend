@@ -25,3 +25,9 @@
 	font-weight: 600;
 }
 
+.background {
+	background-image: url('../src/imagenes/pyme_background.jpg');
+	background-position: center;
+	background-size: cover;
+}
+
