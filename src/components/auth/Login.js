@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -9,11 +9,14 @@ import Grid from '@material-ui/core/Grid';
 import logo from '../../imagenes/logo.png';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import Alert from '@material-ui/lab/Alert';
 
 const Login = () => {
 
     // States & Variables
-
+    const [loginFLag,setLoginFlag] = useState(true);
     const useStyles = makeStyles((theme) => ({
         root: {
             height: '100vh',
@@ -45,8 +48,12 @@ const Login = () => {
         },
     }))
 
+    
     const classes = useStyles();
-
+    
+    //se usa la libreria react hook forms https://react-hook-form.com/
+    const { handleSubmit, register, errors } = useForm();
+    let history = useHistory();
     // Functions
 
     const Copyright = () => {
@@ -62,6 +69,19 @@ const Login = () => {
         );
     }
 
+    const onSubmit = (data, e) =>{
+        
+        if (data.email === 'admin@admin.com' && data.password === 'secretos') {
+            history.push("/abm-formularios");
+            
+		} else {
+            setLoginFlag(false);
+            console.log("pass inv");
+		}
+        e.target.reset();
+    } ;
+
+
     // JSX
 
     return (
@@ -71,16 +91,27 @@ const Login = () => {
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <img src={logo} className="App-logo" alt="logo" />
-                    <form className={classes.form} noValidate>
+                    <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Correo electrpnico"
+                            label="Correo electronico"
                             name="email"
+                            inputRef={
+                                register({
+                                    required:"Required",
+                                    pattern:{
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                        message: "Correo electronico inválido"
+                                    }
+                                })
+                            }
                         />
+                        <span className="text-danger text-small d-block mb-2">
+                         {errors.email && errors.email.message}
+                        </span>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -90,7 +121,24 @@ const Login = () => {
                             label="Password"
                             type="password"
                             id="password"
+                            inputRef={register({
+                                required: {
+                                    value: true,
+                                    message: 'Ingrese su Password'
+                                },
+                                maxLength: {
+                                    value: 100,
+                                    message: 'No mas de 100 carácteres!'
+                                },
+                                minLength: {
+                                    value: 8,
+                                    message: 'Mínimo 8 carácteres'
+                                }
+                            })}
                         />
+                         <span className="text-danger text-small d-block mb-2">
+                                            {errors.password?.message}
+                                        </span>
                         <Button
                             type="submit"
                             fullWidth
@@ -112,6 +160,7 @@ const Login = () => {
                         </Box>
                     </form>
                 </div>
+                <Alert severity="warning" hidden={loginFLag}>¡Verifica tus credenciales!</Alert>
             </Grid>
         </Grid>
     );
