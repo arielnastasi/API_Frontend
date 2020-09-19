@@ -16,7 +16,8 @@ const Navbar = () => {
 
     return (
         <Fragment>
-            {location.pathname == '/login' || location.pathname == '/benchmarking' || location.pathname.includes('/form')
+            {location.pathname == '/login' || location.pathname == '/benchmarking' || location.pathname.includes('/form') 
+                || location.pathname == '/'
                 ?
                 null
                 :
@@ -34,9 +35,6 @@ const Navbar = () => {
                             </li>
                             <li className="nav-item mx-2">
                                 <NavLink className="nav-link" to="/abm-formularios" activeClassName="active"> ABM formularios </NavLink>
-                            </li>
-                            <li className="nav-item mx-2">
-                                <NavLink className="nav-link" to="/perfil" activeClassName="active"> Perfil </NavLink>
                             </li>
                         </ul>
                     </div>

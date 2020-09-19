@@ -12,8 +12,11 @@ const MediaCard = ({ titulo, descripcion, _id }) => {
 
 	// Functions
 
-	const routeChange = (path) => {
-		history.push(path);
+	const routeChange = (pathname, titulo) => {
+		history.push({
+            pathname: pathname,
+            state: titulo
+        });
     }
     
     return (
@@ -26,7 +29,7 @@ const MediaCard = ({ titulo, descripcion, _id }) => {
                     variant="contained"
                     color="primary"
                     startIcon={<ListAltIcon />}
-                    onClick={() => routeChange(`/form/${_id}`)}>
+                    onClick={() => routeChange(`form/${_id}`, titulo)}>
                     Completar
                 </Button>
             </div>

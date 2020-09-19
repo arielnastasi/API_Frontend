@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import logo from '../../imagenes/logo.png';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
 
@@ -46,8 +47,27 @@ const Login = () => {
     }))
 
     const classes = useStyles();
+    const history = useHistory();
+
+    const [loginData, handleLoginData] = useState({
+        email: '',
+        password: '',
+    });
+    const { email, password } = loginData;
 
     // Functions
+
+    const getFormData = (e) => {
+        handleLoginData({
+            ...loginData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const validateForm = (e) => {
+        e.preventDefault();
+        console.log(email, password);
+    }
 
     const Copyright = () => {
         return (
@@ -62,6 +82,10 @@ const Login = () => {
         );
     }
 
+	const routeChange = (path) => {
+		history.push(path);
+	}
+
     // JSX
 
     return (
@@ -71,15 +95,16 @@ const Login = () => {
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <img src={logo} className="App-logo" alt="logo" />
-                    <form className={classes.form} noValidate>
+                    <form className={classes.form} noValidate onSubmit={validateForm}>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
                             id="email"
-                            label="Correo electrpnico"
+                            label="Correo electrónico"
                             name="email"
+                            onChange={getFormData}
                         />
                         <TextField
                             variant="outlined"
@@ -90,6 +115,7 @@ const Login = () => {
                             label="Password"
                             type="password"
                             id="password"
+                            onChange={getFormData}
                         />
                         <Button
                             type="submit"
@@ -109,6 +135,15 @@ const Login = () => {
                         </Grid>
                         <Box mt={5}>
                             <Copyright />
+                            <div className="d-flex justify-content-center mt-2">
+                                <Button
+                                    variant="contained"
+                                    onClick={() => routeChange('/benchmarking')}
+                                >
+                                    Ir a benchmarking
+                                </Button>
+                            </div>
+
                         </Box>
                     </form>
                 </div>

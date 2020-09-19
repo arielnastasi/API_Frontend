@@ -66,7 +66,7 @@ const ABMUsers = () => {
 		<div className="container mt-5">
 			
 			<div className="d-flex justify-content-between mb-3">
-				<h3>Gestionar usuarios</h3>
+				<h3>Administrar usuarios</h3>
 				<div>
 					<Button
 						className="mb-2 mx-1"

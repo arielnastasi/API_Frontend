@@ -5,57 +5,72 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import { useHistory } from "react-router-dom";
 
 
-const ABMForms = ({ name }) => {
-	const [forms] = useState([
+const ABMForms = () => {
+
+	// States & Variables
+
+	const history = useHistory();
+
+	const [forms, handleForms] = useState([
 		{
 			_id: "1",
-			formulario: "Nivel de Ingresos",
+			formulario: "Formulario 1",
 			name: "SUPER_ADMIN",
 			creador: "admin@admin",
 		},
 		{
 			_id: "2",
-			formulario: "Sueldos Promedios",
+			formulario: "Formulario 2",
 			name: "German Morone",
 			creador: "gmorone@uade.edu.ar"
 		},
 		{
 			_id: "3",
-			formulario: "Cantidad de empleados",
+			formulario: "Formulario 3",
 			name: "Ariel Nastasi",
 			creador: "anastasi@uade.edu.ar",
 		},
 		{
 			_id: "4",
-			formulario: "Form 4",
+			formulario: "Formulario 4",
 			name: "July Bustamante",
 			creador: "jbustamante@uade.edu.ar",
 		},
 		{
 			_id: "5",
-			formulario: "Form 5",
+			formulario: "Formulario 5",
 			name: "Lautaro Mitelman",
 			creador: "lmitelman@uade.edu.ar",
 		},
 		{
 			_id: "6",
-			formulario: "Form 6",
+			formulario: "Formulario 6",
 			name: "Valentin Saettone",
 			creador: "vsaettone@uade.edu.ar",
 		}
 	]);
 
+	// Functions
+
+	const routeChange = (path) => {
+		history.push(path);
+	}
+
+	// JSX
+
 	return (
 		<div className="container mt-5">
 			<div className="d-flex justify-content-between mb-3">
-				<h3>Gestionar Formularios</h3>
+				<h3>Administrar formularios</h3>
 				<Button
 					className="mb-2"
 					variant="contained"
 					color="primary"
-					startIcon={<AddIcon/>}>
+					startIcon={<AddIcon />}
+					onClick={() => routeChange('/create-forms')}>
 					Nuevo Formulario
 				</Button>
 			</div>
@@ -74,7 +89,7 @@ const ABMForms = ({ name }) => {
 							<td className="align-middle">{form._id}</td>
 							<td className="align-middle">{form.formulario}</td>
 							<td className="align-middle">{form.creador}</td>
-							<td className="align-middle">								
+							<td className="align-middle">
 								<Fragment>
 									<IconButton aria-label="edit" color="primary">
 										<EditIcon />
