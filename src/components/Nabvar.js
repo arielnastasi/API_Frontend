@@ -31,10 +31,10 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item mx-2">
-                                <NavLink className="nav-link" to="/abm-usuarios" activeClassName="active"> ABM usuarios </NavLink>
+                                <NavLink className="nav-link" to="/abm-usuarios" activeClassName="active"> Usuarios </NavLink>
                             </li>
                             <li className="nav-item mx-2">
-                                <NavLink className="nav-link" to="/abm-formularios" activeClassName="active"> ABM formularios </NavLink>
+                                <NavLink className="nav-link" to="/abm-formularios" activeClassName="active"> Formularios </NavLink>
                             </li>
                         </ul>
                     </div>

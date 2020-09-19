@@ -8,6 +8,7 @@ import Login from './components/auth/Login';
 import Benchmarking from './components/Benckmarking';
 import Form from './components/Form';
 import Navbar from './components/Nabvar';
+import CreateForm from './components/CreateForm';
 
 
 function App() {
@@ -35,12 +36,12 @@ function App() {
 						)
 					}}
 				/>
-				// <Route path="/" exact component={Login} />
 				<Route path="/benchmarking" component={Benchmarking} />
 				<Route path="/login" component={Login} />
 				<Route path="/abm-usuarios" component={ABMUsers} />
 				<Route path="/abm-formularios" component={ABMForms} />
 				<Route path="/create-users" component={CreateUserForm} />
+				<Route path="/create-forms" component={CreateForm} />
 				<Route path="/form/:id" component={Form} />
 			</Switch>
 		</Router>

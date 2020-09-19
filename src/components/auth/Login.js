@@ -41,10 +41,22 @@ const Login = () => {
             width: '100%', // Fix IE 11 issue.
             marginTop: theme.spacing(1),
         },
-        submit: {
+        greenButton: {
             margin: theme.spacing(3, 0, 2),
+            color: 'white',
+            backgroundColor: '#279daa',
+            '&:hover': {
+                backgroundColor: "#2aadbb",
+            },
         },
-    }))
+        orangeButton: {
+            color: 'white',
+            backgroundColor: '#e3703b',
+            '&:hover': {
+                backgroundColor: "#e76123",
+            },
+        }
+    }));
 
     const classes = useStyles();
     const history = useHistory();
@@ -67,6 +79,9 @@ const Login = () => {
     const validateForm = (e) => {
         e.preventDefault();
         console.log(email, password);
+        if (email === 'admin@admin.com' && password === 'secret') {
+            routeChange('/abm-formularios');
+        }
     }
 
     const Copyright = () => {
@@ -122,13 +137,13 @@ const Login = () => {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.submit}
+                            className={classes.greenButton}
                         >
                             Iniciar sesión
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link variant="body2">
                                     ¿Olvidaste tu contraseña?
                                 </Link>
                             </Grid>
@@ -138,12 +153,11 @@ const Login = () => {
                             <div className="d-flex justify-content-center mt-2">
                                 <Button
                                     variant="contained"
-                                    onClick={() => routeChange('/benchmarking')}
-                                >
+                                    className={classes.orangeButton}
+                                    onClick={() => routeChange('/benchmarking')}>
                                     Ir a benchmarking
                                 </Button>
                             </div>
-
                         </Box>
                     </form>
                 </div>

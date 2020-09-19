@@ -3,11 +3,29 @@ import MediaCard from './MediaCard';
 import { useHistory } from "react-router-dom";
 import logo from '../imagenes/logo.png'
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 const Benchmarking = () => {
 
-
 	// States & Variables
+
+	const useStyles = makeStyles((theme) => ({
+        greenButton: {
+            margin: theme.spacing(3, 0, 2),
+            color: 'white',
+            backgroundColor: '#279daa',
+            '&:hover': {
+                backgroundColor: "#2aadbb",
+            },
+        },
+        orangeButton: {
+            color: 'white',
+            backgroundColor: '#e3703b',
+            '&:hover': {
+                backgroundColor: "#e76123",
+            },
+        }
+    }));
 
 	const [availableForms, handleAvailableForms] = useState([
 		{
@@ -57,7 +75,8 @@ const Benchmarking = () => {
 		}
 	]);
 
-	const history = useHistory();
+	const classes = useStyles();
+    const history = useHistory();
 
 	// Functions
 
@@ -76,7 +95,7 @@ const Benchmarking = () => {
 				<Button 
 					variant="contained"
 					onClick={() => routeChange('/login')}
-				>
+					className={classes.orangeButton}>
 					Login Empleados
 				</Button>
 			</nav>

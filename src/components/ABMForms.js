@@ -1,18 +1,27 @@
 import React, { useState, Fragment } from 'react';
 import './ABMUsers.css';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { useHistory } from "react-router-dom";
-
 
 const ABMForms = () => {
 
 	// States & Variables
 
-	const history = useHistory();
+	const useStyles = makeStyles((theme) => ({
+		greenButton: {
+			color: 'white',
+			backgroundColor: '#279daa',
+			'&:hover': {
+				backgroundColor: "#2aadbb",
+			},
+		},
+	}));
 
 	const [forms, handleForms] = useState([
 		{
@@ -53,6 +62,9 @@ const ABMForms = () => {
 		}
 	]);
 
+	const history = useHistory();
+	const classes = useStyles();
+
 	// Functions
 
 	const routeChange = (path) => {
@@ -65,14 +77,16 @@ const ABMForms = () => {
 		<div className="container mt-5">
 			<div className="d-flex justify-content-between mb-3">
 				<h3>Administrar formularios</h3>
-				<Button
-					className="mb-2"
-					variant="contained"
-					color="primary"
-					startIcon={<AddIcon />}
-					onClick={() => routeChange('/create-forms')}>
-					Nuevo Formulario
-				</Button>
+				<div>
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={() => routeChange('/create-forms')}
+						className={classes.greenButton}
+						startIcon={<PersonAddIcon />}>
+						Nuevo formulario
+					</Button>
+				</div>
 			</div>
 			<table className="table table-responsive-md">
 				<thead>
@@ -91,9 +105,6 @@ const ABMForms = () => {
 							<td className="align-middle">{form.creador}</td>
 							<td className="align-middle">
 								<Fragment>
-									<IconButton aria-label="edit" color="primary">
-										<EditIcon />
-									</IconButton>
 									<IconButton aria-label="delete" color="secondary">
 										<DeleteIcon />
 									</IconButton>
