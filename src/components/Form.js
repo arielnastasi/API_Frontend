@@ -10,20 +10,44 @@ import logo from '../imagenes/logo.png'
 import { useLocation } from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useHistory } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
 
 const Form = () => {
 
     // States & Variables
 
+    const useStyles = makeStyles((theme) => ({
+        greenButton: {
+            color: 'white',
+            backgroundColor: '#279daa',
+            '&:hover': {
+                backgroundColor: "#2aadbb",
+            },
+        },
+        orangeButton: {
+            color: 'white',
+            backgroundColor: '#e3703b',
+            '&:hover': {
+                backgroundColor: "#e76123",
+            },
+        },
+        radio: {
+            '&$checked': {
+                color: '#e3703b'
+            }
+        },
+        checked: {}
+    }));
+
     const location = useLocation();
     const history = useHistory();
     let titulo = location.state;
+    const classes = useStyles();
 
     useEffect(() => {
         console.log(location.pathname);
         titulo = location.state;
     }, [location]);
-
 
     // Functions
 
@@ -32,8 +56,8 @@ const Form = () => {
     }
 
     const routeChange = (path) => {
-		history.push(path);
-	}
+        history.push(path);
+    }
 
     // JSX
 
@@ -61,6 +85,26 @@ const Form = () => {
                                     <hr />
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
+                                    <h5>Mail</h5>
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        rows={4}
+                                        fullWidth
+                                        defaultValue=""
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} className="my-2">
+                                    <h5>Razón social</h5>
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        rows={4}
+                                        fullWidth
+                                        defaultValue=""
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} className="my-2">
                                     <h5>Pregunta 1</h5>
                                     <TextField
                                         id="outlined-multiline-static"
@@ -73,11 +117,10 @@ const Form = () => {
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
                                     <h5>Pregunta 2</h5>
-                                    {/* <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}> */}
                                     <RadioGroup aria-label="gender" name="gender1">
-                                        <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                        <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                        <FormControlLabel value="other" control={<Radio />} label="Other" />
+                                        <FormControlLabel value="female" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Female" />
+                                        <FormControlLabel value="male" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Male" />
+                                        <FormControlLabel value="other" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Other" />
                                     </RadioGroup>
                                 </Grid>
                             </Grid>
@@ -87,9 +130,9 @@ const Form = () => {
                                 variant="contained"
                                 color="primary"
                                 className="mt-3"
-                            >
+                                className={classes.greenButton}>
                                 Enviar
-                    </Button>
+                            </Button>
                         </form>
                     </div>
                 </Container>

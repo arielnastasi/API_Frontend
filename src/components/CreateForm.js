@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,7 +21,7 @@ import ListIcon from '@material-ui/icons/List';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
-		marginTop: theme.spacing(8),
+		marginTop: theme.spacing(3),
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -58,11 +58,13 @@ const CreateUserForm = () => {
 		questionType: '',
 		question: '',
 		options: '',
+		referenceSmallBusiness: '',
+		referenceMediumBusiness: ''
 	});
 
 	const [questionList, handleQuestionList] = useState([]);
 
-	let { question, options } = questionData;
+	let { question, options, referenceMediumBusiness, referenceSmallBusiness } = questionData;
 	const classes = useStyles();
 	const history = useHistory();
 
@@ -90,7 +92,9 @@ const CreateUserForm = () => {
 		let questionObject = {
 			questionType: questionTypeForm,
 			question: question,
-			options: options
+			options: options,
+			referenceSmallBusiness: referenceSmallBusiness,
+			referenceMediumBusiness: referenceMediumBusiness
 		}
 		console.log(questionObject);
 		handleQuestionList([
@@ -99,6 +103,8 @@ const CreateUserForm = () => {
 		handleQuestionData({
 			question: '',
 			options: '',
+			referenceSmallBusiness: '',
+			referenceMediumBusiness: ''
 		})
 	}
 
@@ -153,19 +159,47 @@ const CreateUserForm = () => {
 								/>
 							</Grid>
 							{questionTypeForm == 'choice' ?
-								<Grid item xs={12}>
-									<p className="mt-3">Ingrese las opciones separadas por punto y coma (;)</p>
-									<TextField
-										variant="outlined"
-										required
-										fullWidth
-										id="options"
-										label="Ejemplo: Banana;Pera;Manzana;Naranja"
-										name="options"
-										onChange={getFormData}
-										value={options}
-									/>
-								</Grid>
+								<Fragment>
+									<Grid item xs={12}>
+										<p className="my-3">Ingrese las opciones separadas por punto y coma (;)</p>
+										<TextField
+											variant="outlined"
+											required
+											fullWidth
+											id="options"
+											label="Ejemplo: 300;500;800"
+											name="options"
+											onChange={getFormData}
+											value={options}
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<p className="my-3">Valor de referencia promedio para empresas pequeñas</p>
+										<TextField
+											variant="outlined"
+											required
+											fullWidth
+											id="options"
+											label="Ejemplo: 500"
+											name="referenceSmallBusiness"
+											onChange={getFormData}
+											value={referenceSmallBusiness}
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<p className="my-3">Valor de referencia promedio para empresas medianas</p>
+										<TextField
+											variant="outlined"
+											required
+											fullWidth
+											id="options"
+											label="Ejemplo: 800"
+											name="referenceMediumBusiness"
+											onChange={getFormData}
+											value={referenceMediumBusiness}
+										/>
+									</Grid>
+								</Fragment>
 								:
 								null
 							}
@@ -199,7 +233,7 @@ const CreateUserForm = () => {
 				</div>
 			</Container>
 			{questionList.length > 0 ?
-				<Container component="main" maxWidth="xs">
+				<Container component="main" maxWidth="xs" className="mt-5">
 					<CssBaseline />
 					<div className={classes.paper}>
 						<Avatar className={classes.avatar}>
@@ -207,13 +241,24 @@ const CreateUserForm = () => {
 						</Avatar>
 						<Typography component="h1" variant="h5">
 							Preguntas
-							</Typography>
+						</Typography>
 						{questionList.map((question, index) => (
 							<div className="card my-1" key={index}>
 								<div className="card-body">
-									<h5 className="card-title">{question.question}</h5>
-									<p className="card-text">{question.questionType}</p>
-									<p className="card-text">{question.options}</p>
+									<h5 className="card-title">Pregunta: "{question.question}"</h5>
+									<p className="card-text">Tipo: {question.questionType}</p>
+									{question.questionType == "choice" ?
+										<Fragment>
+											<p className="card-text">Opciones:</p>
+											{question.options.map((option) => (
+												<p className="card-text">- {option}</p>
+											))}
+											<p className="card-text">Referencia promedio para empresas pequeñas: {question.referenceSmallBusiness}</p>
+											<p className="card-text">Referencia promedio para empresas medianas: {question.referenceMediumBusiness}</p>
+										</Fragment>
+										:
+										null
+									}
 									<Button
 										variant="contained"
 										color="secondary"
@@ -221,7 +266,7 @@ const CreateUserForm = () => {
 										startIcon={<DeleteIcon />}
 										onClick={() => deleteQuestion(index)}>
 										Eliminar
-      									</Button>
+      								</Button>
 								</div>
 							</div>
 						))}

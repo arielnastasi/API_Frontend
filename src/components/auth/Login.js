@@ -146,8 +146,7 @@ const Login = () => {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.greenButton}
-                        >
+                            className={classes.greenButton}>
                             Iniciar sesión
                         </Button>
                         <Grid container>
