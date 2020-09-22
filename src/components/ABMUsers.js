@@ -1,16 +1,26 @@
 import React, { useState, Fragment } from 'react';
 import './ABMUsers.css';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
 import { useHistory } from "react-router-dom";
 
 const ABMUsers = () => {
 
 	// States & Variables
+
+	const useStyles = makeStyles((theme) => ({
+		greenButton: {
+			color: 'white',
+			backgroundColor: '#279daa',
+			'&:hover': {
+				backgroundColor: "#2aadbb",
+			},
+		},
+	}));
 
 	const [users, updateUsers] = useState([
 		{
@@ -52,6 +62,7 @@ const ABMUsers = () => {
 	]);
 
 	const history = useHistory();
+	const classes = useStyles();
 
 	// Functions
 
@@ -61,24 +72,16 @@ const ABMUsers = () => {
 
 	// JSX
 
-	return (
-		
+	return (	
 		<div className="container mt-5">
-			
 			<div className="d-flex justify-content-between mb-3">
-				<h3>Gestionar usuarios</h3>
+				<h3>Administrar usuarios</h3>
 				<div>
 					<Button
-						className="mb-2 mx-1"
-						variant="contained"
-						startIcon={<AutorenewIcon />}>
-						Actualizar
-					</Button>
-					<Button
-						className="mb-2 mx-1"
 						variant="contained"
 						color="primary"
 						onClick={() => routeChange('/create-users')}
+						className={classes.greenButton}
 						startIcon={<PersonAddIcon />}>
 						Nuevo usuario
 					</Button>
@@ -102,9 +105,9 @@ const ABMUsers = () => {
 							<td className="align-middle">
 								{user.role !== 'SUPER_ADMIN' &&
 									<Fragment>
-										<IconButton aria-label="edit" color="primary">
+										{/* <IconButton aria-label="edit" color="primary">
 											<EditIcon />
-										</IconButton>
+										</IconButton> */}
 										<IconButton aria-label="delete" color="secondary">
 											<DeleteIcon />
 										</IconButton>
@@ -112,9 +115,9 @@ const ABMUsers = () => {
 								}
 								{user.role === 'SUPER_ADMIN' &&
 									<Fragment>
-										<IconButton aria-label="edit" disabled color="primary">
+										{/* <IconButton aria-label="edit" disabled color="primary">
 											<EditIcon />
-										</IconButton>
+										</IconButton> */}
 										<IconButton aria-label="delete" disabled color="secondary">
 											<DeleteIcon />
 										</IconButton>

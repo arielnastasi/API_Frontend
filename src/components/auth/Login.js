@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import logo from '../../imagenes/logo.png';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import Alert from '@material-ui/lab/Alert';
 
@@ -43,18 +42,53 @@ const Login = () => {
             width: '100%', // Fix IE 11 issue.
             marginTop: theme.spacing(1),
         },
-        submit: {
+        greenButton: {
             margin: theme.spacing(3, 0, 2),
+            color: 'white',
+            backgroundColor: '#279daa',
+            '&:hover': {
+                backgroundColor: "#2aadbb",
+            },
         },
-    }))
+        orangeButton: {
+            color: 'white',
+            backgroundColor: '#e3703b',
+            '&:hover': {
+                backgroundColor: "#e76123",
+            },
+        }
+    }));
 
     
     const classes = useStyles();
-    
-    //se usa la libreria react hook forms https://react-hook-form.com/
-    const { handleSubmit, register, errors } = useForm();
-    let history = useHistory();
+    const history = useHistory();
+
+    const [loginFLag, setLoginFlag] = useState(true);
+
+    const [loginData, handleLoginData] = useState({
+        email: '',
+        password: '',
+    });
+    const { email, password } = loginData;
+
     // Functions
+
+    const getFormData = (e) => {
+        handleLoginData({
+            ...loginData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const validateForm = (e) => {
+        e.preventDefault();
+        console.log(email, password);
+        if (email === 'admin@admin.com' && password === 'secretos') {
+            routeChange('/abm-formularios');
+        } else {
+            setLoginFlag(false);
+        }
+    }
 
     const Copyright = () => {
         return (
@@ -69,18 +103,9 @@ const Login = () => {
         );
     }
 
-    const onSubmit = (data, e) =>{
-        
-        if (data.email === 'admin@admin.com' && data.password === 'secretos') {
-            history.push("/abm-formularios");
-            
-		} else {
-            setLoginFlag(false);
-            console.log("pass inv");
-		}
-        e.target.reset();
-    } ;
-
+    const routeChange = (path) => {
+        history.push(path);
+    }
 
     // JSX
 
@@ -91,27 +116,17 @@ const Login = () => {
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <img src={logo} className="App-logo" alt="logo" />
-                    <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <form className={classes.form} noValidate onSubmit={validateForm}>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
-                            label="Correo electronico"
+                            id="email"
+                            label="Correo electrónico"
                             name="email"
-                            inputRef={
-                                register({
-                                    required:"Required",
-                                    pattern:{
-                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                        message: "Correo electronico inválido"
-                                    }
-                                })
-                            }
+                            onChange={getFormData}
                         />
-                        <span className="text-danger text-small d-block mb-2">
-                         {errors.email && errors.email.message}
-                        </span>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -121,42 +136,34 @@ const Login = () => {
                             label="Password"
                             type="password"
                             id="password"
-                            inputRef={register({
-                                required: {
-                                    value: true,
-                                    message: 'Ingrese su Password'
-                                },
-                                maxLength: {
-                                    value: 100,
-                                    message: 'No mas de 100 carácteres!'
-                                },
-                                minLength: {
-                                    value: 8,
-                                    message: 'Mínimo 8 carácteres'
-                                }
-                            })}
+                            onChange={getFormData}
                         />
-                         <span className="text-danger text-small d-block mb-2">
-                                            {errors.password?.message}
-                                        </span>
+                        <Alert severity="warning" hidden={loginFLag}>¡Verifica tus credenciales!</Alert>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.submit}
-                        >
+                            className={classes.greenButton}>
                             Iniciar sesión
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link variant="body2">
                                     ¿Olvidaste tu contraseña?
                                 </Link>
                             </Grid>
                         </Grid>
                         <Box mt={5}>
                             <Copyright />
+                            <div className="d-flex justify-content-center mt-2">
+                                <Button
+                                    variant="contained"
+                                    className={classes.orangeButton}
+                                    onClick={() => routeChange('/benchmarking')}>
+                                    Ir a benchmarking
+                                </Button>
+                            </div>
                         </Box>
                     </form>
                 </div>
