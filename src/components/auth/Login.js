@@ -63,8 +63,7 @@ const Login = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const [loginFLag, setLoginFlag] = useState(true);
-
+   
     const [loginData, handleLoginData] = useState({
         email: '',
         password: '',
