@@ -52,7 +52,8 @@ const Form = () => {
     // Functions
 
     const validateForm = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
+        
     }
 
     const routeChange = (path) => {

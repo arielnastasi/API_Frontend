@@ -250,8 +250,8 @@ const CreateUserForm = () => {
 									{question.questionType == "choice" ?
 										<Fragment>
 											<p className="card-text">Opciones:</p>
-											{question.options.map((option) => (
-												<p className="card-text">- {option}</p>
+											{question.options.map((option, index) => (
+												<p className="card-text" key={index}> - {option}</p>
 											))}
 											<p className="card-text">Referencia promedio para empresas pequeñas: {question.referenceSmallBusiness}</p>
 											<p className="card-text">Referencia promedio para empresas medianas: {question.referenceMediumBusiness}</p>
