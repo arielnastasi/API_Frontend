@@ -69,7 +69,7 @@ const CreateUserForm = () => {
             return
         } else {
             handleErrorInForm(false);
-            if (emailRegex.test(email) == false) {
+            if (emailRegex.test(email) === false) {
                 handleInvalidEmail(true);
                 return
             } else {

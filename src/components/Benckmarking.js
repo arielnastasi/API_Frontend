@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import MediaCard from './MediaCard';
 import { useHistory } from "react-router-dom";
 import logo from '../imagenes/logo.png'
@@ -27,7 +27,7 @@ const Benchmarking = () => {
         }
     }));
 
-	const [availableForms, handleAvailableForms] = useState([
+	const [availableForms] = useState([
 		{
 			_id: "5f4ebe0c04ce66431062ba3f",
 			formName: "Formluario 1",
@@ -88,8 +88,8 @@ const Benchmarking = () => {
 	return (
 		<div className="bg-observatorio">
 			<nav className="navbar navbar-light bg-white">
-				<a className="navbar-brand">
-				<img src={logo} width="200px" />
+				<a className="navbar-brand" href="/">
+				<img src={logo} width="200px" alt='Observatorio' />
 					Benchmarking
   				</a>
 				<Button 

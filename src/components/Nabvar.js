@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Link, NavLink } from "react-router-dom";
 import logo from '../imagenes/logo.png'
 import { useLocation } from 'react-router-dom';
@@ -16,14 +16,14 @@ const Navbar = () => {
 
     return (
         <Fragment>
-            {location.pathname == '/login' || location.pathname == '/benchmarking' || location.pathname.includes('/form') 
-                || location.pathname == '/'
+            {location.pathname === '/login' || location.pathname === '/benchmarking' || location.pathname.includes('/form') 
+                || location.pathname === '/'
                 ?
                 null
                 :
                 <nav className="navbar navbar-expand-lg navbar-light bg-white border border-dark">
                     <Link to="/" className="navbar-brand">
-                        <img src={logo} width="200px" />
+                        <img src={logo} width="200px"  alt='Observatorio'/>
                     </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>

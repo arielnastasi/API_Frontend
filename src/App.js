@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import ABMForms from './components/ABMForms';
@@ -14,10 +14,6 @@ import CreateForm from './components/CreateForm';
 function App() {
 
 	// States & Variables
-
-	const [isAuthenticated, handleAuthentication] = useState([
-		
-	]);
 
 	// Functions
 

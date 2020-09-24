@@ -81,7 +81,6 @@ const Login = () => {
 
     const validateForm = (e) => {
         e.preventDefault();
-        console.log(email, password);
         if (email === 'admin@admin.com' && password === 'secretos') {
             routeChange('/abm-formularios');
         } else {

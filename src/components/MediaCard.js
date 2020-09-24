@@ -40,7 +40,7 @@ const MediaCard = ({ titulo, descripcion, _id }) => {
     
     return (
         <div className="card">
-            <img className="card-img-top" src={card_img} alt="Card image cap" />
+            <img className="card-img-top" src={card_img}  alt='Observatorio'/>
             <div className="card-body d-flex justify-content-center flex-column">
                 <h5 className="card-title">{titulo}</h5>
                 <p className="card-text">{descripcion}</p>

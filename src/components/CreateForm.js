@@ -158,7 +158,7 @@ const CreateUserForm = () => {
 									value={question}
 								/>
 							</Grid>
-							{questionTypeForm == 'choice' ?
+							{questionTypeForm === 'choice' ?
 								<Fragment>
 									<Grid item xs={12}>
 										<p className="my-3">Ingrese las opciones separadas por punto y coma (;)</p>
@@ -215,7 +215,6 @@ const CreateUserForm = () => {
                         	</Button>
 						<Grid container justify="center">
 							<Button
-								className="mx-2 w-50"
 								variant="contained"
 								startIcon={<CheckCircleIcon />}
 								className={classes.orangeButton}>
@@ -247,7 +246,7 @@ const CreateUserForm = () => {
 								<div className="card-body">
 									<h5 className="card-title">Pregunta: "{question.question}"</h5>
 									<p className="card-text">Tipo: {question.questionType}</p>
-									{question.questionType == "choice" ?
+									{question.questionType === "choice" ?
 										<Fragment>
 											<p className="card-text">Opciones:</p>
 											{question.options.map((option, index) => (

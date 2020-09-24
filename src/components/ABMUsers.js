@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom";
 
 const ABMUsers = () => {
@@ -22,7 +21,7 @@ const ABMUsers = () => {
 		},
 	}));
 
-	const [users, updateUsers] = useState([
+	const [users] = useState([
 		{
 			_id: "5f4ebe0c04ce66431062ba3f",
 			role: "SUPER_ADMIN",
