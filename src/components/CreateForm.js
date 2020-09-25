@@ -92,11 +92,13 @@ const CreateUserForm = () => {
 	}
 
 	const addOptionToOptionsList = (e) => {
-		console.log(`Se agregó "${option}" a la lista de opciones`)
-		handleOptionsList([
-			...optionsList, option
-		]);
-		handleOptionValue('');
+		console.log(`Se agregó "${option}" a la lista de opciones`);
+		if (option !== '') {
+			handleOptionsList([
+				...optionsList, option
+			]);
+			handleOptionValue('');
+		}
 	}
 
 	const validateQuestionForm = (e) => {
