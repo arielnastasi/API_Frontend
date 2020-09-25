@@ -17,6 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListIcon from '@material-ui/icons/List';
+import Chip from '@material-ui/core/Chip';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,8 +64,11 @@ const CreateUserForm = () => {
 	});
 
 	const [questionList, handleQuestionList] = useState([]);
+	let [option, handleOptionValue] = useState('');
+	const [optionsList, handleOptionsList] = useState([]);
 
 	let { question, options, referenceMediumBusiness, referenceSmallBusiness } = questionData;
+	
 	const classes = useStyles();
 	const history = useHistory();
 
@@ -82,17 +86,28 @@ const CreateUserForm = () => {
 		})
 	}
 
+	const getOptionData = (e) => {
+		handleOptionValue(e.target.value);
+	}
+
+	const addOptionToOptionsList = (e) => {
+		console.log(`Se agregó "${option}" a la lista de opciones`)
+		handleOptionsList([
+			...optionsList, option
+		]);
+		handleOptionValue('');
+	}
+
 	const validateQuestionForm = (e) => {
 		e.preventDefault();
 		addQuestion();
 	}
 
 	const addQuestion = (e) => {
-		options = options.split(';')
 		let questionObject = {
 			questionType: questionTypeForm,
 			question: question,
-			options: options,
+			options: optionsList,
 			referenceSmallBusiness: referenceSmallBusiness,
 			referenceMediumBusiness: referenceMediumBusiness
 		}
@@ -112,6 +127,12 @@ const CreateUserForm = () => {
 		let newQuestionList = [...questionList];
 		newQuestionList.splice(index, 1);
 		handleQuestionList(newQuestionList);
+	}
+
+	const deleteOption = (index) => {
+		let newOptionsList = [...optionsList];
+		newOptionsList.splice(index, 1);
+		handleOptionsList(newOptionsList);
 	}
 
 	const routeChange = (path) => {
@@ -161,39 +182,54 @@ const CreateUserForm = () => {
 							{questionTypeForm === 'choice' ?
 								<Fragment>
 									<Grid item xs={12}>
-										<p className="my-3">Ingrese las opciones separadas por punto y coma (;)</p>
+										<p className="mt-3 mb-1">Ingrese una opción:</p>
 										<TextField
 											variant="outlined"
 											required
 											fullWidth
-											id="options"
-											label="Ejemplo: 300;500;800"
-											name="options"
-											onChange={getFormData}
-											value={options}
+											id="option"
+											placeholder="Ejemplo: 300"
+											name="option"
+											value={option}
+											onChange={getOptionData}
 										/>
 									</Grid>
+									<div className="d-flex justify-content-center w-100 mt-1">
+										<Button
+											variant="contained"
+											color="primary"
+											className={classes.orangeButton}
+											startIcon={<AddCircleIcon />}
+											onClick={() => addOptionToOptionsList()}>			
+											Añadir opción
+										</Button>
+									</div>
+									<div className="my-3">
+										{optionsList.map((option, index) => (
+											<Chip className="m-2" key={index} label={option} onDelete={() => deleteOption(index)} color="primary" />
+										))}
+									</div>
 									<Grid item xs={12}>
-										<p className="my-3">Valor de referencia promedio para empresas pequeñas</p>
+										<p className="mt-5 mb-1">Valor de referencia promedio para empresas pequeñas</p>
 										<TextField
 											variant="outlined"
 											required
 											fullWidth
 											id="options"
-											label="Ejemplo: 500"
+											placeholder="Ejemplo: 500"
 											name="referenceSmallBusiness"
 											onChange={getFormData}
 											value={referenceSmallBusiness}
 										/>
 									</Grid>
 									<Grid item xs={12}>
-										<p className="my-3">Valor de referencia promedio para empresas medianas</p>
+										<p className="mt-3 mb-1">Valor de referencia promedio para empresas medianas:</p>
 										<TextField
 											variant="outlined"
 											required
 											fullWidth
 											id="options"
-											label="Ejemplo: 800"
+											placeholder="Ejemplo: 800"
 											name="referenceMediumBusiness"
 											onChange={getFormData}
 											value={referenceMediumBusiness}
@@ -212,7 +248,7 @@ const CreateUserForm = () => {
 							className={classes.greenButton}
 							startIcon={<AddCircleIcon />}>
 							Añadir pregunta
-                        	</Button>
+                        </Button>
 						<Grid container justify="center">
 							<Button
 								variant="contained"
@@ -226,7 +262,7 @@ const CreateUserForm = () => {
 								startIcon={<BackspaceIcon />}
 								onClick={() => routeChange('/abm-formularios')}>
 								Cancelar
-                            	</Button>
+                            </Button>
 						</Grid>
 					</form>
 				</div>
