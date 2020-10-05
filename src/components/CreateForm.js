@@ -68,7 +68,7 @@ const CreateUserForm = () => {
 	let [option, handleOptionValue] = useState('');
 	const [optionsList, handleOptionsList] = useState([]);
 
-	let { question, options, referenceMediumBusiness, referenceSmallBusiness } = questionData;
+	let { question,  referenceMediumBusiness, referenceSmallBusiness } = questionData;
 	
 	const classes = useStyles();
 	const history = useHistory();

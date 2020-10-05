@@ -7,7 +7,7 @@ import CreateUserForm from './components/CreateUserForm';
 import Login from './components/auth/Login';
 import Benchmarking from './components/Benckmarking';
 import Form from './components/Form';
-import Navbar from './components/Nabvar';
+import Navbar from './components/navbar/Navbar';
 import CreateForm from './components/CreateForm';
 
 
