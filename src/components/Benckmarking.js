@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import logo from '../imagenes/logo.png'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 const Benchmarking = () => {
 
@@ -24,7 +25,19 @@ const Benchmarking = () => {
             '&:hover': {
                 backgroundColor: "#e76123",
             },
-        }
+		},
+		typo: {
+			fontFamily:  'Lato',
+    		border: 0,
+    		borderRadius: 3,
+    		boxShadow: '0 3px 5px 2px #279daa',
+    		color: '#279daa',
+    		height: 48,
+			padding: '0 30px',
+			flexGrow: 1,
+			textAlign: "center",
+			margin: theme.spacing(1, 60, 2),
+		}
     }));
 
 	const [availableForms] = useState([
@@ -87,18 +100,20 @@ const Benchmarking = () => {
 	// JSX
 	return (
 		<div className="bg-observatorio">
-			<nav className="navbar navbar-light bg-white">
-				<a className="navbar-brand" href="/">
-				<img src={logo} width="200px" alt='Observatorio' />
-					Benchmarking
-  				</a>
-				<Button 
+			<nav className="navbar">
+			<Button 
 					variant="contained"
 					onClick={() => routeChange('/login')}
 					className={classes.orangeButton}>
 					Login Empleados
 				</Button>
+				<a className="navbar-brand" href="/">
+				<img src={logo} width="200px" alt='Observatorio' />
+  				</a>
 			</nav>
+
+			<Typography className={classes.typo} variant="h4">Benchmarking</Typography>
+
 			<div className="card-columns container py-5">
 				{availableForms.map((form, i) =>
 					<MediaCard
