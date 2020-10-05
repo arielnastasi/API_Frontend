@@ -6,7 +6,7 @@ import { SidebarData } from "./SidebarData";
 import './Navbar.css';
 import { IconContext } from 'react-icons';
 import { useLocation } from 'react-router-dom';
-import { logo } from '../../imagenes/logo.png'
+import logo from '../../imagenes/logo.png'
 
 function Navbar() {
     const [sidebar, setSidebar] = useState(false);
@@ -29,7 +29,7 @@ function Navbar() {
                             <FaIcons.FaBars onClick={showSidebar} />
                         </Link>
                         <Link to="/" className='navbar-brand'>
-                        <img src={logo} width="200px"  alt='Observatorio'/>
+                        <img src={logo}  alt='Observatorio'/>
                         </Link>
                     </div>
                     <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

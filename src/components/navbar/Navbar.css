@@ -2,7 +2,7 @@
     background-color: #279daa;
     height: 80px;
     display: flex;
-    align-items: center;
+    align-items: right;
     justify-content: start;
 }
 
@@ -72,13 +72,23 @@ span {
     align-items: right;
 }
 
-.navbar-brand {
-    padding: 0px; 
-  }
-  .navbar-brand>img {
-    max-height: 100%;
-    height: 100%;
-    -o-object-fit: contain;
-    object-fit: contain;
-    
+.navbar-brand { 
+    margin-left: 700px;
+    border-radius: 10%;
+    position: flex;
+    animation-name: funnyColor;
+     animation-duration: 4s;
+     align-items: center;
+     background-color:orange;
+ }
+
+ .navbar-brand img {
+     width: 190px;
+     border-radius: 45%;
+     position: relative; 
+ }
+
+ @keyframes funnyColor {
+    from {background-color:orange;}
+    to {background-color: #2dc5d6; }
   }

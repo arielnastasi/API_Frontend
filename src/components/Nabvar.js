@@ -23,7 +23,7 @@ const Navbar = () => {
                 :
                 <nav className="navbar navbar-expand-lg navbar-light bg-white border border-dark">
                     <Link to="/" className="navbar-brand">
-                        <img src={logo} width="200px"  alt='Observatorio'/>
+                        <img src={logo} alt='Observatorio'/>
                     </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
