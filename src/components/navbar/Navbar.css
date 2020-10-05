@@ -76,16 +76,16 @@ span {
 
 .navbar-brand { 
     margin-left: 1050px;
-    border-radius: 10%;
     animation-name: funnyColor;
-     animation-duration: 3s;
-     align-items: center;
-     background-color:#2dc5d6;
+    animation-duration: 4s;
+    border-radius: 40%;
+    background-color:#2dc5d6;
  }
 
  .navbar-brand img {
-     width: 190px;
-     border-radius: 45%;
+     width: 130px;
+     border-radius: 40%;
+     align-items: initial;
  }
 
  @keyframes funnyColor {
