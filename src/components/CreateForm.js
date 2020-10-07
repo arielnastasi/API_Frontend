@@ -18,6 +18,7 @@ import FormControl from '@material-ui/core/FormControl';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListIcon from '@material-ui/icons/List';
 import Chip from '@material-ui/core/Chip';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +55,7 @@ const CreateUserForm = () => {
 
 	// States & Variables
 
+	const [formName, handleFormName] = useState('');
 	const [questionTypeForm, handleQuestionTypeForm] = useState('choice');
 
 	const [questionData, handleQuestionData] = useState({
@@ -68,19 +70,23 @@ const CreateUserForm = () => {
 	let [option, handleOptionValue] = useState('');
 	const [optionsList, handleOptionsList] = useState([]);
 
-	let { question,  referenceMediumBusiness, referenceSmallBusiness } = questionData;
-	
+	let { question, referenceMediumBusiness, referenceSmallBusiness } = questionData;
+
 	const classes = useStyles();
 	const history = useHistory();
 
 	// Functions
+
+	const getFormaName = (e) => {
+		handleFormName(e.target.value);
+	}
 
 	const getQuestionType = (e) => {
 		console.log(e.target.value);
 		handleQuestionTypeForm(e.target.value);
 	}
 
-	const getFormData = (e) => {
+	const getQuestionData = (e) => {
 		handleQuestionData({
 			...questionData,
 			[e.target.name]: e.target.value
@@ -123,7 +129,8 @@ const CreateUserForm = () => {
 			options: '',
 			referenceSmallBusiness: '',
 			referenceMediumBusiness: ''
-		})
+		});
+		handleOptionsList([]);
 	}
 
 	const deleteQuestion = (index) => {
@@ -142,6 +149,14 @@ const CreateUserForm = () => {
 		history.push(path);
 	}
 
+	const generateForm = () => {
+		let form = {
+			formName: formName,
+			questionList: questionList
+		}
+		console.log(form);
+	}
+
 	// JSX
 
 	return (
@@ -149,6 +164,23 @@ const CreateUserForm = () => {
 			<Container component="main" maxWidth="sm">
 				<CssBaseline />
 				<div className={classes.paper}>
+					<Avatar className={classes.greenButton}>
+						<ListAltIcon />
+					</Avatar>
+					<Typography component="h1" variant="h5">
+						Generar nuevo formulario
+                	</Typography>
+					<TextField
+						variant="outlined"
+						className="my-4"
+						required
+						fullWidth
+						id="formName"
+						label="Nombre del formulario"
+						name="formName"
+						onChange={getFormaName}
+						value={formName}
+					/>
 					<Avatar className={classes.greenButton}>
 						<HelpIcon />
 					</Avatar>
@@ -178,7 +210,7 @@ const CreateUserForm = () => {
 									id="question"
 									label="Pregunta"
 									name="question"
-									onChange={getFormData}
+									onChange={getQuestionData}
 									value={question}
 								/>
 							</Grid>
@@ -203,7 +235,7 @@ const CreateUserForm = () => {
 											color="primary"
 											className={classes.orangeButton}
 											startIcon={<AddCircleIcon />}
-											onClick={() => addOptionToOptionsList()}>			
+											onClick={() => addOptionToOptionsList()}>
 											Añadir opción
 										</Button>
 									</div>
@@ -221,7 +253,7 @@ const CreateUserForm = () => {
 											id="options"
 											placeholder="Ejemplo: 500"
 											name="referenceSmallBusiness"
-											onChange={getFormData}
+											onChange={getQuestionData}
 											value={referenceSmallBusiness}
 										/>
 									</Grid>
@@ -234,7 +266,7 @@ const CreateUserForm = () => {
 											id="options"
 											placeholder="Ejemplo: 800"
 											name="referenceMediumBusiness"
-											onChange={getFormData}
+											onChange={getQuestionData}
 											value={referenceMediumBusiness}
 										/>
 									</Grid>
@@ -256,7 +288,8 @@ const CreateUserForm = () => {
 							<Button
 								variant="contained"
 								startIcon={<CheckCircleIcon />}
-								className={classes.orangeButton}>
+								className={classes.orangeButton}
+								onClick={() => generateForm()}>
 								Generar formulario
                             	</Button>
 							<Button
