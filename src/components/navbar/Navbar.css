@@ -1,5 +1,4 @@
 .navbar {
-    /*background-color:#279daa;*/
     background: linear-gradient(45deg, #279daa 30%, #20cadd 90%);
     height: 70px;
     display: flex;
@@ -75,15 +74,15 @@ span {
     align-items: right;
 }
 
-.navbar-brand { 
-    /* margin-left: 1050px; */
+.navbar-brand-sidebar { 
+    margin-left: 80%;
     animation-name: funnyColor;
     animation-duration: 4s;
     border-radius: 40%;
     background-color:#2dc5d6;
  }
 
- .navbar-brand img {
+ .navbar-brand-sidebar img {
      width: 130px;
      border-radius: 40%;
      align-items: initial;
