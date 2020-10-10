@@ -1,0 +1,80 @@
+{
+    "formularios":[
+        {
+            "_id": "a",
+            "formName": "Formluario 1",
+            "formDescription": "Elaboración de productos alimenticios y/o bebidas"
+        },
+        {
+			"_id": "b",
+			"formName": "Formluario 2",
+			"formDescription": "Fabricación de productos textiles"
+		},
+		{
+			"_id": "c",
+			"formName": "Formluario 3",
+			"formDescription": "Producción de madera y fabricación de productos de madera, corcho y paja, excepto muebles"
+		},
+		{
+			"_id": "d",
+			"formName": "Formluario 4",
+			"formDescription": "Fabricación de papel y de productos de papel"
+		},
+		{
+			"_id": "e",
+			"formName": "Formluario 5",
+			"formDescription": "Fabricación de sustancias y de productos químicos"
+		},
+		{
+			"_id": "f",
+			"formName": "Formluario 6",
+			"formDescription": "Fabricación de productos de caucho y de plástico"
+		},
+		{
+			"_id": "g",
+			"formName": "Formluario 7",
+			"formDescription": "Fabricación de otros productos minerales no metálicos"
+		},
+		{
+			"_id": "h",
+			"formName": "Formluario 8",
+			"formDescription": "Fabricación de metales comunes"
+		},
+		{
+			"_id": "i",
+			"formName": "Formluario 9",
+			"formDescription": "Fabricación de productos de informática, de electrónica y de óptica"
+		},
+		{
+			"_id": "j",
+			"formName": "Formluario 10",
+			"formDescription": "Fabricación de maquinaria y equipo n.c.p."
+		},
+		{
+			"_id": "k",
+			"formName": "Formluario 11",
+			"formDescription": "Fabricación de vehículos automotores, remolques y semirremolques"
+		},
+		{
+			"_id": "l",
+			"formName": "Formluario 12",
+			"formDescription": "Fabricación de muebles"
+		},
+		{
+			"_id": "m",
+			"formName": "Formluario 13",
+			"formDescription": "Elaboración de productos de tabaco"
+		},
+		{
+			"_id": "n",
+			"formName": "Formluario 14",
+			"formDescription": "Descripción del formulario"
+		},
+		{
+			"_id": "o",
+			"formName": "Formluario 15",
+			"formDescription": "Descripción del formulario"
+		}
+        
+    ]
+}

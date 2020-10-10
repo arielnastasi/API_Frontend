@@ -9,7 +9,7 @@ import Benchmarking from './components/Benckmarking';
 import Form from './components/Form';
 import Navbar from './components/navbar/Navbar';
 import CreateForm from './components/CreateForm';
-
+import Benchmarking2 from './components/benchmarking/Benchmarking2';
 
 function App() {
 
@@ -32,13 +32,14 @@ function App() {
 						)
 					}}
 				/>
-				<Route path="/benchmarking" component={Benchmarking} />
+				<Route path="/benchmarking" component={Benchmarking2} />
 				<Route path="/login" component={Login} />
 				<Route path="/abm-usuarios" component={ABMUsers} />
 				<Route path="/abm-formularios" component={ABMForms} />
 				<Route path="/create-users" component={CreateUserForm} />
 				<Route path="/create-forms" component={CreateForm} />
 				<Route path="/form/:id" component={Form} />
+				<Route path="/benchmarking2" component={Benchmarking} />
 			</Switch>
 		</Router>
 	);
