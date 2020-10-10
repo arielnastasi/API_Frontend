@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./estilo.css"
 import "./tarjeta.css"
-import Barra from '../navbar-publica/Barra';
+import Barra from '../../components/navbar-publica/Barra';
 
 import Button from '@material-ui/core/Button';
 

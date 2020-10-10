@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MediaCard from './MediaCard';
+import MediaCard from '../components/MediaCard';
 import { useHistory } from "react-router-dom";
 import logo from '../imagenes/logo.png'
 import Button from '@material-ui/core/Button';

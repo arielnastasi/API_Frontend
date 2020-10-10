@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import ABMForms from './components/ABMForms';
-import ABMUsers from './components/ABMUsers';
-import CreateUserForm from './components/CreateUserForm';
-import Login from './components/auth/Login';
-import Benchmarking from './components/Benckmarking';
-import Form from './components/Form';
+import ABMForms from './pages/ABMForms';
+import ABMUsers from './pages/ABMUsers/ABMUsers';
+import CreateUserForm from './pages/CreateUserForm';
+import Login from './pages/auth/Login';
+import Benchmarking from './pages/Benckmarking';
+import Form from './pages/Form';
 import Navbar from './components/navbar/Navbar';
-import CreateForm from './components/CreateForm';
-import Benchmarking2 from './components/benchmarking/Benchmarking2';
+import CreateForm from './pages/CreateForm';
+import Benchmarking2 from './pages/benchmarking/Benchmarking2';
 
 function App() {
 
