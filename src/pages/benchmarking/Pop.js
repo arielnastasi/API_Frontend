@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import TextField from '@material-ui/core/TextField';
 
 class Pop extends Component {
     
@@ -78,6 +78,7 @@ class Pop extends Component {
                             <br></br>
                             <form>
                                 <h5 className="text-justify">Sólo te pediremos algunos datos...</h5>
+                                
                                 <div className="form-row">
                                     <div className="col-5">
                                         <input  type="email" className="form-control" placeholder="Correo Electrónico"></input>

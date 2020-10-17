@@ -1,0 +1,30 @@
+.text-block{
+    position: absolute;
+    bottom: 140px;
+    left: 0px;
+    background-color: rgba(255, 255, 255, 0.781);
+    color: #279daa;
+    padding-left: 20px;
+    padding-right: 60px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.posicion{
+    position: relative;
+    
+}
+.parrafo{
+    color: black;
+}
+.text-block-right{
+    position: absolute;
+    bottom: 140px;
+    right: 0px;
+    background-color: rgba(255, 255, 255, 0.781);
+    color: #279daa;
+    padding-right: 20px;
+    padding-left: 60px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: right;
+}
