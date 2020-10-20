@@ -2,30 +2,15 @@ import React, { useState } from 'react';
 import MediaCard from '../components/MediaCard';
 import { useHistory } from "react-router-dom";
 import logo from '../imagenes/logo.png'
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-
+import OrangeButton from '../components/orangeButton/OrangeButton';
 const Benchmarking = () => {
 
 	// States & Variables
 
 	const useStyles = makeStyles((theme) => ({
-        greenButton: {
-            margin: theme.spacing(3, 0, 2),
-            color: 'white',
-            backgroundColor: '#279daa',
-            '&:hover': {
-                backgroundColor: "#2aadbb",
-            },
-        },
-        orangeButton: {
-            color: 'white',
-            backgroundColor: '#e3703b',
-            '&:hover': {
-                backgroundColor: "#e76123",
-            },
-		},
+		
 		typo: {
 			fontFamily:  'Lato',
     		color: '#279daa',
@@ -98,12 +83,10 @@ const Benchmarking = () => {
 	return (
 		<div className="bg-observatorio">
 			<nav className="navbar">
-			<Button 
-					variant="contained"
-					onClick={() => routeChange('/login')}
-					className={classes.orangeButton}>
-					Login Empleados
-				</Button>
+			<OrangeButton
+			nombreBoton="Login Empleados"
+			onClick={() => routeChange('/login')}
+			/>
 				<a className="navbar-brand" href="/">
 				<img src={logo} width="200px" alt='Observatorio' />
   				</a>

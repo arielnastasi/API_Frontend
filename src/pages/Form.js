@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
@@ -10,12 +9,23 @@ import logo from '../imagenes/logo.png'
 import { useLocation } from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useHistory } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import GreenButton from '../components/greenButton/GreenButton';
+import { Button, makeStyles } from '@material-ui/core';
 
+
+const useStyles = makeStyles((theme) => ({
+    
+    radio: {
+        '&$checked': {
+            color: '#e3703b'
+        }
+    },
+    checked: {}
+}));
 const Form = () => {
 
     // States & Variables 
-
+    const classes = useStyles();
     const [formData, handleFormData] = useState({
         email: '',
         razonSocial: '',
@@ -27,33 +37,10 @@ const Form = () => {
     const [ showResult, handleSowResult ] = useState(true);
     const [ hiddenForm, handleHiddenForm] = useState(false);
 
-    const useStyles = makeStyles((theme) => ({
-        greenButton: {
-            color: 'white',
-            backgroundColor: '#279daa',
-            '&:hover': {
-                backgroundColor: "#2aadbb",
-            },
-        },
-        orangeButton: {
-            color: 'white',
-            backgroundColor: '#e3703b',
-            '&:hover': {
-                backgroundColor: "#e76123",
-            },
-        },
-        radio: {
-            '&$checked': {
-                color: '#e3703b'
-            }
-        },
-        checked: {}
-    }));
 
     const location = useLocation();
     const history = useHistory();
     let titulo = location.state;
-    const classes = useStyles();
 
     useEffect(() => {
         titulo = location.state;
@@ -102,7 +89,7 @@ const Form = () => {
             <div className="bg-observatorio" style={{ height: 100 + 'vh' }}>
                 <Container component="main" maxWidth="sm" className="bg-white p-5">
                     <div hidden = {hiddenForm}>
-                        <form noValidate onSubmit={validateForm}>
+                        <form noValidate>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} className="my-2">
                                     <h3>{titulo}</h3>
@@ -158,15 +145,10 @@ const Form = () => {
                                     </RadioGroup>
                                 </Grid>
                             </Grid>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className="mt-3"
-                                className={classes.greenButton}>
-                                Enviar
-                            </Button>
+                            <GreenButton
+                            nombreBoton="Enviar"
+                           onClick={validateForm} 
+                            />
                         </form>
                     </div>
                     <div className="card my-1" hidden={showResult}>

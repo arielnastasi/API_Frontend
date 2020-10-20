@@ -1,6 +1,6 @@
 .barra{
     /* background: linear-gradient(45deg, #279daa 30%, #20cadd 90%); */
-    background: #20B1DC;
+    background: linear-gradient(45deg, #279daa 30%, #20cadd 90%);
     height: 70px;
     display: flex;
     align-items: right;

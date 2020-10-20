@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import Alert from '@material-ui/lab/Alert';
+import OrangeButton from '../../components/orangeButton/OrangeButton';
+import GreenButton from '../../components/greenButton/GreenButton';
 
 const Login = () => {
 
@@ -41,21 +43,6 @@ const Login = () => {
         form: {
             width: '100%', // Fix IE 11 issue.
             marginTop: theme.spacing(1),
-        },
-        greenButton: {
-            margin: theme.spacing(3, 0, 2),
-            color: 'white',
-            backgroundColor: '#279daa',
-            '&:hover': {
-                backgroundColor: "#2aadbb",
-            },
-        },
-        orangeButton: {
-            color: 'white',
-            backgroundColor: '#e3703b',
-            '&:hover': {
-                backgroundColor: "#e76123",
-            },
         }
     }));
 
@@ -114,7 +101,7 @@ const Login = () => {
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <img src={logo} className="App-logo" alt="logo" />
-                    <form className={classes.form} noValidate onSubmit={validateForm}>
+                    <form className={classes.form} noValidate>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -137,14 +124,9 @@ const Login = () => {
                             onChange={getFormData}
                         />
                         <Alert severity="warning" hidden={loginFLag}>¡Verifica tus credenciales!</Alert>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.greenButton}>
-                            Iniciar sesión
-                        </Button>
+                        <GreenButton
+                        nombreBoton="Iniciar sesión"
+                        onClick={validateForm}/>
                         <Grid container>
                             <Grid item xs>
                                 <Link variant="body2">
@@ -155,12 +137,9 @@ const Login = () => {
                         <Box mt={5}>
                             <Copyright />
                             <div className="d-flex justify-content-center mt-2">
-                                <Button
-                                    variant="contained"
-                                    className={classes.orangeButton}
-                                    onClick={() => routeChange('/benchmarking')}>
-                                    Ir a benchmarking
-                                </Button>
+                                <OrangeButton
+                                nombreBoton="Ir a benchmarking"
+                                onClick={() => routeChange('/benchmarking')}/>
                             </div>
                         </Box>
                     </form>

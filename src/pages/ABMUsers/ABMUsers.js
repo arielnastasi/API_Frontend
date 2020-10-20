@@ -6,20 +6,11 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from "react-router-dom";
+import GreenButton from '../../components/greenButton/GreenButton';
 
 const ABMUsers = () => {
 
 	// States & Variables
-
-	const useStyles = makeStyles((theme) => ({
-		greenButton: {
-			color: 'white',
-			backgroundColor: '#279daa',
-			'&:hover': {
-				backgroundColor: "#2aadbb",
-			},
-		},
-	}));
 
 	const [users] = useState([
 		{
@@ -61,7 +52,6 @@ const ABMUsers = () => {
 	]);
 
 	const history = useHistory();
-	const classes = useStyles();
 
 	// Functions
 
@@ -76,14 +66,10 @@ const ABMUsers = () => {
 			<div className="d-flex justify-content-between mb-3">
 				<h3>Administrar usuarios</h3>
 				<div>
-					<Button
-						variant="contained"
-						color="primary"
-						onClick={() => routeChange('/create-users')}
-						className={classes.greenButton}
-						startIcon={<PersonAddIcon />}>
-						Nuevo usuario
-					</Button>
+					<GreenButton
+					nombreBoton="Nuevo usuario"
+					startIcon={<PersonAddIcon />}
+					onClick={() => routeChange('/create-users')}/>
 				</div>
 			</div>
 			<table className="table table-responsive-md">

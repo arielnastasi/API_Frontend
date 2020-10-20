@@ -19,6 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ListIcon from '@material-ui/icons/List';
 import Chip from '@material-ui/core/Chip';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import OrangeButton from '../components/orangeButton/OrangeButton';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,14 +41,7 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			backgroundColor: "#2aadbb",
 		},
-	},
-	orangeButton: {
-		color: 'white',
-		backgroundColor: '#e3703b',
-		'&:hover': {
-			backgroundColor: "#e76123",
-		},
-	},
+	}
 }));
 
 
@@ -230,14 +224,9 @@ const CreateUserForm = () => {
 										/>
 									</Grid>
 									<div className="d-flex justify-content-center w-100 mt-1">
-										<Button
-											variant="contained"
-											color="primary"
-											className={classes.orangeButton}
-											startIcon={<AddCircleIcon />}
-											onClick={() => addOptionToOptionsList()}>
-											Añadir opción
-										</Button>
+										<OrangeButton
+										nombreBoton="Añadir opción"
+										onClick={() => addOptionToOptionsList()}/>
 									</div>
 									<div className="my-3">
 										{optionsList.map((option, index) => (
