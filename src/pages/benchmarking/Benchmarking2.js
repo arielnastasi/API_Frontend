@@ -55,8 +55,9 @@ class Benchmarking2 extends Component {
                 Abrir
               </button> */}
               <GreenButton
-              nombreBoton="Abrir"
-              data-target={"#"+form._id}
+                nombreBoton="Abrir"
+                data_target={form._id}
+                data_toggle="modal"
               />
               <Pop 
                 titulo={form.formName} 

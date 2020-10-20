@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const GreenButton = ({nombreBoton, onClick,startIcon}) => {
+const GreenButton = ({nombreBoton, onClick,startIcon, data_target, data_toggle}) => {
 
 
     const classes = useStyles();
@@ -28,6 +28,8 @@ const GreenButton = ({nombreBoton, onClick,startIcon}) => {
                 className={classes.greenButton}
                 startIcon={startIcon}
                 onClick={onClick}
+                data-target={"#"+data_target}
+                data-toggle={data_toggle}
                 >{nombreBoton}
                 </Button>
         </div>
