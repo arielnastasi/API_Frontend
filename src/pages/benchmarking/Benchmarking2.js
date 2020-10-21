@@ -13,7 +13,7 @@ import Carousel from './Carousel';
 import im1 from '../../imagenes/negocios4.jpg'
 import im2 from '../../imagenes/negocios1.jpg'
 import im3 from '../../imagenes/negocios5.jpg'
-import GreenButton from '../../components/greenButton/GreenButton';
+
 
 class Benchmarking2 extends Component {
   constructor() {
@@ -47,18 +47,14 @@ class Benchmarking2 extends Component {
               {form.formDescription}
             </div>
             <div className="card-footer ">
-              {/* <button 
+              <button 
                 type="button" 
-                className="btn btn-primary" 
+                className="btn btn-info" 
                 data-toggle="modal" 
-                data-target={"#"+form._id}>
+                data-target={"#"+form._id}
+               >
                 Abrir
-              </button> */}
-              <GreenButton
-                nombreBoton="Abrir"
-                data_target={form._id}
-                data_toggle="modal"
-              />
+              </button>
               <Pop 
                 titulo={form.formName} 
                 descripcion={form.formDescription} 
