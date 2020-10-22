@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import ABMForms from './pages/ABMForms';
@@ -10,13 +10,28 @@ import Form from './pages/Form';
 import Navbar from './components/navbar/Navbar';
 import CreateForm from './pages/CreateForm';
 import Benchmarking2 from './pages/benchmarking/Benchmarking2';
+import { isLoggedIn } from './pages/auth/auth.service';
+
+const auth = isLoggedIn();
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+	<Route {...rest} render={(props) => (
+		auth == true
+			? <Component {...props} />
+			: <Redirect to='/login' />
+	)} />
+)
 
 function App() {
 
 	// States & Variables
+	useEffect(() => {
+        console.log(auth);
+    });
 
 	// Functions
-
+	
+	
 	// JSX
 
 	return (
@@ -34,11 +49,11 @@ function App() {
 				/>
 				<Route path="/benchmarking" component={Benchmarking2} />
 				<Route path="/login" component={Login} />
-				<Route path="/abm-usuarios" component={ABMUsers} />
-				<Route path="/abm-formularios" component={ABMForms} />
-				<Route path="/create-users" component={CreateUserForm} />
-				<Route path="/create-forms" component={CreateForm} />
-				<Route path="/form/:id" component={Form} />
+				<PrivateRoute path="/abm-usuarios" component={ABMUsers} />
+				<PrivateRoute path="/abm-formularios" component={ABMForms} />
+				<PrivateRoute path="/create-users" component={CreateUserForm} />
+				<PrivateRoute path="/create-forms" component={CreateForm} />
+				<PrivateRoute path="/form/:id" component={Form} />
 				<Route path="/benchmarking2" component={Benchmarking} />
 			</Switch>
 		</Router>

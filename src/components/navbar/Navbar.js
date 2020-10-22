@@ -7,6 +7,8 @@ import './Navbar.css';
 import { IconContext } from 'react-icons';
 import { useLocation } from 'react-router-dom';
 import logo from '../../imagenes/logo.png'
+import * as IoIcons from "react-icons/io";
+import { SignOut } from '../../pages/auth/auth.service';
 
 function Navbar() {
     const [sidebar, setSidebar] = useState(false);
@@ -15,6 +17,13 @@ function Navbar() {
     // States & Variables
     const location = useLocation();
     console.log(location.pathname);
+
+    // Functions
+    const signOut = () => {
+        console.log('Hay que cerrar la sesión y expulsar');
+        SignOut();
+        window.location.reload(false);
+    }
 
     return (
         <Fragment>
@@ -29,7 +38,7 @@ function Navbar() {
                             <FaIcons.FaBars onClick={showSidebar} />
                         </Link>
                         <Link to="#" className='navbar-brand-sidebar'>
-                        <img src={logo}  alt='Observatorio'/>
+                            <img src={logo} alt='Observatorio' />
                         </Link>
                     </div>
                     <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
@@ -49,6 +58,12 @@ function Navbar() {
                                     </li>
                                 );
                             })}
+                            <li className='nav-text'>
+                                <Link onClick={signOut}>
+                                    <IoIcons.IoIosPaper />
+                                    <span>Cerrar sesión</span>
+                                </Link>
+                            </li>
                         </ul>
                     </nav>
                 </IconContext.Provider>

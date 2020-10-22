@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -13,11 +13,12 @@ import { useHistory } from "react-router-dom";
 import Alert from '@material-ui/lab/Alert';
 import OrangeButton from '../../components/orangeButton/OrangeButton';
 import GreenButton from '../../components/greenButton/GreenButton';
+import { SignIn, isLoggedIn } from './auth.service';
 
 const Login = () => {
 
     // States & Variables
-    const [loginFLag,setLoginFlag] = useState(true);
+    const [loginFLag, setLoginFlag] = useState(true);
     const useStyles = makeStyles((theme) => ({
         root: {
             height: '100vh',
@@ -49,7 +50,7 @@ const Login = () => {
     
     const classes = useStyles();
     const history = useHistory();
-
+    const auth = isLoggedIn();
    
     const [loginData, handleLoginData] = useState({
         email: '',
@@ -69,7 +70,8 @@ const Login = () => {
     const validateForm = (e) => {
         e.preventDefault();
         if (email === 'admin@admin.com' && password === 'secretos') {
-            routeChange('/abm-formularios');
+            SignIn();
+            window.location.reload(false);
         } else {
             setLoginFlag(false);
         }
@@ -91,6 +93,14 @@ const Login = () => {
     const routeChange = (path) => {
         history.push(path);
     }
+
+    useEffect(() => {
+        console.log(auth);
+        console.log(history);
+        if (auth == true) {
+            routeChange('/abm-usuarios');
+        }
+    });
 
     // JSX
 
