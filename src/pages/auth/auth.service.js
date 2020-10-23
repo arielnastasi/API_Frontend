@@ -1,6 +1,7 @@
-export const SignIn = () => {
+export const SignIn = (token, user) => {
     console.log('Sesión iniciada');
-    localStorage.setItem('token', '123');
+    localStorage.setItem('token', token);
+    localStorage.setItem('loggedUser', user);
 }
 
 export const isLoggedIn = () => {
@@ -15,4 +16,5 @@ export const isLoggedIn = () => {
 export const SignOut = () => {
     console.log('Sesión finalizada');
     localStorage.removeItem('token');
+    localStorage.removeItem('loggedUser');
 }

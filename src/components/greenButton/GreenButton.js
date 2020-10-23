@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     greenButton: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(2, 0, 3),
         color: 'white',
         backgroundColor: '#279daa',
         '&:hover': {

@@ -14,11 +14,15 @@ import Alert from '@material-ui/lab/Alert';
 import OrangeButton from '../../components/orangeButton/OrangeButton';
 import GreenButton from '../../components/greenButton/GreenButton';
 import { SignIn, isLoggedIn } from './auth.service';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 const Login = () => {
 
     // States & Variables
     const [loginFLag, setLoginFlag] = useState(true);
+    const [hideSpinner, hideAndShowSpinner] = useState(true);
+
     const useStyles = makeStyles((theme) => ({
         root: {
             height: '100vh',
@@ -47,11 +51,10 @@ const Login = () => {
         }
     }));
 
-    
     const classes = useStyles();
     const history = useHistory();
     const auth = isLoggedIn();
-   
+
     const [loginData, handleLoginData] = useState({
         email: '',
         password: '',
@@ -64,17 +67,34 @@ const Login = () => {
         handleLoginData({
             ...loginData,
             [e.target.name]: e.target.value
-        })
+        });
     }
 
-    const validateForm = (e) => {
+    const validateForm = async (e) => {
+        hideAndShowSpinner(false);
+        setLoginFlag(true);
         e.preventDefault();
-        if (email === 'admin@admin.com' && password === 'secretos') {
-            SignIn();
+        const userCredentials = {
+            password: password,
+            email: email
+        }
+        const res = await fetch('http://interactivas-backend.herokuapp.com/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userCredentials)
+        });
+        const data = await res.json();
+        console.log(res.status);
+        if (res.status == 200) {
+            SignIn(data.token, data.user);
             window.location.reload(false);
         } else {
             setLoginFlag(false);
+            hideAndShowSpinner(true);
         }
+        console.log(data);
     }
 
     const Copyright = () => {
@@ -134,9 +154,10 @@ const Login = () => {
                             onChange={getFormData}
                         />
                         <Alert severity="warning" hidden={loginFLag}>¡Verifica tus credenciales!</Alert>
+                        <LinearProgress color="secondary" hidden={hideSpinner} />
                         <GreenButton
-                        nombreBoton="Iniciar sesión"
-                        onClick={validateForm}/>
+                            nombreBoton="Iniciar sesión"
+                            onClick={validateForm} />
                         <Grid container>
                             <Grid item xs>
                                 <Link variant="body2">
@@ -148,13 +169,12 @@ const Login = () => {
                             <Copyright />
                             <div className="d-flex justify-content-center mt-2">
                                 <OrangeButton
-                                nombreBoton="Ir a benchmarking"
-                                onClick={() => routeChange('/benchmarking')}/>
+                                    nombreBoton="Ir a benchmarking"
+                                    onClick={() => routeChange('/benchmarking')} />
                             </div>
                         </Box>
                     </form>
                 </div>
-                <Alert severity="warning" hidden={loginFLag}>¡Verifica tus credenciales!</Alert>
             </Grid>
         </Grid>
     );
