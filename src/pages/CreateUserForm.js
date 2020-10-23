@@ -12,6 +12,10 @@ import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from "react-router-dom";
 import BackspaceIcon from '@material-ui/icons/Backspace';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -26,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     },
     greenButton: {
         margin: theme.spacing(3, 0, 2),
-		color: 'white',
-		backgroundColor: '#279daa',
-		'&:hover': {
-			backgroundColor: "#2aadbb",
-		},
+        color: 'white',
+        backgroundColor: '#279daa',
+        '&:hover': {
+            backgroundColor: "#2aadbb",
+        },
     },
 }));
 
@@ -45,8 +49,10 @@ const CreateUserForm = () => {
         email: '',
         password: '',
     });
+    const [open, setOpen] = React.useState(false);
     const [errorInForm, handleErrorInForm] = useState(false);
     const [invalidEmail, handleInvalidEmail] = useState(false);
+    const [hideSpinner, hideAndShowSpinner] = useState(true);
     const [loading, handleLoading] = useState(false);
     const classes = useStyles();
     const history = useHistory();
@@ -62,6 +68,17 @@ const CreateUserForm = () => {
         })
     }
 
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
     const validateForm = (e) => {
         e.preventDefault();
         if (firstName.trim() === '' || lastName.trim() === '' || email.trim() === '' || password.trim() === '') {
@@ -69,39 +86,76 @@ const CreateUserForm = () => {
             return
         } else {
             handleErrorInForm(false);
-            if (emailRegex.test(email) === false) {
-                handleInvalidEmail(true);
-                return
-            } else {
-                handleInvalidEmail(false);
-                createUser();
-            }
+            createUser();
+            // if (emailRegex.test(email) === false) {
+            //     handleInvalidEmail(true);
+            //     return
+            // } else {
+            //     handleInvalidEmail(false);
+            //     createUser();
+            // }
         }
     }
 
-    const createUser = (e) => {
+    const createUser = async (e) => {
+        hideAndShowSpinner(false);
         let newUser = {
-            firstName: firstName,
-            lastName: lastName,
+            name: `${firstName} ${lastName}`,
+            role: 'ADMIN',
             email: email,
             password: password,
         }
         console.log(newUser);
-        handleLoading(true);
-        setTimeout(() => {
+        const res = await fetch('https://interactivas-backend.herokuapp.com/api/users/createUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+            body: JSON.stringify(newUser)
+        });
+        const data = await res.json();
+        if (res.status == 200) {
             handleLoading(false);
-            routeChange('/abm-usuarios')
-        }, 1500);
+            hideAndShowSpinner(true);
+            routeChange('/abm-usuarios');
+            console.log(res);
+            console.log(data);
+        } else {
+            handleClick();
+            hideAndShowSpinner(true);
+            console.log(res);
+            console.log(data);
+        }
     }
 
-	const routeChange = (path) => {
-		history.push(path);
-	}
+    const routeChange = (path) => {
+        history.push(path);
+    }
 
     // JSX
 
     return (
         <Container component="main" maxWidth="xs">
+            <div>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={open}
+                    autoHideDuration={4000}
+                    onClose={handleClose}
+                    message="¡Ha ocurrido un error!"
+                    action={
+                        <React.Fragment>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                                <CloseIcon fontSize="small" />
+                            </IconButton>
+                        </React.Fragment>
+                    }
+                />
+            </div>
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.greenButton}>
@@ -110,7 +164,7 @@ const CreateUserForm = () => {
                 <Typography component="h1" variant="h5">
                     Nuevo usuario
                 </Typography>
-                {loading 
+                {loading
                     ?
                     <div className="mt-5">
                         <CircularProgress />
@@ -180,18 +234,20 @@ const CreateUserForm = () => {
                                 : null
                             }
                         </Grid>
+                        <LinearProgress color="secondary" hidden={hideSpinner} />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
+                            disabled={!hideSpinner}
                             className={classes.greenButton}>
                             Crear
                         </Button>
                         <Grid container justify="flex-end">
                             <Button
                                 variant="contained"
-                                startIcon={<BackspaceIcon/>}
+                                startIcon={<BackspaceIcon />}
                                 onClick={() => routeChange('/abm-usuarios')}>
                                 Cancelar
                             </Button>
