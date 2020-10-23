@@ -25,12 +25,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 function App() {
 
 	// States & Variables
-	useEffect(() => {
-        console.log(auth);
-    });
 
 	// Functions
-	
 	
 	// JSX
 

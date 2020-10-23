@@ -7,7 +7,6 @@ const Navbar = () => {
 
     // States & Variables
     const location = useLocation();
-    console.log(location.pathname);
 
     // Functions
 

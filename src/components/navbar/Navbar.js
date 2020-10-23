@@ -16,7 +16,6 @@ function Navbar() {
 
     // States & Variables
     const location = useLocation();
-    console.log(location.pathname);
 
     // Functions
     const signOut = () => {
@@ -59,7 +58,7 @@ function Navbar() {
                                 );
                             })}
                             <li className='nav-text'>
-                                <Link onClick={signOut}>
+                                <Link to="nothing" onClick={signOut}>
                                     <IoIcons.IoIosPaper />
                                     <span>Cerrar sesión</span>
                                 </Link>

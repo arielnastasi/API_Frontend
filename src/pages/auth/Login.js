@@ -88,7 +88,7 @@ const Login = () => {
         const data = await res.json();
         console.log(res.status);
         if (res.status == 200) {
-            SignIn(data.token, data.user);
+            SignIn(data.token, data.user.email);
             window.location.reload(false);
         } else {
             setLoginFlag(false);
@@ -115,8 +115,7 @@ const Login = () => {
     }
 
     useEffect(() => {
-        console.log(auth);
-        console.log(history);
+        console.log('No hay ningún token de usuario en Local Storage');
         if (auth == true) {
             routeChange('/abm-usuarios');
         }
