@@ -78,7 +78,7 @@ const Login = () => {
             password: password,
             email: email
         }
-        const res = await fetch('http://interactivas-backend.herokuapp.com/api/auth/login', {
+        const res = await fetch('https://interactivas-backend.herokuapp.com/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

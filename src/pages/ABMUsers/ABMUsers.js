@@ -17,7 +17,7 @@ class ABMUsers extends Component {
 
 	async componentDidMount() {
 		this.state.hideLoading = false;
-		const res = await fetch('http://interactivas-backend.herokuapp.com/api/users/getUsers', {
+		const res = await fetch('https://interactivas-backend.herokuapp.com/api/users/getUsers', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ class ABMUsers extends Component {
 
 	async deleteUser(id) {
 		console.log('must delete user :', id);
-		const res = await fetch(`http://interactivas-backend.herokuapp.com/api/users/deleteUser/${id}`, {
+		const res = await fetch(`https://interactivas-backend.herokuapp.com/api/users/deleteUser/${id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
