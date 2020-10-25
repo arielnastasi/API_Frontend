@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -19,7 +18,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FormControl, InputLabel, Select } from '@material-ui/core';
 import GreenButton from '../components/greenButton/GreenButton';
 import OrangeButton from '../components/orangeButton/OrangeButton';
-
+const { REACT_APP_URL } = process.env;
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -31,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
-    greenButton: {
-        margin: theme.spacing(3, 0, 2),
-        color: 'white',
-        backgroundColor: '#279daa',
-        '&:hover': {
-            backgroundColor: "#2aadbb",
-        },
-    },
+    // greenButton: {
+    //     margin: theme.spacing(3, 0, 2),
+    //     color: 'white',
+    //     backgroundColor: '#279daa',
+    //     '&:hover': {
+    //         backgroundColor: "#2aadbb",
+    //     },
+    //},
 }));
 
 
@@ -52,7 +51,7 @@ const CreateUserForm = () => {
         email: '',
         password: '',
     });
-    const [roleTypeForm,handleRoleTypeForm] = useState('SINROL')
+    const [roleTypeForm, handleRoleTypeForm] = useState('SINROL')
     const [open, setOpen] = React.useState(false);
     const [errorInForm, handleErrorInForm] = useState(false);
     const [invalidEmail, handleInvalidEmail] = useState(false);
@@ -111,7 +110,7 @@ const CreateUserForm = () => {
             password: password,
         }
         console.log(newUser);
-        const res = await fetch('https://interactivas-backend.herokuapp.com/api/users/createUser', {
+        const res = await fetch(`${REACT_APP_URL}/users/createUser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -124,13 +123,9 @@ const CreateUserForm = () => {
             handleLoading(false);
             hideAndShowSpinner(true);
             routeChange('/abm-usuarios');
-            console.log(res);
-            console.log(data);
         } else {
             handleClick();
             hideAndShowSpinner(true);
-            console.log(res);
-            console.log(data);
         }
     }
 

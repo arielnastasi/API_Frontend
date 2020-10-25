@@ -77,7 +77,7 @@ class ABMUsers extends Component {
 						</tr>
 					</thead>
 					<tbody>
-						{this.state.users.map((user, i) => (
+						{this.statusers.map((user, i) => (
 							<tr key={i}>
 								<td className="align-middle">{user.name}</td>
 								<td className="align-middle">{user.email}</td>
