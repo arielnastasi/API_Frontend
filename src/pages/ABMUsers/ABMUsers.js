@@ -71,6 +71,7 @@ class ABMUsers extends Component {
 						<tr>
 							<th scope="col">Nombre</th>
 							<th scope="col">Email</th>
+							<th scope="col">Rol</th>
 							<th scope="col">ID</th>
 							<th scope="col">Opciones</th>
 						</tr>
@@ -80,6 +81,7 @@ class ABMUsers extends Component {
 							<tr key={i}>
 								<td className="align-middle">{user.name}</td>
 								<td className="align-middle">{user.email}</td>
+						<td className="aling-middle">{user.role}</td>
 								<td className="align-middle">{user._id}</td>
 								<td className="align-middle">
 									{user.email !== this.state.loggedUser &&

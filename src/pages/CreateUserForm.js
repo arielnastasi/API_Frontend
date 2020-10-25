@@ -16,6 +16,9 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { FormControl, InputLabel, Select } from '@material-ui/core';
+import GreenButton from '../components/greenButton/GreenButton';
+import OrangeButton from '../components/orangeButton/OrangeButton';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -49,6 +52,7 @@ const CreateUserForm = () => {
         email: '',
         password: '',
     });
+    const [roleTypeForm,handleRoleTypeForm] = useState('SINROL')
     const [open, setOpen] = React.useState(false);
     const [errorInForm, handleErrorInForm] = useState(false);
     const [invalidEmail, handleInvalidEmail] = useState(false);
@@ -56,7 +60,7 @@ const CreateUserForm = () => {
     const [loading, handleLoading] = useState(false);
     const classes = useStyles();
     const history = useHistory();
-    const { firstName, lastName, email, password } = userData;
+    const { firstName, lastName, rol, email, password } = userData;
     const emailRegex = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
 
     // Functions
@@ -80,6 +84,7 @@ const CreateUserForm = () => {
     };
 
     const validateForm = (e) => {
+        console.log(e)
         e.preventDefault();
         if (firstName.trim() === '' || lastName.trim() === '' || email.trim() === '' || password.trim() === '') {
             handleErrorInForm(true);
@@ -101,7 +106,7 @@ const CreateUserForm = () => {
         hideAndShowSpinner(false);
         let newUser = {
             name: `${firstName} ${lastName}`,
-            role: 'ADMIN',
+            role: roleTypeForm,
             email: email,
             password: password,
         }
@@ -131,6 +136,10 @@ const CreateUserForm = () => {
 
     const routeChange = (path) => {
         history.push(path);
+    }
+    //para obtener el valor de la seleccion de rol
+    const getRoleType = (e) => {
+        handleRoleTypeForm(e.target.value);
     }
 
     // JSX
@@ -221,6 +230,19 @@ const CreateUserForm = () => {
                                     onChange={getFormData}
                                 />
                             </Grid>
+                            <Grid item xs={12}>
+                                <FormControl variant="outlined" fullWidth >
+                                    <InputLabel htmlFor="outlined-age-native-simple">Tipo</InputLabel>
+                                    <Select
+                                        native
+                                        name="rolType"
+                                        onChange={getRoleType}
+                                        label="Tipo">
+                                        <option value={'ADMIN'}>Administrador</option>
+                                        <option value={'USER'}>Usuario</option>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
                             {errorInForm ?
                                 <Grid item xs={12}>
                                     <Alert severity="error">Todos los campos son obligatorios!</Alert>
@@ -235,22 +257,19 @@ const CreateUserForm = () => {
                             }
                         </Grid>
                         <LinearProgress color="secondary" hidden={hideSpinner} />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            disabled={!hideSpinner}
-                            className={classes.greenButton}>
-                            Crear
-                        </Button>
-                        <Grid container justify="flex-end">
-                            <Button
-                                variant="contained"
-                                startIcon={<BackspaceIcon />}
-                                onClick={() => routeChange('/abm-usuarios')}>
-                                Cancelar
-                            </Button>
+                        <Grid container spacing={2} alignItems="center" >
+                            <Grid item xs={12} sm={6}>
+                                <OrangeButton
+                                    startIcon={<BackspaceIcon />}
+                                    nombreBoton="Cancelar"
+                                    onClick={() => routeChange('/abm-usuarios')} />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <GreenButton
+                                    disabled={!hideSpinner}
+                                    nombreBoton="crear"
+                                    type="submit" />
+                            </Grid>
                         </Grid>
                     </form>
                 }

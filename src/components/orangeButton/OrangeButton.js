@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const OrangeButton = ({nombreBoton, onClick}) => {
+const OrangeButton = ({nombreBoton, onClick, startIcon}) => {
 
 
     const classes = useStyles();
@@ -24,6 +24,8 @@ const OrangeButton = ({nombreBoton, onClick}) => {
         <div className="d-flex justify-content-center mt-2">
             <Button
                 variant="contained"
+                fullWidth
+                startIcon={startIcon}
                 className={classes.orangeButton}
                 onClick={onClick}
                 >{nombreBoton}

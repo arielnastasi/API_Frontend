@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     greenButton: {
-        margin: theme.spacing(2, 0, 3),
+        //margin: theme.spacing(3, 0, 2),
         color: 'white',
         backgroundColor: '#279daa',
         '&:hover': {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const GreenButton = ({nombreBoton, onClick,startIcon, data_target, data_toggle}) => {
+const GreenButton = ({nombreBoton, onClick,startIcon,type/*,type data_target, data_toggle*/}) => {
 
 
     const classes = useStyles();
@@ -26,10 +26,12 @@ const GreenButton = ({nombreBoton, onClick,startIcon, data_target, data_toggle})
             <Button
                 variant="contained"
                 className={classes.greenButton}
+                fullWidth
                 startIcon={startIcon}
                 onClick={onClick}
-                data-target={"#"+data_target}
-                data-toggle={data_toggle}
+                type={type}
+                // data-target={"#"+data_target}
+                // data-toggle={data_toggle}
                 >{nombreBoton}
                 </Button>
         </div>
