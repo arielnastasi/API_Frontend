@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -20,7 +19,7 @@ import ListIcon from '@material-ui/icons/List';
 import Chip from '@material-ui/core/Chip';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import OrangeButton from '../components/orangeButton/OrangeButton';
-import Alert from '@material-ui/lab/Alert';
+import GreenButton from '../components/greenButton/GreenButton';
 
 
 
@@ -35,14 +34,6 @@ const useStyles = makeStyles((theme) => ({
 	form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(3),
-	},
-	greenButton: {
-		margin: theme.spacing(3, 0, 2),
-		color: 'white',
-		backgroundColor: '#279daa',
-		'&:hover': {
-			backgroundColor: "#2aadbb",
-		},
 	}
 }));
 
@@ -183,7 +174,7 @@ const CreateUserForm = () => {
 			body: JSON.stringify(newForm)
 		});
 		const data = await res.json();
-		if (res.status == 200) {
+		if (res.status === 200) {
 			// handleLoading(false);
 			// hideAndShowSpinner(true);
 			routeChange('/abm-formularios');
@@ -284,11 +275,12 @@ const CreateUserForm = () => {
 											onChange={getOptionData}
 										/>
 									</Grid>
-									<div className="d-flex justify-content-center w-100 mt-1">
+									<Grid item xs={12}>	
 										<OrangeButton
 											nombreBoton="Añadir opción"
-											onClick={() => addOptionToOptionsList()} />
-									</div>
+											onClick={() => addOptionToOptionsList()}
+											startIcon={<AddCircleIcon />}/>
+									</Grid>	
 									<div className="my-3">
 										{optionsList.map((option, index) => (
 											<Chip className="m-2" key={index} label={option} onDelete={() => deleteOption(index)} color="primary" />
@@ -325,30 +317,25 @@ const CreateUserForm = () => {
 								null
 							}
 						</Grid>
-						<Button
-							type="submit"
-							fullWidth
-							variant="contained"
-							color="primary"
-							className={classes.greenButton}
-							startIcon={<AddCircleIcon />}>
-							Añadir pregunta
-                        </Button>
-						<Grid container justify="center">
-							<Button
-								variant="contained"
-								startIcon={<CheckCircleIcon />}
-								className={classes.orangeButton}
-								onClick={() => generateForm()}>
-								Generar formulario
-                            	</Button>
-							<Button
-								className="mx-2"
-								variant="contained"
-								startIcon={<BackspaceIcon />}
-								onClick={() => routeChange('/abm-formularios')}>
-								Cancelar
-                            </Button>
+						   <Grid item xs={12}>
+                                <GreenButton
+								    startIcon={<AddCircleIcon />}
+                                    nombreBoton="Añadir pregunta"
+                                    type="submit" />
+                            </Grid>
+						<Grid container spacing={2} justify="center">
+							<Grid item xs={12} sm={6}>
+                                <OrangeButton
+                                    startIcon={<BackspaceIcon />}
+                                    nombreBoton="Cancelar"
+                                    onClick={() => routeChange('/abm-formularios')} />
+                            </Grid>
+								 <Grid item xs={12} sm={6}>
+                                <GreenButton
+                                    nombreBoton="Generar formulario"
+									onClick={() => generateForm()}
+									startIcon={<CheckCircleIcon />} />
+                            </Grid>
 						</Grid>
 					</form>
 				</div>
@@ -380,14 +367,10 @@ const CreateUserForm = () => {
 										:
 										null
 									}
-									<Button
-										variant="contained"
-										color="secondary"
-										className={classes.button}
-										startIcon={<DeleteIcon />}
-										onClick={() => deleteQuestion(index)}>
-										Eliminar
-      								</Button>
+									<OrangeButton
+									nombreBoton="Eliminar"
+									startIcon={<DeleteIcon />}
+									onClick={() => deleteQuestion(index)}/>
 								</div>
 							</div>
 						))}

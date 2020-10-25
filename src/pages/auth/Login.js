@@ -116,7 +116,7 @@ const Login = () => {
     useEffect(() => {
         console.log('No hay ningún token de usuario en Local Storage');
         if (auth == true) {
-            routeChange('/abm-usuarios');
+            routeChange('/abm-formularios');
         }
     });
 
