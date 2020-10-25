@@ -1,105 +1,110 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import './ABMUsers/ABMUsers.css';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { useHistory } from "react-router-dom";
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import GreenButton from '../components/greenButton/GreenButton';
-
-const ABMForms = () => {
-
-	// States & Variables
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 
 
+class ABMForms extends Component {
 
-	const [forms] = useState([
-		{
-			_id: "1",
-			formulario: "Formulario 1",
-			name: "SUPER_ADMIN",
-			creador: "admin@admin",
-		},
-		{
-			_id: "2",
-			formulario: "Formulario 2",
-			name: "German Morone",
-			creador: "gmorone@uade.edu.ar"
-		},
-		{
-			_id: "3",
-			formulario: "Formulario 3",
-			name: "Ariel Nastasi",
-			creador: "anastasi@uade.edu.ar",
-		},
-		{
-			_id: "4",
-			formulario: "Formulario 4",
-			name: "July Bustamante",
-			creador: "jbustamante@uade.edu.ar",
-		},
-		{
-			_id: "5",
-			formulario: "Formulario 5",
-			name: "Lautaro Mitelman",
-			creador: "lmitelman@uade.edu.ar",
-		},
-		{
-			_id: "6",
-			formulario: "Formulario 6",
-			name: "Valentin Saettone",
-			creador: "vsaettone@uade.edu.ar",
-		}
-	]);
-
-	const history = useHistory();
-
-	// Functions
-
-	const routeChange = (path) => {
-		history.push(path);
+	state = {
+		forms: [],
+		hideLoading: false,
+		loggedUser: localStorage.getItem('loggedUser'),
+		userToken: localStorage.getItem('token')
 	}
 
-	// JSX
+	async componentDidMount() {
+		this.state.hideLoading = false;
+		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getForms', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'token': this.state.userToken
+			},
+		});
+		const data = await res.json();
+		this.state.hideLoading = true;
+		console.log(data);
+		this.setState({ forms: data.forms })
+	}
 
-	return (
-		<div className="container mt-5">
-			<div className="d-flex justify-content-between mb-3">
-				<h3>Administrar formularios</h3>
-				<div>
-					<GreenButton
-						nombreBoton="Nuevo formulario"
-						onClick={() => routeChange('/create-forms')}
-						startIcon={<PersonAddIcon />} />
+	async deleteForm(id) {
+		console.log('must delete form :', id);
+		const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/deleteForm/${id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				'token': this.state.userToken
+			},
+		});
+		const data = await res.json();
+		console.log(res);
+		console.log(data);
+		if (res.status == 200) {
+			window.location.reload(false);
+		}
+	}
+
+	routeChange(path) {
+		this.props.history.push('/create-forms');
+	}
+
+	render() {
+		return (
+			<div className="container mt-5">
+				<div className="d-flex justify-content-center">
+					<CircularProgress color="secondary" hidden={this.state.hideLoading} />
 				</div>
+				<div className="d-flex justify-content-between mb-3" hidden={!this.state.hideLoading}>
+					<h3 hidden={!this.state.hideLoading}>Administrar formularios</h3>
+					<div hidden={!this.state.hideLoading}>
+						<GreenButton
+							nombreBoton="Nuevo formulario"
+							startIcon={<PostAddIcon />}
+							onClick={() => this.routeChange('/create-forms')} />
+					</div>
+				</div>
+				{this.state.forms.length == 0 &&
+					<Alert severity="info" hidden={!this.state.hideLoading}>
+						Aún no se han generado formularios
+					</Alert>
+				}
+				{this.state.forms.length > 0 &&
+					<table className="table table-responsive-md" hidden={!this.state.hideLoading}>
+						<thead>
+							<tr>
+								<th scope="col">Nombre</th>
+								<th scope="col">ID</th>
+								<th scope="col">Autor</th>
+								<th scope="col">Opciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							{this.state.forms.map((form, i) => (
+								<tr key={i}>
+									<td className="align-middle">{form.name}</td>
+									<td className="align-middle">{form._id}</td>
+									{/* <td className="align-middle">{form.author}</td> */}
+									<td className="align-middle">Anónimo</td>
+									<td className="align-middle">
+										<Fragment>
+											<IconButton onClick={() => this.deleteForm(form._id)} aria-label="delete" color="secondary">
+												<DeleteIcon />
+											</IconButton>
+										</Fragment>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				}
 			</div>
-			<table className="table table-responsive-md">
-				<thead>
-					<tr>
-						<th scope="col">ID</th>
-						<th scope="col">Formulario</th>
-						<th scope="col">Creador</th>
-						<th scope="col">Opciones</th>
-					</tr>
-				</thead>
-				<tbody>
-					{forms.map((form, i) => (
-						<tr key={i}>
-							<td className="align-middle">{form._id}</td>
-							<td className="align-middle">{form.formulario}</td>
-							<td className="align-middle">{form.creador}</td>
-							<td className="align-middle">
-								<Fragment>
-									<IconButton aria-label="delete" color="secondary">
-										<DeleteIcon />
-									</IconButton>
-								</Fragment>
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</div>
-	);
+		);
+	}
 }
 
 export default ABMForms;
