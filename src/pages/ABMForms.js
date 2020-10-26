@@ -92,7 +92,7 @@ class ABMForms extends Component {
 									<td className="align-middle">Anónimo</td>
 									<td className="align-middle">
 										<Fragment>
-											<IconButton onClick={() => this.deleteForm(form._id)} aria-label="delete" color="default">
+											<IconButton onClick={() => this.deleteForm(form._id)} aria-label="delete" color="secondary">
 												<DeleteIcon />
 											</IconButton>
 										</Fragment>

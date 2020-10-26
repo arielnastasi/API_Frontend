@@ -20,7 +20,9 @@ import Chip from '@material-ui/core/Chip';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import OrangeButton from '../components/orangeButton/OrangeButton';
 import GreenButton from '../components/greenButton/GreenButton';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,8 +45,8 @@ const CreateUserForm = () => {
 	// States & Variables
 
 	const [formName, handleFormName] = useState('');
-	const [questionTypeForm, handleQuestionTypeForm] = useState('choice');
-	const [formSector, handleFormSector] = useState('choice');
+	const [questionTypeForm, handleQuestionTypeForm] = useState('Multiple choice');
+	const [formSector, handleFormSector] = useState('Elaboración de productos alimenticios y/o bebidas');
 
 	const [questionData, handleQuestionData] = useState({
 		questionType: '',
@@ -56,6 +58,7 @@ const CreateUserForm = () => {
 
 	const [questionList, handleQuestionList] = useState([]);
 	let [option, handleOptionValue] = useState('');
+	const [open, setOpen] = React.useState(false);
 	const [optionsList, handleOptionsList] = useState([]);
 
 	let { question, referenceMediumBusiness, referenceSmallBusiness } = questionData;
@@ -158,33 +161,45 @@ const CreateUserForm = () => {
 		history.push(path);
 	}
 
+	const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
 	const generateForm = async () => {
-		let newForm = {
-			name: formName,
-			sector: formSector,
-			questionList: questionList
-		}
-		console.log(newForm);
-		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/createForm', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'token': localStorage.getItem('token')
-			},
-			body: JSON.stringify(newForm)
-		});
-		const data = await res.json();
-		if (res.status === 200) {
-			// handleLoading(false);
-			// hideAndShowSpinner(true);
-			routeChange('/abm-formularios');
-			console.log(res);
-			console.log(data);
-		} else {
-			// handleClick();
-			// hideAndShowSpinner(true);
-			console.log(res);
-			console.log(data);
+		if (formName.trim() === '') {
+            handleClick();
+            return
+        } else {
+			let newForm = {
+				name: formName,
+				sector: formSector,
+				questionList: questionList
+			}
+			console.log(newForm);
+			const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/createForm', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'token': localStorage.getItem('token')
+				},
+				body: JSON.stringify(newForm)
+			});
+			const data = await res.json();
+			if (res.status === 200) {
+				routeChange('/abm-formularios');
+				console.log(res);
+				console.log(data);
+			} else {
+				console.log(res);
+				console.log(data);
+			}
 		}
 	}
 
@@ -193,6 +208,25 @@ const CreateUserForm = () => {
 	return (
 		<div>
 			<Container component="main" maxWidth="sm">
+				<div>
+					<Snackbar
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'left',
+						}}
+						open={open}
+						autoHideDuration={4000}
+						onClose={handleClose}
+						message="¡El formulario debe tener un título!"
+						action={
+							<React.Fragment>
+								<IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+									<CloseIcon fontSize="small" />
+								</IconButton>
+							</React.Fragment>
+						}
+					/>
+				</div>
 				<CssBaseline />
 				<div className={classes.paper}>
 					<Avatar className={classes.greenButton}>
@@ -220,7 +254,7 @@ const CreateUserForm = () => {
 							onChange={getFormSector}
 							label="Sector">
 							{availableFormSectors.map((sector, i) => (
-								<option value={sector}>
+								<option key={i} value={sector}>
 									{sector}
 								</option>
 							))}
@@ -260,7 +294,7 @@ const CreateUserForm = () => {
 									value={question}
 								/>
 							</Grid>
-							{questionTypeForm === 'choice' ?
+							{questionTypeForm === 'Multiple choice' ?
 								<Fragment>
 									<Grid item xs={12}>
 										<p className="mt-3 mb-1">Ingrese una opción:</p>
@@ -275,12 +309,13 @@ const CreateUserForm = () => {
 											onChange={getOptionData}
 										/>
 									</Grid>
-									<Grid item xs={12}>	
+									<Grid item xs={12}>
 										<OrangeButton
 											nombreBoton="Añadir opción"
 											onClick={() => addOptionToOptionsList()}
-											startIcon={<AddCircleIcon />}/>
-									</Grid>	
+											startIcon={<AddCircleIcon />} 
+										/>
+									</Grid>
 									<div className="my-3">
 										{optionsList.map((option, index) => (
 											<Chip className="m-2" key={index} label={option} onDelete={() => deleteOption(index)} color="primary" />
@@ -317,25 +352,25 @@ const CreateUserForm = () => {
 								null
 							}
 						</Grid>
-						   <Grid item xs={12}>
-                                <GreenButton
-								    startIcon={<AddCircleIcon />}
-                                    nombreBoton="Añadir pregunta"
-                                    type="submit" />
-                            </Grid>
+						<Grid item xs={12}>
+							<GreenButton
+								startIcon={<AddCircleIcon />}
+								nombreBoton="Añadir pregunta"
+								type="submit" />
+						</Grid>
 						<Grid container spacing={2} justify="center">
 							<Grid item xs={12} sm={6}>
-                                <OrangeButton
-                                    startIcon={<BackspaceIcon />}
-                                    nombreBoton="Cancelar"
-                                    onClick={() => routeChange('/abm-formularios')} />
-                            </Grid>
-								 <Grid item xs={12} sm={6}>
-                                <GreenButton
-                                    nombreBoton="Generar formulario"
+								<OrangeButton
+									startIcon={<BackspaceIcon />}
+									nombreBoton="Cancelar"
+									onClick={() => routeChange('/abm-formularios')} />
+							</Grid>
+							<Grid item xs={12} sm={6}>
+								<GreenButton
+									nombreBoton="Generar formulario"
 									onClick={() => generateForm()}
 									startIcon={<CheckCircleIcon />} />
-                            </Grid>
+							</Grid>
 						</Grid>
 					</form>
 				</div>
@@ -355,7 +390,7 @@ const CreateUserForm = () => {
 								<div className="card-body">
 									<h5 className="card-title">Pregunta: "{question.question}"</h5>
 									<p className="card-text">Tipo: {question.questionType}</p>
-									{question.questionType === "choice" ?
+									{question.questionType === "Multiple choice" ?
 										<Fragment>
 											<p className="card-text">Opciones:</p>
 											{question.options.map((option, index) => (
@@ -368,9 +403,9 @@ const CreateUserForm = () => {
 										null
 									}
 									<OrangeButton
-									nombreBoton="Eliminar"
-									startIcon={<DeleteIcon />}
-									onClick={() => deleteQuestion(index)}/>
+										nombreBoton="Eliminar"
+										startIcon={<DeleteIcon />}
+										onClick={() => deleteQuestion(index)} />
 								</div>
 							</div>
 						))}
