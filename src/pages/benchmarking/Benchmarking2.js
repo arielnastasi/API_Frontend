@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import "./estilo.css"
 import "./tarjeta.css"
 import Barra from '../../components/navbar-publica/Barra';
-import Button from '@material-ui/core/Button';
 
 // data
 import { formularios } from '../../formularios.json';

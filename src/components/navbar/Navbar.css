@@ -4,8 +4,6 @@
     display: flex;
     align-items: right;
     justify-content: start;
-    /* box-shadow: 0 3px 5px 2px #279daa; */
-    /* margin-bottom: 1em; */
 }
 
 .menu-bars {
@@ -74,13 +72,7 @@ span {
     align-items: right;
 }
 
-.navbar-brand-sidebar { 
-    margin-left: 80%;
-    animation-name: funnyColor;
-    animation-duration: 4s;
-    border-radius: 40%;
-    background-color:#2dc5d6;
- }
+
 
  .navbar-brand-sidebar img {
      width: 130px;
@@ -91,4 +83,16 @@ span {
  @keyframes funnyColor {
     from {background-color:#e3703b;}
     to {background-color: #2dc5d6; }
+  }
+
+  .typography {
+    text-decoration: wavy;
+    color: white;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 4px;
   }

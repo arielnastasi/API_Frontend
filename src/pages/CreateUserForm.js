@@ -119,7 +119,7 @@ const CreateUserForm = () => {
             body: JSON.stringify(newUser)
         });
         const data = await res.json();
-        if (res.status == 200) {
+        if (res.status === 200) {
             handleLoading(false);
             hideAndShowSpinner(true);
             routeChange('/abm-usuarios');

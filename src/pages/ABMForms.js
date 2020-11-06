@@ -43,7 +43,7 @@ class ABMForms extends Component {
 		const data = await res.json();
 		console.log(res);
 		console.log(data);
-		if (res.status == 200) {
+		if (res.status === 200) {
 			window.location.reload(false);
 		}
 	}
@@ -67,7 +67,7 @@ class ABMForms extends Component {
 							onClick={() => this.routeChange('/create-forms')} />
 					</div>
 				</div>
-				{this.state.forms.length == 0 &&
+				{this.state.forms.length === 0 &&
 					<Alert severity="info" hidden={!this.state.hideLoading}>
 						Aún no se han generado formularios
 					</Alert>

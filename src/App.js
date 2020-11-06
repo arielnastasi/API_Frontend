@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import ABMForms from './pages/ABMForms';
@@ -16,7 +16,7 @@ const auth = isLoggedIn();
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={(props) => (
-		auth == true
+		auth === true
 			? <Component {...props} />
 			: <Redirect to='/login' />
 	)} />

@@ -42,7 +42,7 @@ class ABMUsers extends Component {
 		const data = await res.json();
 		console.log(res);
 		console.log(data);
-		if (res.status == 200) {
+		if (res.status === 200) {
             window.location.reload(false);
         }
 	}
@@ -91,7 +91,7 @@ class ABMUsers extends Component {
 											</IconButton>
 										</Fragment>
 									}
-									{user.email == this.state.loggedUser &&
+									{user.email === this.state.loggedUser &&
 										<Fragment>
 											<IconButton aria-label="delete" disabled color="secondary">
 												<DeleteIcon />
