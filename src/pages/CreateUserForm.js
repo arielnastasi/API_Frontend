@@ -18,7 +18,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FormControl, InputLabel, Select } from '@material-ui/core';
 import GreenButton from '../components/greenButton/GreenButton';
 import OrangeButton from '../components/orangeButton/OrangeButton';
-const { REACT_APP_URL } = process.env;
+//const { REACT_APP_URL } = process.env;
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -27,17 +27,10 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%', 
         marginTop: theme.spacing(3),
     },
-    // greenButton: {
-    //     margin: theme.spacing(3, 0, 2),
-    //     color: 'white',
-    //     backgroundColor: '#279daa',
-    //     '&:hover': {
-    //         backgroundColor: "#2aadbb",
-    //     },
-    //},
+    
 }));
 
 
@@ -60,7 +53,6 @@ const CreateUserForm = () => {
     const classes = useStyles();
     const history = useHistory();
     const { firstName, lastName, rol, email, password } = userData;
-    const emailRegex = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
 
     // Functions
 
@@ -91,13 +83,6 @@ const CreateUserForm = () => {
         } else {
             handleErrorInForm(false);
             createUser();
-            // if (emailRegex.test(email) === false) {
-            //     handleInvalidEmail(true);
-            //     return
-            // } else {
-            //     handleInvalidEmail(false);
-            //     createUser();
-            // }
         }
     }
 
@@ -110,7 +95,7 @@ const CreateUserForm = () => {
             password: password,
         }
         console.log(newUser);
-        const res = await fetch(`${REACT_APP_URL}/users/createUser`, {
+        const res = await fetch(`https://interactivas-backend.herokuapp.com/api/users/createUser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
