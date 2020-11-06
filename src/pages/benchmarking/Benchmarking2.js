@@ -18,45 +18,57 @@ class Benchmarking2 extends Component {
   constructor() {
     super();
     this.state = {
-      formularios
+      formularios:[]
     }
     this.handleAddTodo = this.handleAddTodo.bind(this);
   }
 
+  async componentDidMount() {
+    /*http://localhost:8001*/
+		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getForms', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		});
+		const data = await res.json();
+		//this.state.hideLoading = true;
+    console.log(data.forms);
+    this.handleAddTodo(data.forms);
+	}
+
 
   handleAddTodo(form) {
     this.setState({
-      formularios: [...this.state.formularios, form]
+      formularios: form
     })
   }
 
   render() {
-    const formularios = this.state.formularios.map((form, i) => {
-      
+    const formularios = this.state.formularios.map((form, i) => { 
       return (
         <div className="col-md-4" key={i}>
           <div className="tarjeta card mt-4 mb-4 pt-3 ">
             <div className="card-title text-center">
-              <h3>{form.formName}</h3>
+              <h3>{form.name}</h3>
               <span className="badge badge-pill badge-danger ml-auto">
                 {form._id}
               </span>
             </div>
             <div className="card-body">
-              {form.formDescription}
+              {form.sector}
             </div>
             <div className="card-footer ">
               <button 
                 type="button" 
                 className="btn btn-info" 
                 data-toggle="modal" 
-                data-target={"#"+form._id}
-               >
+                data-target={"#"+form._id}>
                 Abrir
               </button>
               <Pop 
-                titulo={form.formName} 
-                descripcion={form.formDescription} 
+                titulo={form.name} 
+                descripcion={form.sector} 
                 id={form._id}>
               </Pop>
             </div>
@@ -80,14 +92,12 @@ class Benchmarking2 extends Component {
         ></Carousel>
         <div className="container">
           <div className="row mt-4">
-
             <div className="col-md-12">
               <div className="row">
                 {formularios}
               </div>
             </div>
           </div>
-          
         </div>
         </div>
     );
