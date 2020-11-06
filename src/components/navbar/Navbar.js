@@ -62,12 +62,53 @@ function Navbar() {
                 null
                 :
                 <IconContext.Provider value={{ color: '#fff' }}>
-                    <div className='navbar'>
+                    <div className="pos-f-t navbarMobile">
+                        <div className="collapse" id="navbarToggleExternalContent">
+                            <div className="bg-green p-4">
+                                <h5 className="text-white">¡Buenos días  {user.name}!</h5>
+                                {
+                                    user.role === 'ADMIN' ?
+                                        SidebarData.map((item, index) => {
+                                            return (
+                                                <li className='nav-text' key={index}>
+                                                    <Link to={item.path}>
+                                                        {item.icon}
+                                                        <span>{item.title}</span>
+                                                    </Link>
+                                                </li>
+                                            );
+                                        }) :
+                                        SidebarData.filter((item) => item.role.includes('USER'))
+                                            .map((item, index) => {
+                                                return (
+                                                    <li className='nav-text' key={index}>
+                                                        <Link to={item.path}>
+                                                            {item.icon}
+                                                            <span>{item.title}</span>
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })
+                                }
+                                <li className='nav-text'>
+                                    <Link to="nothing" onClick={signOut}>
+                                        <IoIcons.IoIosPaper />
+                                        <span>Cerrar sesión</span>
+                                    </Link>
+                                </li>
+                            </div>
+                        </div>
+                        <nav className="navbar navbar-dark bg-dark">
+                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon m-0"></span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div className="navbar navbarDesktop">
                         <Grid container
                             direction="row"
                             justify="space-between"
-                            alignItems="center"
-                            spacing={8}>
+                            alignItems="center">
                             <Grid item xs={12} sm={6}>
                                 <Link to='#' className='menu-bars'>
                                     <FaIcons.FaBars onClick={showSidebar} />
@@ -105,14 +146,15 @@ function Navbar() {
                                         );
                                     }) :
                                     SidebarData.filter((item) => item.role.includes('USER'))
-                                    .map((item, index) => {
+                                        .map((item, index) => {
                                             return (
-                                                 <li key={index} className={item.cName}>
-                                                      <Link to={item.path}>
-                                                          {item.icon}
-                                                          <span>{item.title}</span>
-                                                          </Link></li>
-                                                          );})
+                                                <li key={index} className={item.cName}>
+                                                    <Link to={item.path}>
+                                                        {item.icon}
+                                                        <span>{item.title}</span>
+                                                    </Link></li>
+                                            );
+                                        })
                             }
                             <li className='nav-text'>
                                 <Link to="nothing" onClick={signOut}>

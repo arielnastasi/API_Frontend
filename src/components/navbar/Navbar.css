@@ -12,6 +12,10 @@
     background: none;
 }
 
+.bg-green {
+    background-color: #279daa;
+}
+
 .nav-menu {
     background-color: #279daa;
     width: 250px;
@@ -25,7 +29,7 @@
 }
 
 .nav-menu.active {
-    left:0;
+    left: 0;
     transition: 350ms;
 }
 
@@ -50,6 +54,10 @@
     border-radius: 4px;
 }
 
+.navbarMobile {
+    display: none;
+}
+
 .nav-text a:hover {
     background-color: #e3703b;
 }
@@ -72,20 +80,23 @@ span {
     align-items: right;
 }
 
+.navbar-brand-sidebar img {
+    width: 130px;
+    border-radius: 40%;
+    align-items: initial;
+}
 
+@keyframes funnyColor {
+    from {
+        background-color: #e3703b;
+    }
+    to {
+        background-color: #2dc5d6;
+    }
+}
 
- .navbar-brand-sidebar img {
-     width: 130px;
-     border-radius: 40%;
-     align-items: initial;
- }
-
- @keyframes funnyColor {
-    from {background-color:#e3703b;}
-    to {background-color: #2dc5d6; }
-  }
-
-  .typography {
+.typography {
+    text-decoration: wavy;
     color: white;
     font-size: 20px;
     width: 100%;
@@ -94,4 +105,16 @@ span {
     align-items: center;
     padding: 0 16px;
     border-radius: 4px;
-  }
+}
+
+@media (max-width: 900px) {
+
+    .navbarDesktop {
+        display: none;
+    }
+
+    .navbarMobile {
+        display: block;
+    }
+    
+}
