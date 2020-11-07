@@ -1,0 +1,73 @@
+[33m80b70da[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m subo hasta form
+[33m02232d8[m subo hasta form
+[33mbcfd0a8[m mobile navbar
+[33maa01b19[m logica de roles
+[33ma4e26b2[m guardo logica roles
+[33m9f41ccb[m 26/10
+[33ma5a1394[m se corrije en multiple choice error en create forms
+[33m31bb59b[m subo normalización de botones en abm form
+[33m4422a4a[m Merge branch 'master' of https://github.com/arielnastasi/API_Frontend
+[33m492966e[m .env
+[33mf4ba062[m crud forms first version
+[33m757ab6c[m agrego campo role  en User
+[33m76ed808[m users crud with backend
+[33mf2dbfac[m https
+[33mf44caa5[m get y delete de usuarios en front end
+[33me79e91e[m integración login con backend
+[33m0297294[m logica para manejo de sesiones
+[33m1b01715[m boton info
+[33mc80c2ba[m arregle el modal
+[33m4f7c474[m subo componentes green y orange
+[33me51d8af[m carousel
+[33me6271e4[m Propongo estructura componentes/pages
+[33m4438976[m benchmarking 2
+[33m09505cd[m benchmarking 2
+[33m86a47e2[m cambio nombre de cases
+[33m60e2025[m se añade campo formName
+[33mb735560[m mejoro logo
+[33mde01811[m subo logito
+[33m356768f[m agrego imagen
+[33m4f58f6a[m sidebar
+[33m5a5d8e9[m added validation to prevent empty options
+[33m304168f[m added question options with chips
+[33mbeccfb3[m added question options with chips
+[33md0103e9[m agrego card a benchmark
+[33m6b43bf0[m key
+[33m621129b[m nadaPusheee
+[33m2f08876[m conflictozzz
+[33m01e2c67[m Merge pull request #4 from arielnastasi/development
+[33m53176bf[m[33m ([m[1;31morigin/development[m[33m)[m 19/9
+[33m65fd9b2[m Merge branch 'development' into master
+[33m0db6048[m make it better
+[33m8c2bdde[m make it better
+[33m193c5dc[m 19/9
+[33m97e4291[m forros
+[33m5cd9e46[m benchmarking & login modifications
+[33m7c2c548[m 18/9
+[33md68aa99[m 18/9
+[33m968fc86[m 18/9
+[33m6665b26[m forms available screen
+[33m1371f29[m navbar
+[33mbf41adf[m sdf
+[33m9960118[m creo boton generico
+[33m5b62ed9[m Cambio en login estados por hook
+[33m96fcf63[m development first commit
+[33md77175b[m ariel
+[33m20e6fed[m ari
+[33mdfd46ca[m PopUp
+[33mf4da7ac[m desacoplar navbar a un componente diferente
+[33mb092dd8[m readme
+[33m05e6d26[m Primer Login-parte 1
+[33m7cb2ba1[m update abm users
+[33me755f90[m updated navbar and look and fell
+[33mec74a3c[m updated navbar and look and fell
+[33m34c848f[m 9/9
+[33m8b62359[m estructura generada!
+[33m81374d0[m estructura generada!
+[33md9e95fa[m estructura generada!
+[33m3d64ce9[m Estructura
+[33mf7f7aad[m estructura folders
+[33m2e4efd7[m front
+[33m22b7a63[m vista y componentes
+[33me661211[m first commit
+[33mb80b274[m Initialize project using Create React App

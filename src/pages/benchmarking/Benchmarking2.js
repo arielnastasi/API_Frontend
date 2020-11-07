@@ -1,41 +1,41 @@
 import React, { Component } from 'react';
 import "./estilo.css"
 import "./tarjeta.css"
+import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import Barra from '../../components/navbar-publica/Barra';
+import SimpleDialog from '../../components/SimpleDialog';
 
-// data
-import { formularios } from '../../formularios.json';
 
 // subcomponents
-import Pop from './Pop';
 import Carousel from './Carousel';
 import im1 from '../../imagenes/negocios4.jpg'
 import im2 from '../../imagenes/negocios1.jpg'
 import im3 from '../../imagenes/negocios5.jpg'
+import GreenButton from '../../components/greenButton/GreenButton';
+import { Typography } from '@material-ui/core';
 
 
 class Benchmarking2 extends Component {
   constructor() {
     super();
     this.state = {
-      formularios:[]
+      formularios: [],
+      open: false,
+      selectedValue: ''
     }
     this.handleAddTodo = this.handleAddTodo.bind(this);
   }
 
   async componentDidMount() {
-    /*http://localhost:8001*/
-		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getForms', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-		});
-		const data = await res.json();
-		//this.state.hideLoading = true;
-    console.log(data.forms);
+    const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getForms', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const data = await res.json();
     this.handleAddTodo(data.forms);
-	}
+  }
 
 
   handleAddTodo(form) {
@@ -44,8 +44,23 @@ class Benchmarking2 extends Component {
     })
   }
 
+  handleClickOpen = () => {
+    this.setState({
+      open: true
+    })
+  };
+
+  handleClose = (value) => {
+    this.setState({
+      open: false
+    })
+    this.setState({
+      selectedValue: value
+    });
+  };
+
   render() {
-    const formularios = this.state.formularios.map((form, i) => { 
+    const formularios = this.state.formularios.map((form, i) => {
       return (
         <div className="col-md-4" key={i}>
           <div className="tarjeta card mt-4 mb-4 pt-3 ">
@@ -59,22 +74,21 @@ class Benchmarking2 extends Component {
               {form.sector}
             </div>
             <div className="card-footer ">
-              <button 
-                type="button" 
-                className="btn btn-info" 
-                data-toggle="modal" 
-                data-target={"#"+form._id}>
-                Abrir
-              </button>
-              <Pop 
-                titulo={form.name} 
-                descripcion={form.sector} 
-                id={form._id}>
-              </Pop>
+              <GreenButton
+                nombreBoton='Abrir'
+                startIcon={<QuestionAnswerOutlinedIcon />}
+                onClick={this.handleClickOpen} />
+              <div>
+                <br />
+                <SimpleDialog selectedValue={this.state.selectedValue}
+                  open={this.state.open} onClose={this.handleClose}
+                  questionList={form.questionList}
+                />
+              </div>
             </div>
           </div>
         </div>
-        
+
       )
     });
 
@@ -82,9 +96,9 @@ class Benchmarking2 extends Component {
     return (
       <div className="App fondo">
         <Barra
-          cantFormularios = {this.state.formularios.length}
+          cantFormularios={this.state.formularios.length}
         ></Barra>
-        
+
         <Carousel
           imagen1={im1}
           imagen2={im2}
@@ -99,7 +113,7 @@ class Benchmarking2 extends Component {
             </div>
           </div>
         </div>
-        </div>
+      </div>
     );
   }
 }
