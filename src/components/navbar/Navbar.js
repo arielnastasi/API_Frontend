@@ -65,7 +65,7 @@ function Navbar() {
                     <div className="pos-f-t navbarMobile">
                         <div className="collapse" id="navbarToggleExternalContent">
                             <div className="bg-green p-4">
-                                <h5 className="text-white">¡Buenos días  {user.name}!</h5>
+                                <h5 className="text-white">¡Buenos días,  {user.name}!</h5>
                                 {
                                     user.role === 'ADMIN' ?
                                         SidebarData.map((item, index) => {
@@ -109,21 +109,19 @@ function Navbar() {
                             direction="row"
                             justify="space-between"
                             alignItems="center">
-                            <Grid item xs={12} sm={6}>
+                            <Grid item>
                                 <Link to='#' className='menu-bars'>
                                     <FaIcons.FaBars onClick={showSidebar} />
                                 </Link>
                             </Grid>
-                            <Grid item xs={12} sm={3}>
-                                <Typography
-                                    className='typography'
-                                    variant="h6">
-                                    ¡ Ten un lindo día  {user.name} !
-                                    </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={3} className='navbar-brand-sidebar'>
-                                <img src={logo} alt='Observatorio' />
-                            </Grid>
+                            <div className="d-flex align-items-center">
+                                <Grid item className="navbar-brand-sidebar mr-2">
+                                    <h5 className="text-white m-0">¡Buenos días,  {user.name}!</h5>
+                                </Grid>
+                                <Grid item className="navbar-brand-sidebar ml-2">
+                                    <img src={logo} alt='Observatorio' />
+                                </Grid>
+                            </div>
                         </Grid>
                     </div>
                     <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

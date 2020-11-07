@@ -1,6 +1,6 @@
 .navbar {
     background: linear-gradient(45deg, #279daa 30%, #20cadd 90%);
-    height: 70px;
+    height: 80px;
     display: flex;
     align-items: right;
     justify-content: start;
@@ -81,9 +81,7 @@ span {
 }
 
 .navbar-brand-sidebar img {
-    width: 130px;
-    border-radius: 40%;
-    align-items: initial;
+    width: 150px;
 }
 
 @keyframes funnyColor {
