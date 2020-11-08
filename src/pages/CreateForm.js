@@ -23,6 +23,7 @@ import GreenButton from '../components/greenButton/GreenButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +59,7 @@ const CreateUserForm = () => {
 
 	const [questionList, handleQuestionList] = useState([]);
 	let [option, handleOptionValue] = useState('');
+	const [optionError, handleOptionError] = useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [optionsList, handleOptionsList] = useState([]);
 
@@ -110,12 +112,16 @@ const CreateUserForm = () => {
 	}
 
 	const addOptionToOptionsList = (e) => {
-		console.log(`Se agregó "${option}" a la lista de opciones`);
-		if (option !== '') {
+		if (option !== '' && !isNaN(option)) {
+			console.log(`Se agregó "${option}" a la lista de opciones`);
+			handleOptionError(false);
 			handleOptionsList([
 				...optionsList, option
 			]);
 			handleOptionValue('');
+		} else {
+			console.log(`El valor: "${option}" es inválido, solo se permiten números`);
+			handleOptionError(true);
 		}
 	}
 
@@ -162,21 +168,21 @@ const CreateUserForm = () => {
 	}
 
 	const handleClick = () => {
-        setOpen(true);
-    };
+		setOpen(true);
+	};
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
 
 	const generateForm = async () => {
 		if (formName.trim() === '') {
-            handleClick();
-            return
-        } else {
+			handleClick();
+			return
+		} else {
 			let newForm = {
 				name: formName,
 				sector: formSector,
@@ -310,10 +316,15 @@ const CreateUserForm = () => {
 										/>
 									</Grid>
 									<Grid item xs={12}>
+										{optionError === true ?
+											<Alert severity="error">¡Las opciones deben ser números!</Alert>
+											:
+											null
+										}
 										<OrangeButton
 											nombreBoton="Añadir opción"
 											onClick={() => addOptionToOptionsList()}
-											startIcon={<AddCircleIcon />} 
+											startIcon={<AddCircleIcon />}
 										/>
 									</Grid>
 									<div className="my-3">

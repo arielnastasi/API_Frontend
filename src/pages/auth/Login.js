@@ -114,9 +114,11 @@ const Login = () => {
     }
 
     useEffect(() => {
-        console.log('No hay ningún token de usuario en Local Storage');
         if (auth === true) {
+            console.log('Hay un token en localStorage');
             routeChange('/abm-formularios');
+        } else {
+            console.log('No hay token en localStorage');
         }
     });
 
@@ -157,11 +159,11 @@ const Login = () => {
                             nombreBoton="Iniciar sesión"
                             onClick={validateForm} />
                         <Grid container>
-                            <Grid item xs>
+                            {/* <Grid item xs>
                                 <Link variant="body2">
                                     ¿Olvidaste tu contraseña?
                                 </Link>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                         <Box mt={5}>
                             <Copyright />
