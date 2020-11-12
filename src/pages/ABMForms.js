@@ -28,6 +28,7 @@ class ABMForms extends Component {
 		});
 		const data = await res.json();
 		this.state.hideLoading = true;
+		console.log(data.forms);
 		this.setState({ forms: data.forms })
 	}
 
