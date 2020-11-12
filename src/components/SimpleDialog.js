@@ -1,63 +1,52 @@
-
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import { orange } from '@material-ui/core/colors';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 
-const useStyles = makeStyles({
-  avatar: {
-    backgroundColor: orange[100],
-    color: orange[600],
-  },
-});
+function FormDialog(props) {
 
-function SimpleDialog(props) {
-    const classes = useStyles();
-    const { onClose, selectedValue, open,  questionList} = props;
-  
-    const handleClose = () => {
-      onClose(selectedValue);
-    };
-  
-    const handleListItemClick = (value) => {
-      console.log(questionList)
-      onClose(value);
-    };
+	const { onClose, selectedValue, open } = props;
 
-   
-  
-    return (
-      <Dialog onClose={handleClose} fullWidth={true} aria-labelledby="simple-dialog-title" open={open}>
-        <DialogTitle id="simple-dialog-title">Responda las siguientes preguntas</DialogTitle>
-        <List>
-          {questionList.map((question, index) => (
-            <ListItem button onClick={() => handleListItemClick(question.question)} key={index}>
-              <ListItemAvatar>
-                <Avatar className={classes.avatar}>
-                  <HelpOutlineOutlinedIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={question.question} />
-            </ListItem>
-          ))}
-        </List>
-      </Dialog>
-    );
-  }
-  
-  SimpleDialog.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-    selectedValue: PropTypes.string.isRequired,
-  };
+	const handleClose = () => {
+		onClose();
+	};
 
-export default SimpleDialog;
+	console.log(selectedValue)
+
+	return (
+		<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+			<DialogTitle id="form-dialog-title">{selectedValue}</DialogTitle>
+			<DialogContent>
+				<DialogContentText>
+					To subscribe to this website, please enter your email address here. We will send updates
+					occasionally.
+          </DialogContentText>
+				<TextField
+					autoFocus
+					margin="dense"
+					id="name"
+					label="Email Address"
+					type="email"
+					fullWidth
+				/>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleClose} color="primary">
+					Cancel
+          </Button>
+				<Button onClick={handleClose} color="primary">
+					Subscribe
+          </Button>
+			</DialogActions>
+		</Dialog>
+	);
+}
+
+export default FormDialog;

@@ -22,34 +22,38 @@ function Navbar() {
 
     // Functions
 
-    //this
+
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const mailUser = localStorage.getItem('loggedUser');
-        fetchData()
-        async function fetchData() {
-            const userRequest = {
-                email: mailUser
-            }
-            //invoca la api para obtener la información del usuario (roles y permisos)
-            const res = await fetch('https://interactivas-backend.herokuapp.com/api/users/me', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token': token
-                },
-                body: JSON.stringify(userRequest)
-            });
-            const data = await res.json();
-            setUser(data.user)
+        if (token) {
+            console.log('Trayendo datos del usuario...');
+            fetchUserData();
         }
-
     });
 
     const signOut = () => {
         console.log('Hay que cerrar la sesión y expulsar');
         SignOut();
         window.location.reload(false);
+    }
+
+    const fetchUserData = async () => {
+        const token = localStorage.getItem('token');
+        const mailUser = localStorage.getItem('loggedUser');
+        const userRequest = {
+            email: mailUser
+        }
+        //invoca la api para obtener la información del usuario (roles y permisos)
+        const res = await fetch('https://interactivas-backend.herokuapp.com/api/users/me', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify(userRequest)
+        });
+        const data = await res.json();
+        setUser(data.user);
     }
 
 

@@ -11,7 +11,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useHistory } from "react-router-dom";
 import GreenButton from '../components/greenButton/GreenButton';
 import { Button, makeStyles } from '@material-ui/core';
-
+import { useParams } from "react-router-dom";
+  
 
 const useStyles = makeStyles((theme) => ({
     
@@ -22,10 +23,13 @@ const useStyles = makeStyles((theme) => ({
     },
     checked: {}
 }));
+
 const Form = () => {
 
     // States & Variables 
     const classes = useStyles();
+    let { id } = useParams();
+
     const [formData, handleFormData] = useState({
         email: '',
         razonSocial: '',
@@ -44,6 +48,7 @@ const Form = () => {
 
     useEffect(() => {
         titulo = location.state;
+        console.log(id)
     }, [location]);
 
     // Functions
@@ -96,7 +101,7 @@ const Form = () => {
                                     <hr />
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
-                                    <h5>Mail</h5>
+                                    <h5>Formulario id: {id}</h5>
                                     <TextField
                                         id="email"
                                         label="Correo electrónico"

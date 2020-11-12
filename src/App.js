@@ -49,7 +49,7 @@ function App() {
 				<PrivateRoute path="/abm-formularios" component={ABMForms} />
 				<PrivateRoute path="/create-users" component={CreateUserForm} />
 				<PrivateRoute path="/create-forms" component={CreateForm} />
-				<PrivateRoute path="/form/:id" component={Form} />
+				<Route path="/form/:id" component={Form} />
 				<Route path="/benchmarking2" component={Benchmarking} />
 			</Switch>
 		</Router>
