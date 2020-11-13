@@ -57,7 +57,6 @@ function Navbar() {
     }
 
 
-
     return (
         <Fragment>
             {location.pathname === '/login' || location.pathname === '/benchmarking' || location.pathname.includes('/form')

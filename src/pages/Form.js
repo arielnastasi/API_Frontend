@@ -48,10 +48,20 @@ const Form = () => {
 
     useEffect(() => {
         titulo = location.state;
-        console.log(id)
+        console.log(id);
+        fetchFormData(id);
+        window.scrollTo(0, 0);
     }, [location]);
 
     // Functions
+
+    const fetchFormData = async (_id) => {
+        const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/getForm/${id}`, {
+            method: 'GET',
+        });
+        const data = await res.json();
+        console.log(data);
+    }
 
     const validateForm = (e) => {
         e.preventDefault();
