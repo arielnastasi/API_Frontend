@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import logo from '../../imagenes/logo.png'
 import * as IoIcons from "react-icons/io";
 import { SignOut } from '../../pages/auth/auth.service';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid} from '@material-ui/core';
 
 function Navbar() {
     const [sidebar, setSidebar] = useState(false);
@@ -68,7 +68,7 @@ function Navbar() {
                     <div className="pos-f-t navbarMobile">
                         <div className="collapse" id="navbarToggleExternalContent">
                             <div className="bg-green p-4">
-                                <h5 className="text-white">¡Buenos días,  {user.name}!</h5>
+                                <h5 style={{color:"#279daa"}}>¡Buenos días,  {user.name}!</h5>
                                 {
                                     user.role === 'ADMIN' ?
                                         SidebarData.map((item, index) => {
@@ -119,7 +119,7 @@ function Navbar() {
                             </Grid>
                             <div className="d-flex align-items-center">
                                 <Grid item className="navbar-brand-sidebar mr-2">
-                                    <h5 className="text-white m-0">¡Buenos días,  {user.name}!</h5>
+                                    <h5 style={{color:"#279daa"}}>¡Buenos días,  {user.name}!</h5>
                                 </Grid>
                                 <Grid item className="navbar-brand-sidebar ml-2">
                                     <img src={logo} alt='Observatorio' />
