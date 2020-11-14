@@ -6,6 +6,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import GreenButton from '../components/greenButton/GreenButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import { orange } from '@material-ui/core/colors';
 
 
 class ABMForms extends Component {
@@ -93,7 +94,7 @@ class ABMForms extends Component {
 									<td className="align-middle">
 										<Fragment>
 											<IconButton onClick={() => this.deleteForm(form._id)} aria-label="delete" color="secondary">
-												<DeleteIcon />
+												<DeleteIcon style={{ color: orange[900] }}/>
 											</IconButton>
 										</Fragment>
 									</td>

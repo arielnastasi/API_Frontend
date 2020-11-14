@@ -5,16 +5,17 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import logo from '../imagenes/logo.png'
 import { useLocation } from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SendIcon from '@material-ui/icons/Send';
 import { useHistory } from "react-router-dom";
 import GreenButton from '../components/greenButton/GreenButton';
 import OrangeButton from '../components/orangeButton/OrangeButton';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
-import { QuestionAnswerOutlined } from '@material-ui/icons';
+import Barra from '../components/navbar-publica/Barra';
+import { orange } from '@material-ui/core/colors';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,12 +38,20 @@ const Form = () => {
         nombreForm: '',
         email: '',
         razonSocial: '',
-        preguntas: []
+        preguntas: [{
+            _id: 0,
+            quesion: '',
+            selectedResponse:''
+        }],
+        sizeBussines:''
     });
 
-    const {nombreForm, email, razonSocial, preguntas } = formData;
+    const { nombreForm, email, razonSocial, preguntas,sizeBussines} = formData;
     const [showResult, handleSowResult] = useState(true);
     const [hiddenForm, handleHiddenForm] = useState(false);
+
+    //para probar el value
+    const [value, setValue] = useState('');
 
 
     const location = useLocation();
@@ -64,8 +73,11 @@ const Form = () => {
         });
         const data = await res.json();
         console.log(data);
-        handleFormData({nombreForm:data.form.name});
-        
+        handleFormData({
+            nombreForm: data.form.name,
+            preguntas: data.form.questionList
+        });
+
     }
 
     const validateForm = (e) => {
@@ -74,7 +86,8 @@ const Form = () => {
         handleHiddenForm(true);
         console.log(`Usted ingresó los siguientes datos
                      Email: ${email}
-                     Razon social: ${razonSocial}`);
+                     Razon social: ${razonSocial}
+                     cantPreguntas: ${preguntas.length}`);
     }
 
     const getFormData = (e) => {
@@ -82,6 +95,8 @@ const Form = () => {
             ...formData,
             [e.target.name]: e.target.value
         })
+
+        console.log(e.target.value)
     }
 
     const routeChange = (path) => {
@@ -92,21 +107,50 @@ const Form = () => {
 
     return (
         <Fragment>
-            <nav className="navbar navbar-light bg-white">
-                <a className="navbar-brand" href="/">
-                    <img src={logo} width="200px" alt='observatorio' />
-						Benchmarking
-  				</a>
-            </nav>
+            <Barra />
             <div className="bg-observatorio" style={{ height: 100 + 'vh' }}>
                 <Container component="main" maxWidth="sm" className="bg-white p-5">
                     <div hidden={hiddenForm}>
                         <form noValidate>
                             <Grid container spacing={2} justify="center" alignContent="center">
                                 <Grid item xs={12} className="my-2">
-                                    <QuestionAnswerOutlined/>
-                                    <h3>{nombreForm}</h3>
                                     <h5>Formulario id: {id}</h5>
+                                    <h2><HelpOutlineIcon style={{ color: orange[900] }} /> {nombreForm}</h2>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {preguntas.map((val, i) => {
+                                        return (
+                                            val.questionType === "Multiple choice" ?
+                                                <Fragment key={i}>
+                                                    <Typography>{val.question}</Typography>
+                                                    <RadioGroup  aria-label="gender" name={val._id} value={value} onChange={getFormData}>
+                                                    {val.options.map((item, index) => {
+                                                        return (<div key={index}>
+                                                                <FormControlLabel value={item} control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label={item} />
+                                                        </div>)}
+                                                    )}
+                                                    </RadioGroup>
+                                                </Fragment>
+                                                : <Fragment key={i}>
+                                                    <Grid item xs={12}>
+                                                        <Typography >{val.question}</Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12} className="my-2">
+                                                        <TextField
+                                                            id={val}
+                                                            label="Respuesta"
+                                                            name="respuesta"
+                                                            rows={4}
+                                                            fullWidth
+                                                            defaultValue=""
+                                                            variant="outlined"
+                                                            onChange={getFormData}
+                                                            required
+                                                        />
+                                                    </Grid>
+                                                </Fragment>
+                                        )
+                                    })}
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
                                     <TextField
@@ -136,24 +180,10 @@ const Form = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
-                                    <h5>Pregunta 1</h5>
-                                    <TextField
-                                        id="pregunta1"
-                                        name="pregunta1"
-                                        multiline
-                                        rows={4}
-                                        fullWidth
-                                        defaultValue=""
-                                        variant="outlined"
-                                        onChange={getFormData}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} className="my-2">
-                                    <h5>Pregunta 2</h5>
-                                    <RadioGroup aria-label="gender" name="pregunta2" onChange={getFormData}>
-                                        <FormControlLabel value="Femenino" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Female" />
-                                        <FormControlLabel value="Masculino" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Male" />
-                                        <FormControlLabel value="Other" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Other" />
+                                    <h5>Tamañio de la empresa</h5>
+                                    <RadioGroup aria-label="gender" name="size" onChange={getFormData}>
+                                        <FormControlLabel value="medium" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana" />
+                                        <FormControlLabel value="small" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña" />
                                     </RadioGroup>
                                 </Grid>
                             </Grid>
@@ -167,7 +197,7 @@ const Form = () => {
                                 <Grid item xs={12} sm={6}>
                                     <GreenButton
                                         nombreBoton="Enviar"
-                                        startIcon={<SendIcon/>}
+                                        startIcon={<SendIcon />}
                                         onClick={validateForm}
                                     />
                                 </Grid>

@@ -82,6 +82,7 @@ span {
 
 .navbar-brand-sidebar img {
     width: 150px;
+    box-shadow: 0 3px 5px 2px white;
 }
 
 @keyframes funnyColor {
