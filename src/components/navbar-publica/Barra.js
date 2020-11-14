@@ -41,7 +41,7 @@ const Barra = ({ cantFormularios }) => {
             <Grid md={2}>
                 <a >Formularios disponibles: {cantFormularios}<span className="sr-only">(current)</span></a>
             </Grid >
-            <form className="form-inline my-2 my-lg-0">
+            {/* <form className="form-inline my-2 my-lg-0">
                 <Grid item ms={3}>
                     <SearchOutlined />
                     <select className="custom-select mr-sm-2" id="sectores">
@@ -61,7 +61,7 @@ const Barra = ({ cantFormularios }) => {
                         <option value="13">Elaboración de productos de tabaco</option>
                     </select>
                 </Grid>
-            </form>
+            </form> */}
             <Grid item ms={3}>
                 <OrangeButton
                     nombreBoton="Login Empleados"
