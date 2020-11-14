@@ -18,7 +18,7 @@ function Navbar() {
     // States & Variables
     const location = useLocation();
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({user:"User"});
 
     // Functions
 
@@ -54,6 +54,7 @@ function Navbar() {
         });
         const data = await res.json();
         setUser(data.user);
+        console.log(data.user)
     }
 
 

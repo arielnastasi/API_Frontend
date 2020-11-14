@@ -92,6 +92,7 @@ const Login = () => {
         } else {
             setLoginFlag(false);
             hideAndShowSpinner(true);
+            localStorage.delete()
         }
         console.log(data);
     }

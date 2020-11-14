@@ -13,3 +13,20 @@
     border-radius: 40%;
     align-items: initial;
 }
+
+.navbarMobile {
+    display: none;
+}
+
+
+@media (max-width: 900px) {
+
+    .navbarDesktop {
+        display: none;
+    }
+
+    .navbarMobile {
+        display: block;
+    }
+    
+}
