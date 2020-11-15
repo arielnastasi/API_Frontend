@@ -210,10 +210,10 @@ const Form = () => {
                             a la dirección de mail proporcionada.</h5>
                             <p className="card-text">Mail: {formData.email} </p>
                             <p className="card-text">Razón social: {formData.razonSocial} </p>
-                            {/* {formData.preguntas.map((resp,index)=>{
+                            {formData.preguntas.map((resp,index)=>{
                             return(<div key={index}>
-                                    <Typography>{resp}</Typography>
-                                    </div>)})} */}
+                                    <Typography>{resp.selectedResponse}</Typography>
+                                    </div>)})}
                             <h1>¡Gracias por participar!</h1>
                         </div>
                     </div>
