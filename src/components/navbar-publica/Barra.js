@@ -33,17 +33,17 @@ const Barra = ({ cantFormularios }) => {
                 </button>
             </nav>
         </div>
-        <nav className="barra navbar navbarDesktop">
-            <Grid container spacing={2} justify="flex-end">
-                <Grid item xs={3}>
+        <nav className="barra navbarDesktop">
+            <Grid container justify="flex-start">
+                <Grid item xs={6} sm={3} to="/login" className='navbar-brand-sidebar ml-2'>
+                <img src={logo} alt='Observatorio' />  
+                </Grid>
+                <Grid item xs={6} sm={6}></Grid>
+                <Grid item xs={3} sm={2}  >
                     <OrangeButton
                         nombreBoton="Login Empleados"
                         onClick={() => routeChange('/login')}
                     />
-                </Grid>
-                <Grid item xs={5}></Grid>
-                <Grid item xs={3}  to="/login" className='navbar-brand-sidebar ml-2'>
-                    <img src={logo} alt='Observatorio' />
                 </Grid>
             </Grid>
         </nav>

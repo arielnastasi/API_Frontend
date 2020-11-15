@@ -137,7 +137,7 @@ const Form = () => {
                                                     </Grid>
                                                     <Grid item xs={12} className="my-2">
                                                         <TextField
-                                                            id={val}
+                                                            id={val.question}
                                                             label="Respuesta"
                                                             name="respuesta"
                                                             rows={4}
@@ -210,8 +210,10 @@ const Form = () => {
                             a la dirección de mail proporcionada.</h5>
                             <p className="card-text">Mail: {formData.email} </p>
                             <p className="card-text">Razón social: {formData.razonSocial} </p>
-                            <p className="card-text">Pregunta 1: {formData.pregunta1} </p>
-                            <p className="card-text">pregunta2: {formData.pregunta2} </p>
+                            {/* {formData.preguntas.map((resp,index)=>{
+                            return(<div key={index}>
+                                    <Typography>{resp}</Typography>
+                                    </div>)})} */}
                             <h1>¡Gracias por participar!</h1>
                         </div>
                     </div>
