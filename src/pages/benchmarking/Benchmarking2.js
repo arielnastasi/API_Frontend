@@ -43,7 +43,7 @@ const Benchmarking2 = () => {
 
 	const fetchFormsData = async () => {
 		handleHideLoading(false);
-		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getForms', {
+		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getPublishedForms', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'

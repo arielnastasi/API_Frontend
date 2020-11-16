@@ -92,7 +92,7 @@ const Login = () => {
         } else {
             setLoginFlag(false);
             hideAndShowSpinner(true);
-            localStorage.delete()
+            localStorage.removeItem("token");
         }
         console.log(data);
     }
