@@ -104,7 +104,7 @@ const Form = () => {
             method: 'GET',
         });
         const data = await res.json();
-        // console.log(data);
+        
         handleFormData({
             nombreForm: data.form.name,
             preguntas: data.form.questionList,
@@ -120,13 +120,15 @@ const Form = () => {
             email: data.email,
             razonSocial: data.razonSocial
         })
+        console.log(formData)
         validateForm(e);
+        
     }
 
     const validateForm = (e) => {
         e.preventDefault();
-        formData.preguntas.map((item) => {
-            if (item.questionType = 'Multiple choice') {
+        formData.preguntas.forEach((item) => {
+            if (item.questionType === 'Multiple choice') {
                 if (item.sizeBussines === 'small') {
                     if (item.referenceSmallBusiness === item.selectedResponse) {
                         item.msgResult = "La respuesta es igual a la media"
@@ -174,17 +176,18 @@ const Form = () => {
         formData.preguntas.forEach((ques) => {
             if (ques._id === event.target.name) {
                 ques.selectedResponse = event.target.value
-                console.log(ques)
             }
         }
         )
     }
 
     const handleResponseText = (event) => {
+        console.log(event.target.name)
+        console.log(event.target.value)
         formData.preguntas.forEach((ques) => {
-            if (ques._id === event.target.name) {
+            console.log(ques)
+            if (ques.question === event.target.name) {
                 ques.selectedResponse = event.target.value
-                console.log(ques)
             }
         }
         )
