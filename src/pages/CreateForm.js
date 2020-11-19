@@ -249,6 +249,7 @@ const CreateUserForm = () => {
 						id="formName"
 						label="Nombre del formulario"
 						name="formName"
+						inputProps={{maxLength :40}}
 						onChange={getFormaName}
 						value={formName}
 					/>

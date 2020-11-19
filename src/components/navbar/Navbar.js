@@ -29,7 +29,7 @@ function Navbar() {
             console.log('Trayendo datos del usuario...');
             fetchUserData();
         }
-    });
+    }, [location]);
 
     const signOut = () => {
         console.log('Hay que cerrar la sesión y expulsar');

@@ -43,7 +43,7 @@ const Benchmarking2 = () => {
 
 	const fetchFormsData = async () => {
 		handleHideLoading(false);
-		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getForms', {
+		const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/getPublishedForms', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ const Benchmarking2 = () => {
 								Aún hay formularios disponibles en este momento.
 							</Alert>
 						} */}
-						<div className="col">
+						<div className="col" hidden={!hideLoading}>
 							<select className="custom-select mr-sm-2" id="sectores" onChange={(event) => searchFormsBySector(event)}>
 								<option value="default">Seleccionar sector...</option>
 								<option value="all">Todos los sectores</option>

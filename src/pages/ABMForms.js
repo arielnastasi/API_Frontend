@@ -5,6 +5,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import GreenButton from '../components/greenButton/GreenButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Alert from '@material-ui/lab/Alert';
 import { orange } from '@material-ui/core/colors';
 
@@ -37,6 +39,23 @@ class ABMForms extends Component {
 		console.log('must delete form :', id);
 		const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/deleteForm/${id}`, {
 			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				'token': this.state.userToken
+			},
+		});
+		const data = await res.json();
+		console.log(res);
+		console.log(data);
+		if (res.status === 200) {
+			window.location.reload(false);
+		}
+	}
+
+	async switchFormStatus(id) {
+		console.log('must switch form :', id);
+		const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/switchFormStatus/${id}`, {
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'token': this.state.userToken
@@ -94,8 +113,16 @@ class ABMForms extends Component {
 									<td className="align-middle">
 										<Fragment>
 											<IconButton onClick={() => this.deleteForm(form._id)} aria-label="delete" color="secondary">
-												<DeleteIcon style={{ color: orange[900] }}/>
+												<DeleteIcon style={{ color: orange[900] }} />
 											</IconButton>
+											{form.status == "published"
+												? <IconButton onClick={() => this.switchFormStatus(form._id)} aria-label="delete" color="secondary">
+													<VisibilityIcon style={{ color: orange[900] }} />
+												</IconButton>
+												: <IconButton onClick={() => this.switchFormStatus(form._id)} aria-label="delete" color="secondary">
+													<VisibilityOffIcon style={{ color: orange[900] }} />
+												</IconButton>
+											}
 										</Fragment>
 									</td>
 								</tr>
