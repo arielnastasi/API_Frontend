@@ -14,6 +14,7 @@ import OrangeButton from '../../components/orangeButton/OrangeButton';
 import GreenButton from '../../components/greenButton/GreenButton';
 import { SignIn, isLoggedIn } from './auth.service';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { orange } from '@material-ui/core/colors';
 
 
 const Login = () => {
@@ -155,16 +156,11 @@ const Login = () => {
                             onChange={getFormData}
                         />
                         <Alert severity="warning" hidden={loginFLag}>¡Verifica tus credenciales!</Alert>
-                        <LinearProgress color="secondary" hidden={hideSpinner} />
+                        <LinearProgress hidden={hideSpinner} />
                         <GreenButton
                             nombreBoton="Iniciar sesión"
                             onClick={validateForm} />
                         <Grid container>
-                            {/* <Grid item xs>
-                                <Link variant="body2">
-                                    ¿Olvidaste tu contraseña?
-                                </Link>
-                            </Grid> */}
                         </Grid>
                         <Box mt={5}>
                             <Copyright />

@@ -13,11 +13,11 @@
 }
 
 .bg-green {
-    background-color: #279daa;
+    background-color: #00A0B0;
 }
 
 .nav-menu {
-    background-color: #279daa;
+    background-color: #00A0B0;
     width: 250px;
     height: 100vh;
     display: flex;
@@ -67,7 +67,7 @@
 }
 
 .navbar-toggle {
-    background-color: #279daa;
+    background-color: #00A0B0;
     width: 100%;
     height: 80px;
     display: flex;

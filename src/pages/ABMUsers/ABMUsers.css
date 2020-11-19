@@ -4,12 +4,12 @@
 
 .greenButton {
     color: white;
-    background-color: #33c1d1,
+    background-color: #00A0B0,
 
 }
 
 .greenButton:hover() {
-    background-color: #2aadbb;
+    background-color: #00A0B0;
 }
 
 .orangeButton {

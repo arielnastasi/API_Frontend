@@ -120,7 +120,8 @@ function Navbar() {
                             </Grid>
                             <div className="d-flex align-items-center">
                                 <Grid item className="navbar-brand-sidebar mr-2">
-                                    <h5 style={{color:"#279daa"}}>¡Buenos días,  {user.name}!</h5>
+                                    <h5 style={{color:"#279daa"}}>¡Buenos días,  {user.name}</h5>
+                                    <h5 style={{color:"#279daa"}}> tu rol es: {user.role}!</h5> 
                                 </Grid>
                                 <Grid item className="navbar-brand-sidebar ml-2">
                                     <img src={logo} alt='Observatorio' />

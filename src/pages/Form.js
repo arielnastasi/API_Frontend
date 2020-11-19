@@ -11,48 +11,54 @@ import SendIcon from '@material-ui/icons/Send';
 import { useHistory } from "react-router-dom";
 import GreenButton from '../components/greenButton/GreenButton';
 import OrangeButton from '../components/orangeButton/OrangeButton';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Paper, Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 import Barra from '../components/navbar-publica/Barra';
 import { orange } from '@material-ui/core/colors';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-
+import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
 
     radio: {
         '&$checked': {
-            color: '#e3703b'
+            color: '#00A0B0'
         }
     },
-    checked: {}
+    checked: {},
+    paper:{
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1)
+    },}
 }));
 
 const Form = () => {
 
-    // States & Variables 
+    // States & Variables
     const classes = useStyles();
     let { id } = useParams();
 
     const [formData, handleFormData] = useState({
         nombreForm: '',
+        sector: '',
         email: '',
         razonSocial: '',
+        sizeBussines:'',
         preguntas: [{
             _id: 0,
             quesion: '',
-            selectedResponse:''
+            selectedResponse: '',
+            msgResult:''
+            
         }],
-        sizeBussines:''
     });
 
-    const { nombreForm, email, razonSocial, preguntas,sizeBussines} = formData;
+    const { nombreForm, email, razonSocial, preguntas, sector } = formData;
     const [showResult, handleSowResult] = useState(true);
     const [hiddenForm, handleHiddenForm] = useState(false);
-
-    //para probar el value
-    const [value, setValue] = useState('');
-
+    const [value,setValue] =  React.useState('');
 
     const location = useLocation();
     const history = useHistory();
@@ -72,36 +78,76 @@ const Form = () => {
             method: 'GET',
         });
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         handleFormData({
             nombreForm: data.form.name,
-            preguntas: data.form.questionList
+            preguntas: data.form.questionList,
+            sector: data.form.sector
         });
 
     }
 
-    const validateForm = (e) => {
-        e.preventDefault();
-        handleSowResult(false);
-        handleHiddenForm(true);
-        console.log(`Usted ingresó los siguientes datos
-                     Email: ${email}
-                     Razon social: ${razonSocial}
-                     cantPreguntas: ${preguntas.length}`);
-    }
-
-    const getFormData = (e) => {
+    const { register, errors, handleSubmit } = useForm();
+    const onSubmit = (data, e) => {
+        let result = JSON.stringify(data);
+        console.log(data.email)
         handleFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            email: data.email,
+            razonSocial: data.razonSocial
         })
+        validateForm(e);
+	}
 
-        console.log(e.target.value)
+    const validateForm = (e) => {
+        e.preventDefault();  
+        formData.preguntas.map((item)=>{
+            if(item.questionType = 'Multiple choice'){
+                if(item.sizeBussines === 'small'){
+                    if(item.referenceSmallBusiness === item.selectedResponse){
+                        item.msgResult = "La respuesta es igual a la media"
+                    }if (item.selectedResponse > item.referenceSmallBusiness ) {
+                        item.msgResult = "La respuesta es superior a la media"
+                    } else {
+                        item.msgResult = "La respuesta es inferiro a la media"
+                    }
+                }else{
+                    if(item.referenceMediumBusiness === item.selectedResponse){
+                        item.msgResult = "La respuesta es igual a la media"
+                    }if (item.referenceMediumBusiness > item.referenceSmallBusiness ) {
+                        item.msgResult = "La respuesta es superior a la media"
+                    } else {
+                        item.msgResult = "La respuesta es inferiro a la media"
+                    }
+                }
+            }
+        })
+        handleSowResult(false);
+        handleHiddenForm(true);
+        console.log(formData)
     }
 
     const routeChange = (path) => {
         history.push(path);
     }
+
+    const handleChange = (event) => {
+       setValue(event.target.value)
+       handleFormData({
+        ...formData,
+        sizeBussines: event.target.value
+    })
+      };
+
+     const handleResponse = (event) => {
+        formData.preguntas.map((ques)=>{
+            if(ques._id = event.target.name){
+                ques.selectedResponse = event.target.value
+            }
+        }
+        )
+     }
+
 
     // JSX
 
@@ -111,46 +157,54 @@ const Form = () => {
             <div className="bg-observatorio" style={{ height: 100 + 'vh' }}>
                 <Container component="main" maxWidth="sm" className="bg-white p-5">
                     <div hidden={hiddenForm}>
-                        <form noValidate>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <Grid container spacing={2} justify="center" alignContent="center">
                                 <Grid item xs={12} className="my-2">
-                                    <h5>Formulario id: {id}</h5>
-                                    <h2><HelpOutlineIcon style={{ color: orange[900] }} /> {nombreForm}</h2>
+                                    <Paper elevation={1} className={classes.paper}>
+                                        <h2>{nombreForm}</h2>
+                                        <h5><strong>Formulario id: </strong>{id}</h5>
+                                    </Paper>
+                                    <h5><strong>Sector: </strong>{sector}</h5>
+                                </Grid>
+                                <Grid item xs={12} className="my-2">
+                                    <h5>Seleccione el tamañio de la empresa</h5>
+                                    <RadioGroup aria-label="size" name="size" value={value} onChange={handleChange}>
+                                        <FormControlLabel value="medium" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana" />
+                                        <FormControlLabel value="small" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña" />
+                                    </RadioGroup>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    {preguntas.map((val, i) => {
-                                        return (
-                                            val.questionType === "Multiple choice" ?
-                                                <Fragment key={i}>
-                                                    <Typography>{val.question}</Typography>
-                                                    <RadioGroup  aria-label="gender" name={val._id} value={value} onChange={getFormData}>
+                                    {preguntas.map((val, i) => (
+                                        val.questionType === "Multiple choice" ?
+                                            <Fragment key={i}>
+                                                <Typography><HelpOutlineIcon style={{ color: orange[900] }} /> {val.question}</Typography>
+                                                <RadioGroup aria-label={val._id} name={val._id} onChange={handleResponse}>
                                                     {val.options.map((item, index) => {
                                                         return (<div key={index}>
-                                                                <FormControlLabel value={item} control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label={item} />
-                                                        </div>)}
+                                                            <FormControlLabel value={item} control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label={item} />
+                                                        </div>);
+                                                    }
                                                     )}
-                                                    </RadioGroup>
-                                                </Fragment>
-                                                : <Fragment key={i}>
-                                                    <Grid item xs={12}>
-                                                        <Typography >{val.question}</Typography>
-                                                    </Grid>
-                                                    <Grid item xs={12} className="my-2">
-                                                        <TextField
-                                                            id={val.question}
-                                                            label="Respuesta"
-                                                            name="respuesta"
-                                                            rows={4}
-                                                            fullWidth
-                                                            defaultValue=""
-                                                            variant="outlined"
-                                                            onChange={getFormData}
-                                                            required
-                                                        />
-                                                    </Grid>
-                                                </Fragment>
-                                        )
-                                    })}
+                                                </RadioGroup>
+                                            </Fragment>
+                                            : <Fragment key={i}>
+                                                <Grid item xs={12}>
+                                                    <Typography><HelpOutlineIcon style={{ color: orange[900] }} />  {val.question}</Typography>
+                                                </Grid>
+                                                <Grid item xs={12} className="my-2">
+                                                    <TextField
+                                                        id={val.question}
+                                                        label="Respuesta"
+                                                        name={val.question}
+                                                        rows={4}
+                                                        fullWidth
+                                                        defaultValue=""
+                                                        variant="outlined"
+                                                        inputRef={register}
+                                                        required />
+                                                </Grid>
+                                            </Fragment>
+                                    ))}
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
                                     <TextField
@@ -161,7 +215,7 @@ const Form = () => {
                                         fullWidth
                                         defaultValue=""
                                         variant="outlined"
-                                        onChange={getFormData}
+                                        inputRef={register}
                                         required
                                     />
                                 </Grid>
@@ -175,16 +229,9 @@ const Form = () => {
                                         fullWidth
                                         defaultValue=""
                                         variant="outlined"
-                                        onChange={getFormData}
+                                        inputRef={register}
                                         required
                                     />
-                                </Grid>
-                                <Grid item xs={12} className="my-2">
-                                    <h5>Tamañio de la empresa</h5>
-                                    <RadioGroup aria-label="gender" name="size" onChange={getFormData}>
-                                        <FormControlLabel value="medium" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana" />
-                                        <FormControlLabel value="small" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña" />
-                                    </RadioGroup>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2}>
@@ -198,7 +245,7 @@ const Form = () => {
                                     <GreenButton
                                         nombreBoton="Enviar"
                                         startIcon={<SendIcon />}
-                                        onClick={validateForm}
+                                        type="submit"
                                     />
                                 </Grid>
                             </Grid>
@@ -208,12 +255,13 @@ const Form = () => {
                         <div className="card-body">
                             <h5 className="card-title">Los datos ingresados serán analizados y enviados
                             a la dirección de mail proporcionada.</h5>
-                            <p className="card-text">Mail: {formData.email} </p>
-                            <p className="card-text">Razón social: {formData.razonSocial} </p>
-                            {formData.preguntas.map((resp,index)=>{
-                            return(<div key={index}>
+                            <p className="card-text">Mail: {email} </p>
+                            <p className="card-text">Razón social: {razonSocial} </p>
+                            {formData.preguntas.map((resp, index) => {
+                                return (<div key={index}>
                                     <Typography>{resp.selectedResponse}</Typography>
-                                    </div>)})}
+                                </div>)
+                            })}
                             <h1>¡Gracias por participar!</h1>
                         </div>
                     </div>

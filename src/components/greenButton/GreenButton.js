@@ -10,9 +10,9 @@ const useStyles = makeStyles((theme) => ({
     greenButton: {
         //margin: theme.spacing(3, 0, 2),
         color: 'white',
-        backgroundColor: '#279daa',
+        backgroundColor: '#00A0B0',
         '&:hover': {
-            backgroundColor: "#2aadbb",
+            backgroundColor: "#00A0B0",
         },
     }
 }));
@@ -30,8 +30,6 @@ const GreenButton = ({nombreBoton, onClick,startIcon,type/*,type data_target, da
                 startIcon={startIcon}
                 onClick={onClick}
                 type={type}
-                // data-target={"#"+data_target}
-                // data-toggle={data_toggle}
                 >{nombreBoton}
                 </Button>
         </div>
