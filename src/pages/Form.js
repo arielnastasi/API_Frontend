@@ -182,10 +182,7 @@ const Form = () => {
     }
 
     const handleResponseText = (event) => {
-        console.log(event.target.name)
-        console.log(event.target.value)
         formData.preguntas.forEach((ques) => {
-            console.log(ques)
             if (ques.question === event.target.name) {
                 ques.selectedResponse = event.target.value
             }
