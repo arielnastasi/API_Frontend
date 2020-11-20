@@ -24,6 +24,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
+import { orange } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,13 +53,17 @@ const CreateUserForm = () => {
 	const [questionData, handleQuestionData] = useState({
 		questionType: '',
 		question: '',
-		options: '',
+		options: {
+			value:'',
+			type:''
+		},
 		referenceSmallBusiness: '',
 		referenceMediumBusiness: ''
 	});
 
 	const [questionList, handleQuestionList] = useState([]);
-	let [option, handleOptionValue] = useState('');
+	let [optionValue, handleOptionValue] = useState('');
+	let [optionType, handleOptionType] = useState('equal');
 	const [optionError, handleOptionError] = useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [optionsList, handleOptionsList] = useState([]);
@@ -111,16 +116,22 @@ const CreateUserForm = () => {
 		handleOptionValue(e.target.value);
 	}
 
+	const getOptionType = (e) =>{
+		console.log(e.target.value)
+		handleOptionType(e.target.value);
+	}
+
 	const addOptionToOptionsList = (e) => {
-		if (option !== '' && !isNaN(option)) {
-			console.log(`Se agregó "${option}" a la lista de opciones`);
+		if (optionValue !== '' && !isNaN(optionValue)) {
+			console.log(`Se agregó ${optionType} ${optionValue}" a la lista de opciones`);
 			handleOptionError(false);
 			handleOptionsList([
-				...optionsList, option
+				...optionsList,{type:optionType,
+								value:optionValue} 
 			]);
 			handleOptionValue('');
 		} else {
-			console.log(`El valor: "${option}" es inválido, solo se permiten números`);
+			console.log(`El valor: "${optionValue}" es inválido, solo se permiten números`);
 			handleOptionError(true);
 		}
 	}
@@ -312,9 +323,21 @@ const CreateUserForm = () => {
 											id="option"
 											placeholder="Ejemplo: 300"
 											name="option"
-											value={option}
+											value={optionValue}
 											onChange={getOptionData}
 										/>
+									</Grid>
+									<Grid item xs={12}>
+									<InputLabel htmlFor="outlined-age-native-simple">Tipo de opción</InputLabel>
+										<Select
+											native
+											name='optionType'
+											label='Medida'
+											onChange={getOptionType}>
+										<option value={'equal'}>Igual</option>
+										<option value={'higher'}>Mayor</option>
+										<option value={'lower'}>Menor</option>
+										</Select>
 									</Grid>
 									<Grid item xs={12}>
 										{optionError === true ?
@@ -329,8 +352,10 @@ const CreateUserForm = () => {
 										/>
 									</Grid>
 									<div className="my-3">
-										{optionsList.map((option, index) => (
-											<Chip className="m-2" key={index} label={option} onDelete={() => deleteOption(index)} color="primary" />
+										{optionsList.map((option, index) => (<div key={index}>
+											<Chip className="m-2"  label={option.type} onDelete={() => deleteOption(index)} style={{ color: orange[900] }} />
+											<Chip className="m-2"  label={option.value} onDelete={() => deleteOption(index)} color="primary" />
+										</div>
 										))}
 									</div>
 									<Grid item xs={12}>
@@ -406,7 +431,7 @@ const CreateUserForm = () => {
 										<Fragment>
 											<p className="card-text">Opciones:</p>
 											{question.options.map((option, index) => (
-												<p className="card-text" key={index}> - {option}</p>
+												<p className="card-text" key={index}> - {option.type}&nbsp;{option.value}</p>
 											))}
 											<p className="card-text">Referencia promedio para empresas pequeñas: {question.referenceSmallBusiness}</p>
 											<p className="card-text">Referencia promedio para empresas medianas: {question.referenceMediumBusiness}</p>
