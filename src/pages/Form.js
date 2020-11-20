@@ -270,7 +270,7 @@ const Form = () => {
                                     <h5><strong>Sector: </strong>{sector}</h5>
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
-                                    <h5>Seleccione el tamañio de la empresa</h5>
+                                    <h5>Seleccione el tamaño de la empresa</h5>
                                     <RadioGroup aria-label="size" name="size" value={value} onChange={handleChange}>
                                         <FormControlLabel value="medium" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana" />
                                         <FormControlLabel value="small" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña" />
