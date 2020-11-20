@@ -155,7 +155,7 @@ const Form = () => {
         formData.preguntas.forEach((item) => {
             console.log(item)
             if (item.questionType === 'Multiple choice') {
-                if (item.sizeBussines === 'small') {
+                if (formData.sizeBussines === 'small') {
                     if (item.referenceSmallBusiness === item.selectedResponse) {
                         if (item.typeSelectedResponse === 'equal') {
                             item.msgResult = "La respuesta es igual a la media"
@@ -214,7 +214,7 @@ const Form = () => {
         setExpanded(!expanded);
     };
 
-    const handleResponse = (event) => {
+      const handleResponse = (event) => {
         setOptionSelected(parseInt(event.target.value,10));
         formData.preguntas.forEach((ques) => {
             if (ques._id === event.target.name) {
