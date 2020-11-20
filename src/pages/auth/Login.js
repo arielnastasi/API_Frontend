@@ -14,7 +14,6 @@ import OrangeButton from '../../components/orangeButton/OrangeButton';
 import GreenButton from '../../components/greenButton/GreenButton';
 import { SignIn, isLoggedIn } from './auth.service';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { orange } from '@material-ui/core/colors';
 
 
 const Login = () => {

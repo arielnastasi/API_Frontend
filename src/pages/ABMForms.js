@@ -30,8 +30,8 @@ class ABMForms extends Component {
 			},
 		});
 		const data = await res.json();
+		console.log(data);
 		this.state.hideLoading = true;
-		console.log(data.forms);
 		this.setState({ forms: data.forms });
 	}
 
@@ -108,14 +108,16 @@ class ABMForms extends Component {
 								<tr key={i}>
 									<td className="align-middle">{form.name}</td>
 									<td className="align-middle">{form._id}</td>
-									{/* <td className="align-middle">{form.author}</td> */}
-									<td className="align-middle">Anónimo</td>
+									{form.author
+										? <td className="align-middle">{form.author}</td>
+										: <td className="align-middle">Anónimo</td>
+									}
 									<td className="align-middle">
 										<Fragment>
 											<IconButton onClick={() => this.deleteForm(form._id)} aria-label="delete" color="secondary">
 												<DeleteIcon style={{ color: orange[900] }} />
 											</IconButton>
-											{form.status == "published"
+											{form.status === "published"
 												? <IconButton onClick={() => this.switchFormStatus(form._id)} aria-label="delete" color="secondary">
 													<VisibilityIcon style={{ color: orange[900] }} />
 												</IconButton>
