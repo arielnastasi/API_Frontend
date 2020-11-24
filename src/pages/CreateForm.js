@@ -187,7 +187,8 @@ const CreateUserForm = () => {
 			let newForm = {
 				name: formName,
 				sector: formSector,
-				questionList: questionList
+				questionList: questionList,
+				author: localStorage.getItem('loggedUser')
 			}
 			console.log(newForm);
 			const res = await fetch('https://interactivas-backend.herokuapp.com/api/forms/createForm', {
