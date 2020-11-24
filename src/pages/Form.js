@@ -140,11 +140,6 @@ const Form = () => {
     const { register, errors, handleSubmit } = useForm();
 
     const onSubmit = (data, e) => {
-        handleFormData({
-            ...formData,
-            email: data.email,
-            razonSocial: data.razonSocial
-        })
         validateFormResults(e);
         sendMail();
     }
@@ -180,6 +175,20 @@ const Form = () => {
         handleFormData({
             ...formData,
             sizeBussines: event.target.value
+        })
+    };
+
+    const handleEmail = (event) => {
+        handleFormData({
+            ...formData,
+            email: event.target.value
+        })
+    };
+
+    const handleRazonSocial = (event) => {
+        handleFormData({
+            ...formData,
+            razonSocial: event.target.value
         })
     };
 
@@ -224,8 +233,8 @@ const Form = () => {
                                 <Grid item xs={12} className="my-2">
                                     <h5>Seleccione el tamañio de la empresa</h5>
                                     <RadioGroup aria-label="size" name="size" value={value} onChange={handleChange}>
-                                        <FormControlLabel value="small" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña (10 a 50 ocupados)" />
-                                        <FormControlLabel value="medium" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana (51 a 250 ocupados)" />
+                                        <FormControlLabel value="small" control={<Radio required={true} classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña (10 a 50 ocupados)" />
+                                        <FormControlLabel value="medium" control={<Radio required={true} classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana (51 a 250 ocupados)" />
                                     </RadioGroup>
                                 </Grid>
                                 <Grid item xs={12}>
@@ -233,10 +242,10 @@ const Form = () => {
                                         val.questionType === "Multiple choice" ?
                                             <Fragment key={i}>
                                                 <Typography><HelpOutlineIcon style={{ color: orange[900] }} /> {val.question}</Typography>
-                                                <RadioGroup aria-label={val.question} name={val.question} onChange={handleResponse}>
+                                                <RadioGroup aria-label={val.question} name={val.question} required onChange={handleResponse}>
                                                     {val.options.map((item, index) => {
                                                         return (<div key={index}>
-                                                            <FormControlLabel value={item} control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label={(addQuantityQuestion.length>0)?`${item} ${addQuantityQuestion.find((value)=>{return value.question === val.question}).addQuantity}`:item} /> 
+                                                            <FormControlLabel value={item} control={<Radio required={true} classes={{ root: classes.radio, checked: classes.checked }} />} label={(addQuantityQuestion.length>0)?`${item} ${addQuantityQuestion.find((value)=>{return value.question === val.question}).addQuantity}`:item} /> 
                                                         </div>);
                                                     }
                                                     )}
@@ -283,6 +292,7 @@ const Form = () => {
                                         fullWidth
                                         defaultValue=""
                                         variant="outlined"
+                                        onBlur={handleEmail}
                                         inputRef={
                                             register({
                                                 required: {
@@ -312,6 +322,7 @@ const Form = () => {
                                         fullWidth
                                         defaultValue=""
                                         variant="outlined"
+                                        onBlur={handleRazonSocial}
                                         inputRef={register}
                                         required
                                     />
