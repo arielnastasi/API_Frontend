@@ -312,7 +312,7 @@ const CreateUserForm = () => {
 											required
 											fullWidth
 											id="option"
-											placeholder="Ejemplo: Mayor a ..."
+											placeholder="Ejemplo: Mayor a, Menor a, No varió"
 											name="option"
 											value={optionValue}
 											onChange={getOptionData}

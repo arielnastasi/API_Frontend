@@ -49,7 +49,6 @@ const Benchmarking2 = () => {
 			},
 		});
 		const data = await res.json();
-		console.log(data)
 		handleHideLoading(true);
 		handleformularios(data.forms);
 		handleformulariosOriginales(data.forms);
