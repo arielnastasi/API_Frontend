@@ -76,23 +76,22 @@ const Form = () => {
             _id: 0,
             question: '',
             options: [],
-            referenceMediumBusiness: 0,
-            referenceSmallBusiness: 0,
-            selectedResponse: 0,
-            typeSelectedResponse: '',
-            msgResult: ''
-
-        }],
+            referenceMediumBusiness: '',
+            referenceSmallBusiness: '',
+        }]
     });
 
     const { nombreForm, email, razonSocial, preguntas, sector } = formData;
+    const [ results, handleResults ] = useState([])
     const [showResult, handleSowResult] = useState(true);
     const [hiddenForm, handleHiddenForm] = useState(false);
     const [value, setValue] = React.useState('');
-    const [optionSelected,setOptionSelected] = React.useState(10);
+    const [addQuantity, setaddQuantity] = React.useState('');
+    const [addQuantityQuestion, setaddQuantityQuestion] = React.useState([]);
     const [expanded, setExpanded] = React.useState(false);
     const location = useLocation();
     const history = useHistory();
+
     let titulo = location.state;
 
     useEffect(() => {
@@ -108,7 +107,6 @@ const Form = () => {
             method: 'GET',
         });
         const data = await res.json();
-        //console.log(data)
         handleFormData({
             nombreForm: data.form.name,
             preguntas: data.form.questionList,
@@ -118,27 +116,29 @@ const Form = () => {
     }
 
     const sendMail = async () => {
-        console.log(formData)
-        let formJson =JSON.stringify({
-            email:email,
-            data: formData})
-            console.log("Enviando mail ...");
-            console.log(formJson);
-        // const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/sendEmail`, {
-        //     method: 'POST',
-        //     method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 			'token': localStorage.getItem('token')
-		// 		},
-        //         body: formJson
-        // });
+       
+        let formJson = {
+            email: email,
+            formName: formData.nombreForm,
+            results: results
+        }
+        console.log("Enviando mail ...");
+        console.log(formJson);
+        const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/sendEmail`, {
+            method: 'POST',
+            method: 'POST',
+        		headers: {
+        			'Content-Type': 'application/json',
+        			'token': localStorage.getItem('token')
+        		},
+                body: formJson
+        });
 
 
     }
 
-
     const { register, errors, handleSubmit } = useForm();
+
     const onSubmit = (data, e) => {
         handleFormData({
             ...formData,
@@ -146,57 +146,30 @@ const Form = () => {
             razonSocial: data.razonSocial
         })
         validateFormResults(e);
-        //sendMail();
+        sendMail();
     }
 
     const validateFormResults = (e) => {
+        
         e.preventDefault();
-
-        formData.preguntas.forEach((item) => {
-            console.log(item)
-            if (item.questionType === 'Multiple choice') {
-                if (formData.sizeBussines === 'small') {
-                    if (item.referenceSmallBusiness === item.selectedResponse) {
-                        if (item.typeSelectedResponse === 'equal') {
-                            item.msgResult = "La respuesta es igual a la media"
-                        } else {
-                            if (item.typeSelectedResponse === 'lower') {
-                                item.msgResult = "La respuesta es inferiro a la media"
-                            } else {
-                                item.msgResult = "La respuesta es superior a la media"
-                            }
-                        }
-                    } if (item.selectedResponse < item.referenceSmallBusiness) {
-                        item.msgResult = `La respuesta es inferior al benchmark ${item.referenceSmallBusiness}`
-                    } else {
-                        item.msgResult = `La respuesta es superior al benchmark ${item.referenceSmallBusiness}`
-                    }
-                } else {
-                    if (item.referenceMediumBusiness === item.selectedResponse) {
-                        if (item.typeSelectedResponse === 'equal') {
-                            item.msgResult = "La respuesta es igual a la media"
-                        } else {
-                            if (item.typeSelectedResponse === 'lower') {
-                                item.msgResult = "La respuesta es inferiro a la media"
-                            } else {
-                                item.msgResult = "La respuesta es superior a la media"
-                            }
-                        }
-                    } if (item.selectedResponse < item.referenceMediumBusiness) {
-                        item.msgResult = `La respuesta es inferior al benchmark ${item.referenceMediumBusiness}`
-                    } else {
-                        item.msgResult = `La respuesta es superior al benchmark ${item.referenceMediumBusiness}`
-                    }
-                }
-            } else {
-                item.msgResult = item.selectedResponse
-            }
-
-        })
         handleSowResult(false);
         handleHiddenForm(true);
-
+        results.forEach((resl)=>{
+            let sizeBussines = formData.sizeBussines
+            let bench = (sizeBussines==='small')? formData.preguntas
+                .find((ben)=>{return ben.question === resl.question}).referenceSmallBusiness:formData.preguntas
+                .find((ben)=>{return ben.question === resl.question}).referenceMediumBusiness
+            addQuantityQuestion.forEach((val)=>{
+                if(resl.question === val.question){
+                    let aux = `Su respuesta fué ${resl.result} ${val.addQuantity}, mientras que en el sector ${formData.sector} la media es ${bench}`
+                    resl.result = aux 
+                }
+            }
+        )})
+        console.log(results)
     }
+
+
 
     const routeChange = (path) => {
         history.push(path);
@@ -214,42 +187,22 @@ const Form = () => {
         setExpanded(!expanded);
     };
 
-      const handleResponse = (event) => {
-        setOptionSelected(parseInt(event.target.value,10));
-        formData.preguntas.forEach((ques) => {
-            if (ques._id === event.target.name) {
-                ques.selectedResponse = ques.options[event.target.value].value
-                ques.typeSelectedResponse = ques.options[event.target.value].type
-            }
-            console.log(optionSelected)
-            console.log(ques)
-
-        }
-        )
-        // for (const property in object) {
-        //     console.log(`${property}: ${object[property]}`);
-        //   }
+    const handleResponse = (event) => {
+        let answ =  event.target.value
+        handleResults([...results,{
+            question:event.target.name,
+            result:answ
+        }])
+        
     }
 
-    const handleResponseText = (event) => {
-        formData.preguntas.forEach((ques) => {
-            if (ques.question === event.target.name) {
-                ques.selectedResponse = event.target.value
-            }
-        }
-        )
-    }
 
-    function convert(value) {
-        if (value === "lower") {
-            return "Menor a";
-        } else {
-            if (value === "higher") {
-                return "Mayor a";
-            } else {
-                return "Igual a";
-            }
-        }
+    const handleAddQuantity = (event) => {
+        setaddQuantity(event.target.value) 
+        setaddQuantityQuestion([...addQuantity,
+            {question: event.target.name,
+             addQuantity: event.target.value }])
+        
     }
 
     // JSX
@@ -265,15 +218,14 @@ const Form = () => {
                                 <Grid item xs={12} className="my-2">
                                     <Paper elevation={1} className={classes.paper}>
                                         <h2>{nombreForm}</h2>
-                                        <h5><strong>Formulario id: </strong>{id}</h5>
                                     </Paper>
                                     <h5><strong>Sector: </strong>{sector}</h5>
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
                                     <h5>Seleccione el tamañio de la empresa</h5>
                                     <RadioGroup aria-label="size" name="size" value={value} onChange={handleChange}>
-                                        <FormControlLabel value="medium" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana" />
-                                        <FormControlLabel value="small" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña" />
+                                        <FormControlLabel value="small" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Pequeña (10 a 50 ocupados)" />
+                                        <FormControlLabel value="medium" control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label="Mediana (51 a 250 ocupados)" />
                                     </RadioGroup>
                                 </Grid>
                                 <Grid item xs={12}>
@@ -281,14 +233,27 @@ const Form = () => {
                                         val.questionType === "Multiple choice" ?
                                             <Fragment key={i}>
                                                 <Typography><HelpOutlineIcon style={{ color: orange[900] }} /> {val.question}</Typography>
-                                                <RadioGroup aria-label={val._id} value ={optionSelected} name={val._id} onChange={handleResponse}>
+                                                <RadioGroup aria-label={val.question} name={val.question} onChange={handleResponse}>
                                                     {val.options.map((item, index) => {
                                                         return (<div key={index}>
-                                                            <FormControlLabel value={index} control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label={`${convert(item.type)}...${item.value}`} />
+                                                            <FormControlLabel value={item} control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />} label={(addQuantityQuestion.length>0)?`${item} ${addQuantityQuestion.find((value)=>{return value.question === val.question}).addQuantity}`:item} /> 
                                                         </div>);
                                                     }
                                                     )}
                                                 </RadioGroup>
+                                                <Grid item xs={12} className="my-2">
+                                                    <TextField
+                                                        id={val.question}
+                                                        label="Agregar detalle de respuesta"
+                                                        name={val.question}
+                                                        rows={4}
+                                                        fullWidth
+                                                        defaultValue=""
+                                                        variant="outlined"
+                                                        onBlur={handleAddQuantity}
+                                                        required
+                                                    />
+                                                </Grid>
                                             </Fragment>
                                             : <Fragment key={i}>
                                                 <Grid item xs={12}>
@@ -303,7 +268,7 @@ const Form = () => {
                                                         fullWidth
                                                         defaultValue=""
                                                         variant="outlined"
-                                                        onChange={handleResponseText}
+                                                        onBlur={handleResponse}
                                                         required />
                                                 </Grid>
                                             </Fragment>
@@ -436,7 +401,7 @@ const Form = () => {
                                             <Typography variant="body1" color="textPrimary" component="p">
                                                 Tamaño de la empresa: {(formData.sizeBussines) === "small" ? "Pequeña" : "Mediana"}</Typography>
                                         </ListItem>
-                                        {formData.preguntas.map((resp, index) => {
+                                        {results.map((resp, index) => {
                                             return (<div key={index}>
                                                 {(resp.questionType === 'Multiple choice') ?
                                                     <div>
@@ -449,15 +414,13 @@ const Form = () => {
                                                                     <TableHead>
                                                                         <TableRow>
                                                                             <TableCell align="center">Respuesta</TableCell>
-                                                                            <TableCell align="center">Resultado Benchmark</TableCell>
                                                                         </TableRow>
                                                                     </TableHead>
                                                                     <TableBody>
                                                                         <TableRow >
                                                                             <TableCell align="center">
-                                                                                {resp.selectedResponse}
+                                                                                {resp.result}
                                                                             </TableCell>
-                                                                            <TableCell align="center">{resp.msgResult}</TableCell>
                                                                         </TableRow>
                                                                     </TableBody>
                                                                 </Table>
@@ -469,7 +432,7 @@ const Form = () => {
                                                             <Typography variant="body1" color="textPrimary" component="p"><HelpOutlineIcon style={{ color: orange[900] }} /> {resp.question}</Typography>
                                                         </ListItem>
                                                         <ListItem>
-                                                            <Typography variant="body2" color="textSecondary" component="p">{resp.selectedResponse}</Typography>
+                                                            <Typography variant="body2" color="textSecondary" component="p">{resp.result}</Typography>
                                                         </ListItem>
                                                     </div>}
                                             </div>

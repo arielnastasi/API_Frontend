@@ -4,7 +4,6 @@ import "./estilo.css"
 import "./tarjeta.css"
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import Barra from '../../components/navbar-publica/Barra';
-import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from "react-router-dom";
 
@@ -50,6 +49,7 @@ const Benchmarking2 = () => {
 			},
 		});
 		const data = await res.json();
+		console.log(data)
 		handleHideLoading(true);
 		handleformularios(data.forms);
 		handleformulariosOriginales(data.forms);
@@ -66,7 +66,7 @@ const Benchmarking2 = () => {
 
 	const searchFormsBySector = (event) => {
 		const searchFor = event.target.value;
-		if (searchFor === "default" || searchFor === "all" ) {
+		if (searchFor === "default" || searchFor === "all") {
 			handleformularios(formulariosOriginales);
 		} else {
 			let searchResult = []
@@ -119,9 +119,6 @@ const Benchmarking2 = () => {
 									<div className="tarjeta card mt-4 mb-4 pt-3 ">
 										<div className="card-title text-center">
 											<h3>{form.name}</h3>
-											<span className="badge badge-pill badge-danger ml-auto">
-												{form._id}
-											</span>
 										</div>
 										<div className="card-body">
 											{form.sector}
