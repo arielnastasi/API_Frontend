@@ -82,7 +82,7 @@ const Form = () => {
     });
 
     const { nombreForm, email, razonSocial, preguntas, sector } = formData;
-    const [ results, handleResults ] = useState([])
+    const [results, handleResults] = useState([])
     const [showResult, handleSowResult] = useState(true);
     const [hiddenForm, handleHiddenForm] = useState(false);
     const [value, setValue] = React.useState('');
@@ -116,7 +116,6 @@ const Form = () => {
     }
 
     const sendMail = async () => {
-    
         let formJson = {
             email: email,
             formName: formData.nombreForm,
@@ -126,15 +125,14 @@ const Form = () => {
         console.log(formJson);
         const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/sendEmail`, {
             method: 'POST',
-            method: 'POST',
-        		headers: {
-        			'Content-Type': 'application/json',
-        			'token': localStorage.getItem('token')
-        		},
-                body: formJson
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+            body: JSON.stringify(formJson)
         });
-
-
+        const data = await res.json();
+        console.log(data);
     }
 
     const { register, errors, handleSubmit } = useForm();
@@ -145,22 +143,23 @@ const Form = () => {
     }
 
     const validateFormResults = (e) => {
-        
+
         e.preventDefault();
         handleSowResult(false);
         handleHiddenForm(true);
-        results.forEach((resl)=>{
+        results.forEach((resl) => {
             let sizeBussines = formData.sizeBussines
-            let bench = (sizeBussines==='small')? formData.preguntas
-                .find((ben)=>{return ben.question === resl.question}).referenceSmallBusiness:formData.preguntas
-                .find((ben)=>{return ben.question === resl.question}).referenceMediumBusiness
-            addQuantityQuestion.forEach((val)=>{
-                if(resl.question === val.question){
+            let bench = (sizeBussines === 'small') ? formData.preguntas
+                .find((ben) => { return ben.question === resl.question }).referenceSmallBusiness : formData.preguntas
+                    .find((ben) => { return ben.question === resl.question }).referenceMediumBusiness
+            addQuantityQuestion.forEach((val) => {
+                if (resl.question === val.question) {
                     let aux = `Su respuesta fué ${resl.result} ${val.addQuantity}, mientras que en el sector ${formData.sector} la media es ${bench}`
-                    resl.result = aux 
+                    resl.result = aux
                 }
             }
-        )})
+            )
+        })
         console.log(results)
     }
 
@@ -197,21 +196,23 @@ const Form = () => {
     };
 
     const handleResponse = (event) => {
-        let answ =  event.target.value
-        handleResults([...results,{
-            question:event.target.name,
-            result:answ
+        let answ = event.target.value
+        handleResults([...results, {
+            question: event.target.name,
+            result: answ
         }])
-        
+
     }
 
 
     const handleAddQuantity = (event) => {
-        setaddQuantity(event.target.value) 
+        setaddQuantity(event.target.value)
         setaddQuantityQuestion([...addQuantity,
-            {question: event.target.name,
-             addQuantity: event.target.value }])
-        
+        {
+            question: event.target.name,
+            addQuantity: event.target.value
+        }])
+
     }
 
     // JSX
@@ -245,7 +246,7 @@ const Form = () => {
                                                 <RadioGroup aria-label={val.question} name={val.question} required onChange={handleResponse}>
                                                     {val.options.map((item, index) => {
                                                         return (<div key={index}>
-                                                            <FormControlLabel value={item} control={<Radio required={true} classes={{ root: classes.radio, checked: classes.checked }} />} label={(addQuantityQuestion.length>0)?`${item} ${addQuantityQuestion.find((value)=>{return value.question === val.question}).addQuantity}`:item} /> 
+                                                            <FormControlLabel value={item} control={<Radio required={true} classes={{ root: classes.radio, checked: classes.checked }} />} label={(addQuantityQuestion.length > 0) ? `${item} ${addQuantityQuestion.find((value) => { return value.question === val.question }).addQuantity}` : item} />
                                                         </div>);
                                                     }
                                                     )}
