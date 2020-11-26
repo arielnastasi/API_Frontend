@@ -143,17 +143,17 @@ const Form = () => {
     }
 
     const validateFormResults = (e) => {
-
         e.preventDefault();
         handleSowResult(false);
         handleHiddenForm(true);
+        console.log(results)
         results.forEach((resl) => {
             
             let sizeBussines = formData.sizeBussines
             let bench = (sizeBussines === 'small' ) ? formData.preguntas
                 .find((ben) => { return ben.question === resl.question }).referenceSmallBusiness : formData.preguntas
                     .find((ben) => { return ben.question === resl.question }).referenceMediumBusiness
-            if(addQuantity.length > 0) {
+            if(addQuantity) {
             addQuantityQuestion.forEach((val) => {
                 if (resl.question === val.question) {
                     let aux = `Su respuesta fué ${resl.result} ${val.addQuantity}, mientras que en el sector ${formData.sector} la media es ${bench}`
@@ -166,8 +166,6 @@ const Form = () => {
         })
         console.log(results)
     }
-
-
 
     const routeChange = (path) => {
         history.push(path);
@@ -200,14 +198,24 @@ const Form = () => {
     };
 
     const handleResponse = (event) => {
+        let index = -1
         let answ = event.target.value
-        handleResults([...results, {
-            question: event.target.name,
-            result: answ
-        }])
-
+        console.log(event.target.name)
+        index =  results.findIndex((el)=>el.question ===event.target.name)
+        console.log(index)
+        console.log(results)
+        if(index >= 0){
+            results[index] = {
+                question: event.target.name,
+                result: answ
+            }
+        }else{
+            handleResults([...results, {
+                question: event.target.name,
+                result: answ
+            }])
+        }
     }
-
 
     const handleAddQuantity = (event) => {
         setaddQuantity(event.target.value)
@@ -250,9 +258,9 @@ const Form = () => {
                                                 <RadioGroup aria-label={val.question} name={val.question} 
                                                      required onChange={handleResponse}>
                                                     {val.options.map((item, index) => {
-                                                        return (//<div key={index}>
+                                                        return (
                                                             <FormControlLabel key={index} value={item} control={<Radio required={true} classes={{ root: classes.radio, checked: classes.checked }} />} label={item} />
-                                                        /*</div>*/);
+                                                        );
                                                     }
                                                     )}
                                                 </RadioGroup>
@@ -266,7 +274,7 @@ const Form = () => {
                                                         defaultValue=""
                                                         variant="outlined"
                                                         onBlur={handleAddQuantity}
-                                                        required
+                                                        
                                                     />
                                                 </Grid>
                                             </Fragment>

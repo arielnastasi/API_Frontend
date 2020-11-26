@@ -254,6 +254,7 @@ const CreateUserForm = () => {
 						inputProps={{maxLength :40}}
 						onChange={getFormaName}
 						value={formName}
+						required
 					/>
 					<FormControl variant="outlined" fullWidth className={classes.formControl}>
 						<InputLabel htmlFor="outlined-age-native-simple">Sector</InputLabel>
