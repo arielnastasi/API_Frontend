@@ -148,19 +148,20 @@ const Form = () => {
         handleHiddenForm(true);
         console.log(results)
         results.forEach((resl) => {
-            
+
             let sizeBussines = formData.sizeBussines
-            let bench = (sizeBussines === 'small' ) ? formData.preguntas
+            let bench = (sizeBussines === 'small') ? formData.preguntas
                 .find((ben) => { return ben.question === resl.question }).referenceSmallBusiness : formData.preguntas
                     .find((ben) => { return ben.question === resl.question }).referenceMediumBusiness
-            if(addQuantity) {
-            addQuantityQuestion.forEach((val) => {
-                if (resl.question === val.question) {
-                    let aux = `Su respuesta fué ${resl.result} ${val.addQuantity}, mientras que en el sector ${formData.sector} la media es ${bench}`
-                    resl.result = aux
+            if (addQuantity) {
+                addQuantityQuestion.forEach((val) => {
+                    if (resl.question === val.question) {
+                        let aux = `Su respuesta fué ${resl.result} ${val.addQuantity}, mientras que en el sector ${formData.sector} la media es ${bench}`
+                        resl.result = aux
+                    }
                 }
-            }
-            )} else{
+                )
+            } else {
                 resl.result = `Su respuesta fué ${resl.result}, mientras que en el sector ${formData.sector} la media es ${bench}`
             }
         })
@@ -201,15 +202,15 @@ const Form = () => {
         let index = -1
         let answ = event.target.value
         console.log(event.target.name)
-        index =  results.findIndex((el)=>el.question ===event.target.name)
+        index = results.findIndex((el) => el.question === event.target.name)
         console.log(index)
         console.log(results)
-        if(index >= 0){
+        if (index >= 0) {
             results[index] = {
                 question: event.target.name,
                 result: answ
             }
-        }else{
+        } else {
             handleResults([...results, {
                 question: event.target.name,
                 result: answ
@@ -217,15 +218,28 @@ const Form = () => {
         }
     }
 
-    const handleAddQuantity = (event) => {
-        setaddQuantity(event.target.value)
-        setaddQuantityQuestion([...addQuantity,
-        {
-            question: event.target.name,
-            addQuantity: event.target.value
-        }])
+    // const handleAddQuantity = (event) => {
+    //     //setaddQuantity(event.target.value)
 
-    }
+    //     let index = -1
+    //     let answ = event.target.value
+    //     console.log(event.target.name)
+    //     console.log(index)
+    //     console.log(results)
+    //     if (index >= 0) {
+    //         addQuantity[index] = {
+    //             question: event.target.name,
+    //             result: answ
+    //         }
+    //     } else {
+    //         setaddQuantityQuestion([...addQuantity,
+    //         {
+    //             question: event.target.name,
+    //             addQuantity: event.target.value
+    //         }])
+    //     }
+
+    // }
 
     // JSX
 
@@ -255,8 +269,8 @@ const Form = () => {
                                         val.questionType === "Multiple choice" ?
                                             <Fragment key={i}>
                                                 <Typography><HelpOutlineIcon style={{ color: orange[900] }} /> {val.question}</Typography>
-                                                <RadioGroup aria-label={val.question} name={val.question} 
-                                                     required onChange={handleResponse}>
+                                                <RadioGroup aria-label={val.question} name={val.question}
+                                                    required onChange={handleResponse}>
                                                     {val.options.map((item, index) => {
                                                         return (
                                                             <FormControlLabel key={index} value={item} control={<Radio required={true} classes={{ root: classes.radio, checked: classes.checked }} />} label={item} />
@@ -264,19 +278,6 @@ const Form = () => {
                                                     }
                                                     )}
                                                 </RadioGroup>
-                                                <Grid item xs={12} className="my-2">
-                                                    <TextField
-                                                        id={val.question}
-                                                        label="Agregar detalle de respuesta"
-                                                        name={val.question}
-                                                        rows={4}
-                                                        fullWidth
-                                                        defaultValue=""
-                                                        variant="outlined"
-                                                        onBlur={handleAddQuantity}
-                                                        
-                                                    />
-                                                </Grid>
                                             </Fragment>
                                             : <Fragment key={i}>
                                                 <Grid item xs={12}>
