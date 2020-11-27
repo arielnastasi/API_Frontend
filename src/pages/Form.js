@@ -14,7 +14,7 @@ import OrangeButton from '../components/orangeButton/OrangeButton';
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, List, ListItem, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 import Barra from '../components/navbar-publica/Barra';
-import { orange } from '@material-ui/core/colors';
+import { orange, teal } from '@material-ui/core/colors';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useForm } from 'react-hook-form';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -22,6 +22,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import Collapse from '@material-ui/core/Collapse';
+import { Restaurant } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -71,7 +72,7 @@ const Form = () => {
         sector: '',
         email: '',
         razonSocial: '',
-        sizeBussines: '',
+        sizeBussines: 'small',
         preguntas: [{
             _id: 0,
             question: '',
@@ -86,8 +87,6 @@ const Form = () => {
     const [showResult, handleSowResult] = useState(true);
     const [hiddenForm, handleHiddenForm] = useState(false);
     const [value, setValue] = React.useState('');
-    const [addQuantity, setaddQuantity] = React.useState('');
-    const [addQuantityQuestion, setaddQuantityQuestion] = React.useState([]);
     const [expanded, setExpanded] = React.useState(false);
     const location = useLocation();
     const history = useHistory();
@@ -121,8 +120,6 @@ const Form = () => {
             formName: formData.nombreForm,
             results: results
         }
-        console.log("Enviando mail ...");
-        console.log(formJson);
         const res = await fetch(`https://interactivas-backend.herokuapp.com/api/forms/sendEmail`, {
             method: 'POST',
             headers: {
@@ -148,21 +145,17 @@ const Form = () => {
         handleHiddenForm(true);
         console.log(results)
         results.forEach((resl) => {
-
-            let sizeBussines = formData.sizeBussines
-            let bench = (sizeBussines === 'small') ? formData.preguntas
-                .find((ben) => { return ben.question === resl.question }).referenceSmallBusiness : formData.preguntas
-                    .find((ben) => { return ben.question === resl.question }).referenceMediumBusiness
-            if (addQuantity) {
-                addQuantityQuestion.forEach((val) => {
-                    if (resl.question === val.question) {
-                        let aux = `Su respuesta fué ${resl.result} ${val.addQuantity}, mientras que en el sector ${formData.sector} la media es ${bench}`
-                        resl.result = aux
-                    }
+            let indexQuestion = preguntas.findIndex((i) => i.question === resl.question)
+            if (preguntas[indexQuestion].questionType === 'Multiple choice') {
+                let sizeBussines = formData.sizeBussines
+                let bench = (sizeBussines === 'small') ? formData.preguntas
+                    .find((ben) => { return ben.question === resl.question }).referenceSmallBusiness : formData.preguntas
+                        .find((ben) => { return ben.question === resl.question }).referenceMediumBusiness
+                if (resl.result === bench) {
+                    resl.result = `Su respuesta fué igual a la media del sector ${formData.sector}: ${bench}`
+                } else {
+                    resl.result = `Su respuesta fué ${resl.result}, mientras que en el sector ${formData.sector} la media es ${bench}`
                 }
-                )
-            } else {
-                resl.result = `Su respuesta fué ${resl.result}, mientras que en el sector ${formData.sector} la media es ${bench}`
             }
         })
         console.log(results)
@@ -200,46 +193,22 @@ const Form = () => {
 
     const handleResponse = (event) => {
         let index = -1
-        let answ = event.target.value
-        console.log(event.target.name)
         index = results.findIndex((el) => el.question === event.target.name)
-        console.log(index)
-        console.log(results)
         if (index >= 0) {
             results[index] = {
                 question: event.target.name,
-                result: answ
+                result: event.target.value
             }
         } else {
             handleResults([...results, {
                 question: event.target.name,
-                result: answ
+                result: event.target.value
             }])
         }
+        // console.log(index)
+        // console.log(results)
     }
 
-    // const handleAddQuantity = (event) => {
-    //     //setaddQuantity(event.target.value)
-
-    //     let index = -1
-    //     let answ = event.target.value
-    //     console.log(event.target.name)
-    //     console.log(index)
-    //     console.log(results)
-    //     if (index >= 0) {
-    //         addQuantity[index] = {
-    //             question: event.target.name,
-    //             result: answ
-    //         }
-    //     } else {
-    //         setaddQuantityQuestion([...addQuantity,
-    //         {
-    //             question: event.target.name,
-    //             addQuantity: event.target.value
-    //         }])
-    //     }
-
-    // }
 
     // JSX
 
@@ -293,7 +262,7 @@ const Form = () => {
                                                         defaultValue=""
                                                         variant="outlined"
                                                         onBlur={handleResponse}
-                                                        required />
+                                                        required={true} />
                                                 </Grid>
                                             </Fragment>
                                     ))}
@@ -324,7 +293,7 @@ const Form = () => {
                                                 }
                                             })
                                         }
-                                        required
+                                        required={true}
                                     />
                                 </Grid>
                                 <Grid item xs={12} className="my-2">
@@ -339,7 +308,7 @@ const Form = () => {
                                         variant="outlined"
                                         onBlur={handleRazonSocial}
                                         inputRef={register}
-                                        required
+                                        required={true}
                                     />
                                 </Grid>
                             </Grid>
@@ -455,10 +424,10 @@ const Form = () => {
                                                     </div> :
                                                     <div>
                                                         <ListItem>
-                                                            <Typography variant="body1" color="textPrimary" component="p"><HelpOutlineIcon style={{ color: orange[900] }} /> {resp.question}</Typography>
+                                                            <Typography variant="body1" color="textPrimary" component="p"><HelpOutlineIcon style={{ color: orange[900] }} /><strong>{resp.question}</strong> </Typography>
                                                         </ListItem>
                                                         <ListItem>
-                                                            <Typography variant="body2" color="textSecondary" component="p">{resp.result}</Typography>
+                                                            <Typography variant="body1" color="textPrimary" component="p" >{resp.result}</Typography>
                                                         </ListItem>
                                                     </div>}
                                             </div>

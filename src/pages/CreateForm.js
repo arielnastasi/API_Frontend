@@ -59,7 +59,8 @@ const CreateUserForm = () => {
 
 	const [questionList, handleQuestionList] = useState([]);
 	let [optionValue, handleOptionValue] = useState('');
-	// const [optionError, handleOptionError] = useState(false);
+	const [optionError, handleOptionError] = useState(false);
+	const [optionErrorReference, handleOptionErrorReference] = useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [optionsList, handleOptionsList] = useState([]);
 
@@ -113,22 +114,32 @@ const CreateUserForm = () => {
 
 
 	const addOptionToOptionsList = (e) => {
-		// if (optionValue !== '' && !isNaN(optionValue)) {
+		if (optionValue !== '') {
 			console.log(`Se agregó ${optionValue}" a la lista de opciones`);
-			// handleOptionError(false);
+			handleOptionError(false);
 			handleOptionsList([
-				...optionsList,optionValue
+				...optionsList, optionValue
 			]);
-			// handleOptionValue('');
-		// } else {
-			// console.log(`El valor: "${optionValue}" es inválido, solo se permiten números`);
-			// handleOptionError(true);
-		// }
+			handleOptionValue('');
+		} else {
+			console.log(`El valor: "${optionValue}" es inválido, solo se permiten números`);
+			handleOptionError(true);
+		}
 	}
 
 	const validateQuestionForm = (e) => {
 		e.preventDefault();
-		addQuestion();
+		if (questionTypeForm === 'Multiple choice') {
+			if (referenceMediumBusiness != '' & referenceSmallBusiness != '') {
+				handleOptionErrorReference(false);
+				addQuestion();
+			} else {
+				handleOptionErrorReference(true);
+			}
+		} else {
+			addQuestion();
+		}
+
 	}
 
 	const addQuestion = (e) => {
@@ -251,7 +262,7 @@ const CreateUserForm = () => {
 						id="formName"
 						label="Nombre del formulario"
 						name="formName"
-						inputProps={{maxLength :40}}
+						inputProps={{ maxLength: 40 }}
 						onChange={getFormaName}
 						value={formName}
 						required
@@ -320,6 +331,11 @@ const CreateUserForm = () => {
 										/>
 									</Grid>
 									<Grid item xs={12}>
+										{optionError === true ?
+											<Alert severity="error">¡Ingrese una opción ejemplo : Mayor a 20%!</Alert>
+											:
+											null
+										}
 										<OrangeButton
 											nombreBoton="Añadir opción"
 											onClick={() => addOptionToOptionsList()}
@@ -328,7 +344,7 @@ const CreateUserForm = () => {
 									</Grid>
 									<div className="my-3">
 										{optionsList.map((option, index) => (<div key={index}>
-											<Chip className="m-2"  label={option} onDelete={() => deleteOption(index)} color="primary" />
+											<Chip className="m-2" label={option} onDelete={() => deleteOption(index)} color="primary" />
 										</div>
 										))}
 									</div>
@@ -357,6 +373,11 @@ const CreateUserForm = () => {
 											onChange={getQuestionData}
 											value={referenceMediumBusiness}
 										/>
+										{optionErrorReference === true ?
+											<Alert severity="error">¡Ingrese los benchmark ejemplo Mayor a 25%!</Alert>
+											:
+											null
+										}
 									</Grid>
 								</Fragment>
 								:

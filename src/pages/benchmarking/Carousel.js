@@ -16,10 +16,8 @@ class Carousel extends Component {
                       <img src={this.props.imagen1} alt='Norway'  className="d-block w-100"/>
                       <div className="text-block">
                       <h3 align="center">LA FUNDACIÓN</h3>    
-                        <p className="parrafo" align="left">La Fundación Observatorio PyME es una entidad sin fines de lucro, 
-                        cuya misión es promover la valorización cultural del rol de las pequeñas y medianas empresas
-                         en la sociedad, la investigación microeconómica aplicada y las políticas públicas de apoyo 
-                         al desarrollo productivo.</p>
+                        <p className="parrafo" align="left">Fundación Observatorio PyME
+                          promovemos el valor de las Pequeñas y medianas empresas.</p>
                       </div>
                       </div>
                     </div>
@@ -30,8 +28,6 @@ class Carousel extends Component {
                       <div className="text-block">
                         <h3 align="left">¿Quienes somos?</h3>
                         <p className="parrafo" align="left">Conocé nuestro equipo de trabajo haciendo clic <a href="https://www.observatoriopyme.org.ar/la-fundacion/equipo-de-trabajo/">aquí</a></p>
-                        
-                        
                       </div>
                       </div>
                     </div>
