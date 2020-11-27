@@ -24,7 +24,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
-import { orange } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,18 +52,15 @@ const CreateUserForm = () => {
 	const [questionData, handleQuestionData] = useState({
 		questionType: '',
 		question: '',
-		options: {
-			value:'',
-			type:''
-		},
+		options: [],
 		referenceSmallBusiness: '',
 		referenceMediumBusiness: ''
 	});
 
 	const [questionList, handleQuestionList] = useState([]);
 	let [optionValue, handleOptionValue] = useState('');
-	let [optionType, handleOptionType] = useState('equal');
 	const [optionError, handleOptionError] = useState(false);
+	const [optionErrorReference, handleOptionErrorReference] = useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [optionsList, handleOptionsList] = useState([]);
 
@@ -116,18 +112,13 @@ const CreateUserForm = () => {
 		handleOptionValue(e.target.value);
 	}
 
-	const getOptionType = (e) =>{
-		console.log(e.target.value)
-		handleOptionType(e.target.value);
-	}
 
 	const addOptionToOptionsList = (e) => {
-		if (optionValue !== '' && !isNaN(optionValue)) {
-			console.log(`Se agregó ${optionType} ${optionValue}" a la lista de opciones`);
+		if (optionValue !== '') {
+			console.log(`Se agregó ${optionValue}" a la lista de opciones`);
 			handleOptionError(false);
 			handleOptionsList([
-				...optionsList,{type:optionType,
-								value:optionValue} 
+				...optionsList, optionValue
 			]);
 			handleOptionValue('');
 		} else {
@@ -138,7 +129,17 @@ const CreateUserForm = () => {
 
 	const validateQuestionForm = (e) => {
 		e.preventDefault();
-		addQuestion();
+		if (questionTypeForm === 'Multiple choice') {
+			if (referenceMediumBusiness != '' & referenceSmallBusiness != '') {
+				handleOptionErrorReference(false);
+				addQuestion();
+			} else {
+				handleOptionErrorReference(true);
+			}
+		} else {
+			addQuestion();
+		}
+
 	}
 
 	const addQuestion = (e) => {
@@ -261,9 +262,10 @@ const CreateUserForm = () => {
 						id="formName"
 						label="Nombre del formulario"
 						name="formName"
-						inputProps={{maxLength :40}}
+						inputProps={{ maxLength: 40 }}
 						onChange={getFormaName}
 						value={formName}
+						required
 					/>
 					<FormControl variant="outlined" fullWidth className={classes.formControl}>
 						<InputLabel htmlFor="outlined-age-native-simple">Sector</InputLabel>
@@ -322,27 +324,15 @@ const CreateUserForm = () => {
 											required
 											fullWidth
 											id="option"
-											placeholder="Ejemplo: 300"
+											placeholder="Ejemplo: Mayor a, Menor a, No varió"
 											name="option"
 											value={optionValue}
 											onChange={getOptionData}
 										/>
 									</Grid>
 									<Grid item xs={12}>
-									<InputLabel htmlFor="outlined-age-native-simple">Tipo de opción</InputLabel>
-										<Select
-											native
-											name='optionType'
-											label='Medida'
-											onChange={getOptionType}>
-										<option value={'equal'}>Igual</option>
-										<option value={'higher'}>Mayor</option>
-										<option value={'lower'}>Menor</option>
-										</Select>
-									</Grid>
-									<Grid item xs={12}>
 										{optionError === true ?
-											<Alert severity="error">¡Las opciones deben ser números!</Alert>
+											<Alert severity="error">¡Ingrese una opción ejemplo : Mayor a 20%!</Alert>
 											:
 											null
 										}
@@ -354,36 +344,40 @@ const CreateUserForm = () => {
 									</Grid>
 									<div className="my-3">
 										{optionsList.map((option, index) => (<div key={index}>
-											<Chip className="m-2"  label={option.type} onDelete={() => deleteOption(index)} style={{ color: orange[900] }} />
-											<Chip className="m-2"  label={option.value} onDelete={() => deleteOption(index)} color="primary" />
+											<Chip className="m-2" label={option} onDelete={() => deleteOption(index)} color="primary" />
 										</div>
 										))}
 									</div>
 									<Grid item xs={12}>
-										<p className="mt-5 mb-1">Valor de referencia promedio para empresas pequeñas</p>
+										<p className="mt-5 mb-1">Porcentaje de referencia para empresas pequeñas</p>
 										<TextField
 											variant="outlined"
 											required
 											fullWidth
 											id="options"
-											placeholder="Ejemplo: 500"
+											placeholder="Ejemplo: Mayor al 30% o Menor a 10%"
 											name="referenceSmallBusiness"
 											onChange={getQuestionData}
 											value={referenceSmallBusiness}
 										/>
 									</Grid>
 									<Grid item xs={12}>
-										<p className="mt-3 mb-1">Valor de referencia promedio para empresas medianas:</p>
+										<p className="mt-3 mb-1">Porcentaje de referencia para empresas medianas:</p>
 										<TextField
 											variant="outlined"
 											required
 											fullWidth
 											id="options"
-											placeholder="Ejemplo: 800"
+											placeholder="Ejemplo: Mayor al 30% o Menor a 10%"
 											name="referenceMediumBusiness"
 											onChange={getQuestionData}
 											value={referenceMediumBusiness}
 										/>
+										{optionErrorReference === true ?
+											<Alert severity="error">¡Ingrese los benchmark ejemplo Mayor a 25%!</Alert>
+											:
+											null
+										}
 									</Grid>
 								</Fragment>
 								:
@@ -432,7 +426,7 @@ const CreateUserForm = () => {
 										<Fragment>
 											<p className="card-text">Opciones:</p>
 											{question.options.map((option, index) => (
-												<p className="card-text" key={index}> - {option.type}&nbsp;{option.value}</p>
+												<p className="card-text" key={index}> - {option}</p>
 											))}
 											<p className="card-text">Referencia promedio para empresas pequeñas: {question.referenceSmallBusiness}</p>
 											<p className="card-text">Referencia promedio para empresas medianas: {question.referenceMediumBusiness}</p>
